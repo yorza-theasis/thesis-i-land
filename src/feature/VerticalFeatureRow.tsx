@@ -1,0 +1,42 @@
+import className from 'classnames';
+import { useRouter } from 'next/router';
+
+type IVerticalFeatureRowProps = {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  reverse?: boolean;
+};
+
+const VerticalFeatureRow = (props: IVerticalFeatureRowProps) => {
+  const verticalFeatureClass = className(
+    // Прибрали 'mt-20', щоб слайд стояв рівно в каруселі
+    'flex',
+    'flex-wrap',
+    'items-center',
+    'py-8', // Додали симетричний внутрішній відступ
+    {
+      'flex-row-reverse': props.reverse,
+    },
+  );
+
+  const router = useRouter();
+
+  return (
+    <div className={verticalFeatureClass}>
+      <div className="w-full text-center sm:w-1/2 sm:px-6">
+        <h3 className="text-3xl font-semibold text-gray-900 dark:text-white">
+          {props.title}
+        </h3>
+        <div className="mt-6 text-xl leading-9">{props.description}</div>
+      </div>
+
+      <div className="w-full p-6 sm:w-1/2">
+        <img src={`${router.basePath}${props.image}`} alt={props.imageAlt} />
+      </div>
+    </div>
+  );
+};
+
+export { VerticalFeatureRow };
