@@ -10,7 +10,7 @@ const Team = () => (
       description="Deep expertise and one shared mission: building software that makes a difference."
     >
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-        {/* <div className="text-center">
+        {/* <div className="text-center"> qwerty
           <div className="mx-auto mb-6 flex size-24 items-center justify-center rounded-full bg-primary-500 text-3xl font-bold text-white">
             MI
           </div>
