@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 
 import { Background } from '../background/Background';
@@ -10,9 +11,37 @@ import { Logo } from './Logo';
 
 const Hero = () => (
   <>
-    {/* 1. Хедер тепер винесений ЗА межі Background. 
-        Він більше не блокується іншими секціями і має z-[100] для надійності. */}
-    <header className="fixed inset-x-0 top-0 z-[100] w-full border-b border-gray-200/50 bg-white/70 backdrop-blur-md dark:border-gray-800/50 dark:bg-gray-700/70">
+    <Head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ProfessionalService',
+            name: 'thesis-i',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: 'Lviv',
+              addressCountry: 'UA',
+            },
+            description:
+              'Software studio specializing in mobile and backend development.',
+            image: 'https://your-domain.com/apple-touch-icon.png',
+            knowsAbout: [
+              'Mobile Development',
+              'Backend Development',
+              'React Native',
+              'Next.js',
+            ],
+          }),
+        }}
+      />
+    </Head>
+
+    <header
+      role="banner"
+      className="fixed inset-x-0 top-0 z-[100] w-full border-b border-gray-200/50 bg-white/70 backdrop-blur-md dark:border-gray-800/50 dark:bg-gray-700/70"
+    >
       <Section yPadding="py-4">
         <NavbarTwoColumns logo={<Logo xl />} themeToggle={<ThemeToggle />}>
           <li>
@@ -25,38 +54,40 @@ const Hero = () => (
             <Link href="#team">Team</Link>
           </li>
           <li>
-            <Link href="/contact/">Contact</Link>
+            <Link href="/contact/" aria-label="Go to contact page">
+              Contact
+            </Link>
           </li>
         </NavbarTwoColumns>
       </Section>
     </header>
 
-    {/* 2. Фон та контент Hero тепер йдуть окремо. */}
-    <Background color="bg-white dark:bg-gray-700" withGlow>
-      {/* Трохи збільшив відступ до pt-40, щоб контент точно не ховався під меню */}
-      <Section yPadding="pt-40 pb-32">
-        <HeroOneButton
-          title={
-            <>
-              {'Engineering Excellence,\n'}
-              <span className="text-primary-500">Delivered.</span>
-            </>
-          }
-          description={
-            <>
-              A Lviv-based software studio with 5+ years of experience each,
-              building scalable mobile and <br />
-              full-stack solutions for clients worldwide.
-            </>
-          }
-          button={
-            <Link href="/contact/">
-              <Button xl>Get in Touch</Button>
-            </Link>
-          }
-        />
-      </Section>
-    </Background>
+    <main>
+      <Background color="bg-white dark:bg-gray-700" withGlow>
+        <Section yPadding="pt-40 pb-32">
+          <HeroOneButton
+            title={
+              <>
+                {'Engineering Excellence,\n'}
+                <span className="text-primary-500">Delivered.</span>
+              </>
+            }
+            description={
+              <>
+                A Lviv-based software studio with 5+ years of experience each,
+                building scalable mobile and full-stack solutions for clients
+                worldwide.
+              </>
+            }
+            button={
+              <Link href="/contact/" aria-label="Get in Touch">
+                <Button xl>Get in Touch</Button>
+              </Link>
+            }
+          />
+        </Section>
+      </Background>
+    </main>
   </>
 );
 
