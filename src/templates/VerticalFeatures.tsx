@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { Background } from '../background/Background';
@@ -76,9 +77,7 @@ const VerticalFeatures = () => {
         description="A glimpse into the projects we have delivered across industries. All details are shared within NDA boundaries."
       >
         <div className="relative w-full p-4 sm:px-12 md:px-16">
-          {/* Ось тут додано маску. 
-            Контейнер обрізає зайве, а mask-image робить краї (перші та останні 5%) напівпрозорими 
-          */}
+          {/* Маска для країв каруселі */}
           <div
             className="w-full overflow-hidden"
             style={{
@@ -164,6 +163,29 @@ const VerticalFeatures = () => {
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
+        </div>
+
+        {/* Кнопка "Детальніше" */}
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/cases"
+            className="inline-flex items-center justify-center rounded-md bg-primary-500 px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          >
+            View all cases
+            <svg
+              className="ml-2 size-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </Link>
         </div>
       </Section>
     </Background>
