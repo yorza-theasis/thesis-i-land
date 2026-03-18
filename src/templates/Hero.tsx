@@ -9,86 +9,107 @@ import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
 import { ThemeToggle } from '../navigation/ThemeToggle';
 import { Logo } from './Logo';
 
-const Hero = () => (
-  <>
-    <Head>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'ProfessionalService',
-            name: 'thesis-i',
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality: 'Lviv',
-              addressCountry: 'UA',
-            },
-            description:
-              'Software studio specializing in mobile and backend development.',
-            image: 'https://your-domain.com/apple-touch-icon.png',
-            knowsAbout: [
-              'Mobile Development',
-              'Backend Development',
-              'React Native',
-              'Next.js',
-            ],
-          }),
-        }}
-      />
-    </Head>
+const Hero = () => {
+  const schemaData = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'thesis-i',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Lviv',
+      addressCountry: 'UA',
+    },
+    description:
+      'Software studio specializing in mobile and backend development.',
+    image: 'https://your-domain.com/apple-touch-icon.png',
+    knowsAbout: [
+      'Mobile Development',
+      'Backend Development',
+      'React Native',
+      'Next.js',
+    ],
+  };
 
-    <header
-      role="banner"
-      className="fixed inset-x-0 top-0 z-[100] w-full border-b border-gray-200/50 bg-white/70 backdrop-blur-md dark:border-gray-800/50 dark:bg-gray-700/70"
-    >
-      <Section yPadding="py-4">
-        <NavbarTwoColumns logo={<Logo xl />} themeToggle={<ThemeToggle />}>
-          <li>
-            <Link href="#services">Services</Link>
-          </li>
-          <li>
-            <Link href="#cases">Cases</Link>
-          </li>
-          <li>
-            <Link href="#team">Team</Link>
-          </li>
-          <li>
-            <Link href="/contact/" aria-label="Go to contact page">
-              Contact
-            </Link>
-          </li>
-        </NavbarTwoColumns>
-      </Section>
-    </header>
+  return (
+    <>
+      <Head>
+        {/* 1. Google Tag Manager Library */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18025811889"
+        />
 
-    <main>
-      <Background color="bg-white dark:bg-gray-700" withGlow>
-        <Section yPadding="pt-40 pb-32">
-          <HeroOneButton
-            title={
-              <>
-                {'Engineering Excellence,\n'}
-                <span className="text-primary-500">Delivered.</span>
-              </>
-            }
-            description={
-              <>
-                A Lviv-based software studio with 5+ years of experience each,
-                building scalable mobile and full-stack solutions for clients
-                worldwide.
-              </>
-            }
-            button={
-              <Link href="/contact/" aria-label="Get in Touch">
-                <Button xl>Get in Touch</Button>
+        {/* 2. Google Tag Configuration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-18025811889');
+            `,
+          }}
+        />
+
+        {/* 3. Structured Data (Schema.org) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+      </Head>
+
+      <header
+        role="banner"
+        className="fixed inset-x-0 top-0 z-[100] w-full border-b border-gray-200/50 bg-white/70 backdrop-blur-md dark:border-gray-800/50 dark:bg-gray-700/70"
+      >
+        <Section yPadding="py-4">
+          <NavbarTwoColumns logo={<Logo xl />} themeToggle={<ThemeToggle />}>
+            <li>
+              <Link href="#services">Services</Link>
+            </li>
+            <li>
+              <Link href="#cases">Cases</Link>
+            </li>
+            <li>
+              <Link href="#team">Team</Link>
+            </li>
+            <li>
+              <Link href="/contact/" aria-label="Go to contact page">
+                Contact
               </Link>
-            }
-          />
+            </li>
+          </NavbarTwoColumns>
         </Section>
-      </Background>
-    </main>
-  </>
-);
+      </header>
+
+      <main>
+        <Background color="bg-white dark:bg-gray-700" withGlow>
+          <Section yPadding="pt-40 pb-32">
+            <HeroOneButton
+              title={
+                <>
+                  {'Engineering Excellence,\n'}
+                  <span className="text-primary-500">Delivered.</span>
+                </>
+              }
+              description={
+                <>
+                  A Lviv-based software studio with 5+ years of experience each,
+                  building scalable mobile and full-stack solutions for clients
+                  worldwide.
+                </>
+              }
+              button={
+                <Link href="/contact/" aria-label="Get in Touch">
+                  <Button xl>Get in Touch</Button>
+                </Link>
+              }
+            />
+          </Section>
+        </Background>
+      </main>
+    </>
+  );
+};
 
 export { Hero };
