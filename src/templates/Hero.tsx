@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Script from 'next/script';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
@@ -33,30 +34,32 @@ const Hero = () => {
   return (
     <>
       <Head>
-        {/* 1. Google Tag Manager Library */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18025811889"
-        />
-
-        {/* 2. Google Tag Configuration */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-18025811889');
-            `,
-          }}
-        />
-
         {/* 3. Structured Data (Schema.org) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </Head>
+
+      {/* 1. Google Tag Manager Library */}
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=AW-18025811889"
+      />
+
+      {/* 2. Google Tag Configuration */}
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18025811889');
+          `,
+        }}
+      />
 
       <header
         role="banner"
