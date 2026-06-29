@@ -61,52 +61,94 @@ const Contact = () => {
   };
 
   return (
-    <div className="text-gray-600 antialiased dark:text-gray-300">
+    <div className="bg-kosmos-950 text-gray-300 antialiased">
       <Meta
         title={`Contact - ${AppConfig.site_name}`}
         description="Get in touch with us. We'd love to hear about your project."
       />
 
-      <Background color="border-gray-200/50 bg-white/70 backdrop-blur-md dark:border-gray-800/50 dark:bg-gray-700/70">
-        <Section yPadding="py-6">
+      {/* Glassmorphic navbar */}
+      <header
+        role="banner"
+        className="border-white/8 glass-panel fixed inset-x-0 top-0 z-[100] w-full border-b"
+      >
+        <Section yPadding="py-4">
           <NavbarTwoColumns logo={<Logo xl />} themeToggle={<ThemeToggle />}>
             <li>
-              <Link href="/#services">Services</Link>
+              <Link
+                href="/#services"
+                className="text-gray-400 transition-colors duration-300 hover:text-neon-purple-bright"
+              >
+                Services
+              </Link>
             </li>
             <li>
-              <Link href="/#cases">Cases</Link>
+              <Link
+                href="/#cases"
+                className="text-gray-400 transition-colors duration-300 hover:text-neon-purple-bright"
+              >
+                Cases
+              </Link>
             </li>
             <li>
-              <Link href="/#team">Team</Link>
+              <Link
+                href="/#team"
+                className="text-gray-400 transition-colors duration-300 hover:text-neon-purple-bright"
+              >
+                Team
+              </Link>
             </li>
             <li>
-              <Link href="/contact/">Contact</Link>
+              <Link
+                href="/contact/"
+                aria-label="Go to contact page"
+                className="text-neon-purple-bright transition-colors duration-300"
+              >
+                Contact
+              </Link>
             </li>
           </NavbarTwoColumns>
         </Section>
-      </Background>
-      <Background color="bg-gray-100 dark:bg-gray-600" withGlow>
-        <Section yPadding="py-16">
+      </header>
+
+      {/* Main content */}
+      <Background withGrid withGlow>
+        <Section yPadding="pt-36 pb-24">
           <div className="mx-auto max-w-xl">
-            <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+            <h1 className="mb-4 text-4xl font-bold tracking-tightest text-white">
               Get in Touch
             </h1>
-            <p className="mb-8 text-lg text-gray-600 dark:text-gray-100">
+            <p className="mb-8 text-lg text-gray-400">
               Have a project in mind? Fill out the form below and we&apos;ll get
               back to you as soon as possible.
             </p>
 
             {status === 'success' ? (
-              <div className="rounded-lg bg-green-50 p-8 text-center dark:bg-green-900/20">
-                <h2 className="mb-2 text-2xl font-bold text-green-800 dark:text-green-300">
+              <div className="glass-card rounded-xl p-8 text-center">
+                <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full border border-neon-purple/30 bg-neon-purple/10">
+                  <svg
+                    className="size-7 text-neon-purple-bright"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <h2 className="mb-2 text-2xl font-bold text-white">
                   Thank you!
                 </h2>
-                <p className="mb-6 text-green-700 dark:text-green-400">
+                <p className="mb-6 text-gray-400">
                   Your message has been sent. We&apos;ll be in touch soon.
                 </p>
                 <Link
                   href="/"
-                  className="inline-block rounded-md bg-primary-500 px-6 py-2 font-semibold text-white hover:bg-primary-600"
+                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-neon-purple to-neon-blue px-6 py-2.5 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
                 >
                   Back to Homepage
                 </Link>
@@ -116,39 +158,39 @@ const Contact = () => {
                 <div>
                   <label
                     htmlFor="name"
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="mb-2 block font-mono text-sm font-medium text-gray-400"
                   >
-                    Name <span className="text-red-500">*</span>
+                    Name <span className="text-neon-purple">*</span>
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     required
-                    className="w-full rounded-md border border-gray-300 bg-white p-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-100"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="mb-2 block font-mono text-sm font-medium text-gray-400"
                   >
-                    Email <span className="text-red-500">*</span>
+                    Email <span className="text-neon-purple">*</span>
                   </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     required
-                    className="w-full rounded-md border border-gray-300 bg-white p-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-100"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="company"
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="mb-2 block font-mono text-sm font-medium text-gray-400"
                   >
                     Company
                   </label>
@@ -156,28 +198,28 @@ const Contact = () => {
                     type="text"
                     id="company"
                     name="company"
-                    className="w-full rounded-md border border-gray-300 bg-white p-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-100"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="message"
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="mb-2 block font-mono text-sm font-medium text-gray-400"
                   >
-                    Message <span className="text-red-500">*</span>
+                    Message <span className="text-neon-purple">*</span>
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     required
                     rows={5}
-                    className="w-full rounded-md border border-gray-300 bg-white p-3 text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-100"
+                    className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
                   />
                 </div>
 
                 {status === 'error' && (
-                  <div className="rounded-md bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-400">
+                  <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 font-mono text-sm text-red-400">
                     {errorMessage}
                   </div>
                 )}
@@ -185,7 +227,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="inline-block rounded-md bg-primary-500 px-6 py-3 text-lg font-semibold text-white hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-neon-purple to-neon-blue px-8 py-3.5 text-base font-semibold text-white shadow-neon-purple transition-all duration-300 hover:-translate-y-0.5 hover:shadow-neon-purple-lg disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {status === 'submitting' ? 'Sending...' : 'Send Message'}
                 </button>
@@ -195,15 +237,17 @@ const Contact = () => {
         </Section>
       </Background>
 
-      <Background color="bg-white dark:bg-gray-700">
-        <Section>
+      {/* Footer */}
+      <div className="border-white/8 border-t bg-kosmos-950">
+        <Section yPadding="py-12">
           <CenteredFooter
             logo={<Logo />}
             iconList={
               <>
                 <Link
                   href="/contact/"
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  className="text-gray-600 transition-colors hover:text-neon-purple-bright"
+                  aria-label="Email us"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -211,27 +255,43 @@ const Contact = () => {
                     stroke="currentColor"
                     strokeWidth="1.5"
                     xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
                   >
                     <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </Link>
-
                 <Link
                   href="https://www.linkedin.com/company/thesis-i"
                   target="_blank"
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 transition-colors hover:text-neon-purple-bright"
+                  aria-label="LinkedIn"
                 >
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                  >
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                   </svg>
                 </Link>
-
                 <Link
                   href="https://t.me/vu_boru"
                   target="_blank"
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 transition-colors hover:text-neon-purple-bright"
+                  aria-label="Telegram"
                 >
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                  >
                     <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
                   </svg>
                 </Link>
@@ -252,7 +312,7 @@ const Contact = () => {
             </li>
           </CenteredFooter>
         </Section>
-      </Background>
+      </div>
     </div>
   );
 };

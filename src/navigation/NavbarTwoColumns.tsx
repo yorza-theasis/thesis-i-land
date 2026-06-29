@@ -14,24 +14,12 @@ const NavbarTwoColumns = (props: INavbarProps) => (
     </div>
 
     <nav>
-      <ul className="navbar flex items-center text-xl font-medium text-gray-800 dark:text-gray-200">
+      <ul className="navbar flex items-center gap-6 text-sm font-medium">
         {props.children}
       </ul>
     </nav>
 
     {props.themeToggle}
-
-    <style jsx>
-      {`
-        .navbar :global(li:not(:first-child)) {
-          @apply mt-0;
-        }
-
-        .navbar :global(li:not(:last-child)) {
-          @apply mr-5;
-        }
-      `}
-    </style>
   </div>
 );
 

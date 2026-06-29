@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 type IBackgroundProps = {
   children: ReactNode;
-  color: string;
+  color?: string;
   withGrid?: boolean;
   withGlow?: boolean;
 };
@@ -13,31 +13,30 @@ const Background = ({
   withGrid = false,
   withGlow = false,
 }: IBackgroundProps) => (
-  <div className={`relative w-full overflow-hidden ${color}`}>
-    {/* Ефект сітки */}
+  <div
+    className={`relative w-full overflow-hidden bg-kosmos-950 ${color ?? ''}`}
+  >
+    {/* Subtle grid pattern */}
     {withGrid && (
       <div
-        className="pointer-events-none absolute inset-0 z-0 opacity-50 dark:opacity-20"
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.04]"
         style={{
           backgroundImage:
-            'linear-gradient(to right, #8080801a 1px, transparent 1px), linear-gradient(to bottom, #8080801a 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
+            'linear-gradient(to right, rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.5) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
         }}
       />
     )}
 
-    {/* Ефект розмитих кольорових плям (Glow) - зміщені до центру */}
+    {/* Neon mesh gradient glows */}
     {withGlow && (
       <>
-        {/* Пляма зліва від центру */}
-        <div className="pointer-events-none absolute left-1/3 top-1/2 z-0 size-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/10 blur-[120px] dark:bg-primary-500/20" />
-
-        {/* Пляма справа від центру */}
-        <div className="pointer-events-none absolute right-1/4 top-1/2 z-0 size-[400px] -translate-y-1/3 translate-x-1/2 rounded-full bg-primary-700/10 blur-[100px] dark:bg-primary-600/20" />
+        <div className="pointer-events-none absolute left-[-10%] top-[-10%] z-0 size-[600px] rounded-full bg-neon-purple/10 blur-[120px]" />
+        <div className="bg-neon-blue/8 pointer-events-none absolute bottom-[-10%] right-[-5%] z-0 size-[500px] rounded-full blur-[100px]" />
       </>
     )}
 
-    {/* Основний контент */}
+    {/* Main content */}
     <div className="relative z-10">{children}</div>
   </div>
 );

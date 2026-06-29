@@ -18,7 +18,7 @@ const TechStack = dynamic(() =>
 const Banner = dynamic(() => import('./Banner').then((mod) => mod.Banner));
 
 const Base = () => (
-  <div className="text-gray-600 antialiased dark:text-gray-300">
+  <div className="bg-kosmos-950 text-gray-300 antialiased">
     <Meta title={AppConfig.title} description={AppConfig.description} />
     <Hero />
     <Sponsors />
