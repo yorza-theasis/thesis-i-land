@@ -261,26 +261,42 @@ const AnimatedSphere = () => (
       />
     ))}
 
+    <svg
+      className="pointer-events-none absolute inset-0 z-10 size-full"
+      style={{ overflow: 'visible' }}
+    >
+      <motion.path
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 3, delay: 1.2, ease: 'easeInOut' }}
+        d="M -20 80 L 60 150 L 265 265 L 260 -40 L 500 100 L 265 265 L 550 350 L 265 550 L 265 265 L 80 530 L -20 430 L 60 150 M -20 80 L 260 -40 M 500 100 L 550 350 M -20 430 L 80 530"
+        fill="none"
+        stroke="rgba(176,38,255,0.35)"
+        strokeWidth="1.5"
+        strokeDasharray="4 6"
+      />
+    </svg>
+
+    <FloatLabel
+      text="Python / FastAPI"
+      style={{ left: -40, top: 60 }}
+      delay={0.8}
+    />
     <FloatLabel
       text="Kotlin / KMP"
-      style={{ left: '-14%', top: '12%' }}
+      style={{ left: 60, top: 150 }}
       delay={0.9}
     />
+    <FloatLabel text="AI Agents" style={{ left: 220, top: -60 }} delay={1.0} />
+    <FloatLabel text="Spring Boot" style={{ left: 470, top: 80 }} delay={1.1} />
+    <FloatLabel text="LLMs & RAG" style={{ left: 520, top: 330 }} delay={1.2} />
     <FloatLabel
-      text="Spring Boot"
-      style={{ right: '-10%', top: '22%' }}
-      delay={1.1}
-    />
-    <FloatLabel
-      text="Kubernetes"
-      style={{ right: '-8%', bottom: '26%' }}
+      text="React Native"
+      style={{ left: 225, top: 540 }}
       delay={1.3}
     />
-    <FloatLabel
-      text="Next.js"
-      style={{ left: '-8%', bottom: '18%' }}
-      delay={1.5}
-    />
+    <FloatLabel text="Kubernetes" style={{ left: 50, top: 520 }} delay={1.4} />
+    <FloatLabel text="Next.js" style={{ left: -40, top: 410 }} delay={1.5} />
   </div>
 );
 
@@ -306,8 +322,8 @@ const Hero = () => {
     ],
   };
 
-  const headline1 = ['Building', 'Scalable'];
-  const headline2 = ['Digital', 'Products.'];
+  const headline1 = ['Scaling', 'Businesses'];
+  const headline2 = ['with AI &', 'Software.'];
 
   return (
     <>
@@ -336,52 +352,112 @@ const Hero = () => {
       />
 
       {/* Navbar */}
-      <header
-        role="banner"
-        className="glass-panel border-white/6 fixed inset-x-0 top-0 z-[100] w-full border-b"
-      >
-        <Section yPadding="py-4">
-          <NavbarTwoColumns logo={<Logo xl />} themeToggle={<ThemeToggle />}>
-            <li>
-              <Link
-                href="#services"
-                className="text-sm text-gray-500 transition-colors duration-200 hover:text-white"
+      <NavbarTwoColumns
+        logo={<Logo xl />}
+        themeToggle={<ThemeToggle />}
+        navItems={[
+          {
+            label: 'Services',
+            href: '#services',
+            icon: (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#cases"
-                className="text-sm text-gray-500 transition-colors duration-200 hover:text-white"
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            ),
+          },
+          {
+            label: 'Portfolio',
+            href: '#cases',
+            icon: (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                Portfolio
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#techstack"
-                className="text-sm text-gray-500 transition-colors duration-200 hover:text-white"
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            ),
+          },
+          {
+            label: 'Tech Stack',
+            href: '#techstack',
+            icon: (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                Tech Stack
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="#team"
-                className="text-sm text-gray-500 transition-colors duration-200 hover:text-white"
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            ),
+          },
+          {
+            label: 'Team',
+            href: '#team',
+            icon: (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                Team
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact/" aria-label="Start your project">
-                <Button>Start Project</Button>
-              </Link>
-            </li>
-          </NavbarTwoColumns>
-        </Section>
-      </header>
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            ),
+          },
+          {
+            label: 'Start Project',
+            href: '/contact/',
+            isButton: true,
+            icon: (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            ),
+          },
+        ]}
+      />
 
       {/* Hero */}
       <main className="relative overflow-hidden bg-kosmos-950">
@@ -491,9 +567,9 @@ const Hero = () => {
                 }}
                 className="mb-10 max-w-[480px] text-base leading-relaxed text-gray-500 sm:text-lg"
               >
-                A software engineering studio combining strong technical
-                execution with architecture-driven thinking. We deliver
-                reliable, production-ready solutions.
+                We build premium AI-powered software and autonomous agents
+                designed to automate workflows, scale operations, and directly
+                multiply your business revenue.
               </motion.p>
 
               {/* CTAs */}

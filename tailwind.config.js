@@ -26,24 +26,24 @@ module.exports = {
         ring: 'var(--ring)',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        /* ── Neon accent palette ── */
+        /* ── Professional Neon accent palette ── */
         neon: {
-          purple: '#b026ff',
-          'purple-bright': '#e5b5ff',
-          'purple-dim': 'rgba(176, 38, 255, 0.15)',
-          blue: '#0047ff',
-          'blue-bright': '#b9c3ff',
-          'blue-dim': 'rgba(0, 71, 255, 0.15)',
+          purple: '#9d34ff',
+          'purple-bright': '#d49bff',
+          'purple-dim': 'rgba(157, 52, 255, 0.12)',
+          blue: '#1155ff',
+          'blue-bright': '#99b8ff',
+          'blue-dim': 'rgba(17, 85, 255, 0.12)',
         },
         /* ── Dark surface scale ── */
         kosmos: {
-          950: '#0a0a0a',
-          900: '#131313',
-          800: '#1c1b1b',
-          700: '#201f1f',
-          600: '#2a2a2a',
-          500: '#353534',
-          400: '#4a4949',
+          950: '#060608',
+          900: '#0a0a0c',
+          800: '#121215',
+          700: '#18181c',
+          600: '#222226',
+          500: '#2c2c31',
+          400: '#3e3e44',
         },
         primary: {
           100: '#E6F6FE',
@@ -113,16 +113,16 @@ module.exports = {
       },
       boxShadow: {
         'neon-purple':
-          '0 0 20px rgba(176, 38, 255, 0.35), 0 0 60px rgba(176, 38, 255, 0.1)',
+          '0 0 15px rgba(157, 52, 255, 0.25), 0 0 50px rgba(157, 52, 255, 0.08)',
         'neon-blue':
-          '0 0 20px rgba(0, 71, 255, 0.35), 0 0 60px rgba(0, 71, 255, 0.1)',
+          '0 0 15px rgba(17, 85, 255, 0.25), 0 0 50px rgba(17, 85, 255, 0.08)',
         'neon-purple-lg':
-          '0 0 40px rgba(176, 38, 255, 0.5), 0 0 100px rgba(176, 38, 255, 0.2)',
+          '0 0 30px rgba(157, 52, 255, 0.35), 0 0 80px rgba(157, 52, 255, 0.15)',
         glass:
-          'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 4px 24px rgba(0, 0, 0, 0.4)',
+          'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.5)',
       },
       backgroundImage: {
-        'gradient-neon': 'linear-gradient(135deg, #b026ff 0%, #0047ff 100%)',
+        'gradient-neon': 'linear-gradient(135deg, #9d34ff 0%, #1155ff 100%)',
         'gradient-neon-soft':
           'linear-gradient(135deg, rgba(176,38,255,0.8) 0%, rgba(0,71,255,0.8) 100%)',
         'gradient-text':

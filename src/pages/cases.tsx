@@ -39,7 +39,8 @@ const CASES: CaseItem[] = [
     imageAlt: 'AI Dept Platform Dashboard',
     stack: ['Next.js', 'Spring Boot', 'MongoDB', 'Ollama', 'Kubernetes'],
     highlights: ['Custom RAG', 'K8s Cluster', 'Full Stack'],
-    status: 'in_progress',
+    status: 'completed',
+    href: 'https://aidept.com.ua/en',
   },
   {
     num: '02',
@@ -53,7 +54,21 @@ const CASES: CaseItem[] = [
     stack: ['React Native', 'Expo', 'Supabase', 'Next.js'],
     highlights: ['iOS & Android', 'Real-time', 'Secure Payments'],
     status: 'completed',
-    href: 'https://niania24.pl',
+    href: 'https://www.niania24.com/ua',
+  },
+  {
+    num: '03',
+    title: 'Extensa AI',
+    subtitle: 'Agentic B2B Outreach Platform',
+    category: ['AI Agents', 'SaaS', 'FastAPI'],
+    description:
+      'A FastAPI-based B2B outreach platform powered by Claude. Extensa automatically creates and manages Ideal Customer Profiles (ICPs) using an autonomous GoalAgent that reasons about target segments, gathers clarifying information, and learns from user feedback.',
+    image: '/assets/images/extensa.jpg',
+    imageAlt: 'Extensa AI Dashboard',
+    stack: ['Python', 'FastAPI', 'Claude AI', 'Celery', 'PostgreSQL'],
+    highlights: ['Autonomous AI Agent', 'Dynamic ICPs', 'Background Tasks'],
+    status: 'completed',
+    href: '#',
   },
 ];
 
@@ -74,44 +89,93 @@ const CasesPage = () => (
     />
 
     {/* Navbar */}
-    <header
-      role="banner"
-      className="border-white/8 glass-panel fixed inset-x-0 top-0 z-[100] w-full border-b"
-    >
-      <Section yPadding="py-4">
-        <NavbarTwoColumns logo={<Logo xl />} themeToggle={<ThemeToggle />}>
-          <li>
-            <Link
-              href="/#services"
-              className="text-gray-400 transition-colors duration-300 hover:text-neon-purple-bright"
+    <NavbarTwoColumns
+      logo={<Logo xl />}
+      themeToggle={<ThemeToggle />}
+      navItems={[
+        {
+          label: 'Services',
+          href: '/#services',
+          icon: (
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              Services
-            </Link>
-          </li>
-          <li>
-            <Link href="/cases" className="text-neon-purple-bright">
-              Cases
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/#team"
-              className="text-gray-400 transition-colors duration-300 hover:text-neon-purple-bright"
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          ),
+        },
+        {
+          label: 'Cases',
+          href: '/cases',
+          icon: (
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              Team
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/contact/"
-              className="text-gray-400 transition-colors duration-300 hover:text-neon-purple-bright"
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          ),
+        },
+        {
+          label: 'Team',
+          href: '/#team',
+          icon: (
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              Contact
-            </Link>
-          </li>
-        </NavbarTwoColumns>
-      </Section>
-    </header>
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          ),
+        },
+        {
+          label: 'Contact',
+          href: '/contact/',
+          isButton: true,
+          icon: (
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          ),
+        },
+      ]}
+    />
 
     <main>
       {/* Page intro */}

@@ -94,6 +94,29 @@ const services = [
       </svg>
     ),
   },
+  {
+    num: '05',
+    title: 'Reducing AI-Slop',
+    description:
+      'We architect purposeful machine learning systems that directly drive ROI. We replace generic, bloated AI integrations with fine-tuned, scalable models designed for precision and operational efficiency.',
+    tags: ['AI Strategy', 'Custom Models', 'Clean Architecture'],
+    stat: 'High ROI',
+    icon: (
+      <svg
+        className="size-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 4h16v16H4z" />
+        <path d="M8 8l8 8" />
+        <path d="M16 8l-8 8" />
+      </svg>
+    ),
+  },
 ];
 
 const containerVariants: Variants = {

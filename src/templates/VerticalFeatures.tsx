@@ -21,46 +21,6 @@ const casesData: {
   isRealPhoto?: boolean;
 }[] = [
   {
-    title: 'Sports Streaming Platform',
-    category: 'Mobile Development',
-    description:
-      "Key mobile features for one of the world's largest sports streaming services — 50M+ users. Optimized app loading by 30%, improved internationalization by 60%.",
-    image: '/assets/images/feature.svg',
-    imageAlt: 'Sports streaming platform',
-    status: 'completed',
-    tags: ['Kotlin', 'Jetpack Compose', 'KMP'],
-  },
-  {
-    title: 'Semiconductor Management Platform',
-    category: 'Backend & IoT',
-    description:
-      'IoT platform for semiconductor etching operations. Digital Twin for real-time simulation and anomaly detection with ETL pipelines and live sensor analytics.',
-    image: '/assets/images/feature2.svg',
-    imageAlt: 'IoT platform',
-    status: 'completed',
-    tags: ['Java', 'Spring Boot', 'Kafka'],
-  },
-  {
-    title: 'Energy Sector Automation',
-    category: 'Cloud & Backend',
-    description:
-      'Enterprise platform centralizing energy distribution, resource planning, and real-time monitoring with advanced analytics across distributed networks.',
-    image: '/assets/images/feature3.svg',
-    imageAlt: 'Energy automation',
-    status: 'completed',
-    tags: ['Spring Cloud', 'Kubernetes', 'AWS'],
-  },
-  {
-    title: 'Navigation & Route Optimization',
-    category: 'Mobile Development',
-    description:
-      'Mobile navigation integrating real-time air quality monitoring with route optimization. Google Maps + HERE SDK, custom tiles for professional drivers.',
-    image: '/assets/images/feature.svg',
-    imageAlt: 'Navigation platform',
-    status: 'completed',
-    tags: ['Android SDK', 'Google Maps', 'KMP'],
-  },
-  {
     title: 'Niania24',
     category: 'Web & Mobile',
     description:
@@ -73,25 +33,28 @@ const casesData: {
     isRealPhoto: true,
   },
   {
-    title: 'Fintech Cashback Platform',
-    category: 'Backend & Fintech',
-    description:
-      'Fintech platform for cashback calculation and distribution. Transaction processing, rule validation, payment integrations — idempotent, auditable, event-driven.',
-    image: '/assets/images/feature2.svg',
-    imageAlt: 'Fintech platform',
-    status: 'in_progress',
-    tags: ['Spring Boot', 'PostgreSQL', 'Kafka'],
-  },
-  {
     title: 'AI Department',
     category: 'AI & Automation',
     description:
       'Internal AI-powered platform for automating department workflows, documentation, and reporting — built to reduce ops overhead and surface actionable insights.',
     image: '/assets/images/684_1x_shots_so.jpeg',
     imageAlt: 'AI Department tool screenshot',
-    status: 'in_progress',
+    status: 'completed',
     tags: ['Next.js', 'Python', 'OpenAI'],
     isRealPhoto: true,
+    href: '/cases',
+  },
+  {
+    title: 'Extensa AI',
+    category: 'Agentic Outreach',
+    description:
+      'A FastAPI-based B2B platform using an autonomous Claude GoalAgent to continuously build, refine, and test Ideal Customer Profiles (ICPs) based on direct feedback and onboarding goals.',
+    image: '/assets/images/extensa.jpg',
+    imageAlt: 'Extensa AI Dashboard',
+    status: 'completed',
+    tags: ['Python', 'FastAPI', 'Claude AI', 'Celery'],
+    isRealPhoto: true,
+    href: '/cases',
   },
 ];
 
