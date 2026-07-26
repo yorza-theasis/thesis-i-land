@@ -7,6 +7,7 @@ import { CenteredFooter } from '../footer/CenteredFooter';
 import { Meta } from '../layout/Meta';
 import { Section } from '../layout/Section';
 import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
+import { subPageNavItems } from '../navigation/navItems';
 import { ThemeToggle } from '../navigation/ThemeToggle';
 import { Logo } from '../templates/Logo';
 import { AppConfig } from '../utils/AppConfig';
@@ -35,7 +36,7 @@ const CASES: CaseItem[] = [
     category: ['Web Development', 'AI Integration'],
     description:
       'Complete design overhaul, backend logic, and admin panel development. Implemented engaging animations, custom UI elements, database architecture, and a custom RAG system. Fully deployed on a production Kubernetes cluster.',
-    image: '/assets/images/684_1x_shots_so.jpeg',
+    image: '/assets/images/684_1x_shots_so.png',
     imageAlt: 'AI Dept Platform Dashboard',
     stack: ['Next.js', 'Spring Boot', 'MongoDB', 'Ollama', 'Kubernetes'],
     highlights: ['Custom RAG', 'K8s Cluster', 'Full Stack'],
@@ -49,7 +50,7 @@ const CASES: CaseItem[] = [
     category: ['Mobile App', 'Cross-platform'],
     description:
       'Full feature parity with the web platform plus unique mobile-first capabilities. Built in strict alignment with the web identity and secured with a robust personal data protection layer. Real-time booking, reviews, and secure payments.',
-    image: '/assets/images/21_1x_shots_so.jpeg',
+    image: '/assets/images/21_1x_shots_so.png',
     imageAlt: 'Niania24 Mobile App',
     stack: ['React Native', 'Expo', 'Supabase', 'Next.js'],
     highlights: ['iOS & Android', 'Real-time', 'Secure Payments'],
@@ -92,89 +93,7 @@ const CasesPage = () => (
     <NavbarTwoColumns
       logo={<Logo xl />}
       themeToggle={<ThemeToggle />}
-      navItems={[
-        {
-          label: 'Services',
-          href: '/#services',
-          icon: (
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-          ),
-        },
-        {
-          label: 'Cases',
-          href: '/cases',
-          icon: (
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
-          ),
-        },
-        {
-          label: 'Team',
-          href: '/#team',
-          icon: (
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-          ),
-        },
-        {
-          label: 'Contact',
-          href: '/contact/',
-          isButton: true,
-          icon: (
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-          ),
-        },
-      ]}
+      navItems={subPageNavItems}
     />
 
     <main>

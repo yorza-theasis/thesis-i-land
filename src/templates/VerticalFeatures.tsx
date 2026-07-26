@@ -25,7 +25,7 @@ const casesData: {
     category: 'Web & Mobile',
     description:
       'Childcare service platform connecting families with trusted babysitters. Full-stack web and mobile solution with real-time booking, reviews, and secure payments.',
-    image: '/assets/images/21_1x_shots_so.jpeg',
+    image: '/assets/images/21_1x_shots_so.png',
     imageAlt: 'Niania24 platform screenshot',
     status: 'completed',
     tags: ['Next.js', 'React Native', 'Spring Boot'],
@@ -37,7 +37,7 @@ const casesData: {
     category: 'AI & Automation',
     description:
       'Internal AI-powered platform for automating department workflows, documentation, and reporting — built to reduce ops overhead and surface actionable insights.',
-    image: '/assets/images/684_1x_shots_so.jpeg',
+    image: '/assets/images/684_1x_shots_so.png',
     imageAlt: 'AI Department tool screenshot',
     status: 'completed',
     tags: ['Next.js', 'Python', 'OpenAI'],
