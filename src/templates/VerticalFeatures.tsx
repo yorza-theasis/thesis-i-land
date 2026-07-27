@@ -4,64 +4,46 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { Background } from '../background/Background';
+import { useT } from '../i18n/LocaleContext';
 import { Section } from '../layout/Section';
 
 type CaseStatus = 'completed' | 'in_progress';
 type TabFilter = 'all' | CaseStatus;
 
-const casesData: {
-  title: string;
-  category: string;
-  description: string;
+const casesMeta: {
   image: string;
-  imageAlt: string;
   status: CaseStatus;
   tags: string[];
   href?: string;
   isRealPhoto?: boolean;
 }[] = [
   {
-    title: 'Niania24',
-    category: 'Web & Mobile',
-    description:
-      'Childcare service platform connecting families with trusted babysitters. Full-stack web and mobile solution with real-time booking, reviews, and secure payments.',
+    image: '/assets/images/extensa.jpg',
+    status: 'completed',
+    tags: ['Python', 'FastAPI', 'Claude AI', 'Celery'],
+    isRealPhoto: true,
+    href: '/cases',
+  },
+  {
+    image: '/assets/images/gmi.svg',
+    status: 'in_progress',
+    tags: ['Python', 'FastAPI', 'Claude AI', 'RAG', 'PostgreSQL'],
+    isRealPhoto: true,
+  },
+  {
     image: '/assets/images/21_1x_shots_so.png',
-    imageAlt: 'Niania24 platform screenshot',
     status: 'completed',
     tags: ['Next.js', 'React Native', 'Spring Boot'],
     href: '/cases',
     isRealPhoto: true,
   },
   {
-    title: 'AI Department',
-    category: 'AI & Automation',
-    description:
-      'Internal AI-powered platform for automating department workflows, documentation, and reporting — built to reduce ops overhead and surface actionable insights.',
     image: '/assets/images/684_1x_shots_so.png',
-    imageAlt: 'AI Department tool screenshot',
     status: 'completed',
     tags: ['Next.js', 'Python', 'OpenAI'],
     isRealPhoto: true,
     href: '/cases',
   },
-  {
-    title: 'Extensa AI',
-    category: 'Agentic Outreach',
-    description:
-      'A FastAPI-based B2B platform using an autonomous Claude GoalAgent to continuously build, refine, and test Ideal Customer Profiles (ICPs) based on direct feedback and onboarding goals.',
-    image: '/assets/images/extensa.jpg',
-    imageAlt: 'Extensa AI Dashboard',
-    status: 'completed',
-    tags: ['Python', 'FastAPI', 'Claude AI', 'Celery'],
-    isRealPhoto: true,
-    href: '/cases',
-  },
-];
-
-const tabs: { id: TabFilter; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'completed', label: 'Live' },
-  { id: 'in_progress', label: 'In Development' },
 ];
 
 const cardVariants: Variants = {
@@ -79,7 +61,18 @@ const containerVariants: Variants = {
 };
 
 const VerticalFeatures = () => {
+  const { portfolio } = useT();
   const [activeTab, setActiveTab] = useState<TabFilter>('all');
+
+  const casesData = portfolio.cases
+    .slice(0, casesMeta.length)
+    .map((c, i) => ({ ...c, ...casesMeta[i]! }));
+
+  const tabs: { id: TabFilter; label: string }[] = [
+    { id: 'all', label: portfolio.tabs.all },
+    { id: 'completed', label: portfolio.tabs.completed },
+    { id: 'in_progress', label: portfolio.tabs.in_progress },
+  ];
 
   const filtered =
     activeTab === 'all'
@@ -96,9 +89,9 @@ const VerticalFeatures = () => {
     <Background withGrid withGlow>
       <Section
         id="cases"
-        eyebrow="Portfolio"
-        title="Selected Work"
-        description="A glimpse into the projects we have delivered across industries. Details shared within NDA boundaries."
+        eyebrow={portfolio.eyebrow}
+        title={portfolio.title}
+        description={portfolio.description}
       >
         {/* Tab filter */}
         <div className="mb-12 flex justify-center">
@@ -174,12 +167,12 @@ const VerticalFeatures = () => {
                     {isInProgress ? (
                       <div className="border-neon-purple/28 flex items-center gap-1.5 rounded-full border bg-kosmos-900/85 px-2.5 py-1 font-mono text-xs font-medium text-neon-purple-bright/80 backdrop-blur-sm">
                         <span className="animate-pulse-dot size-1.5 rounded-full bg-neon-purple" />
-                        In Dev
+                        {portfolio.status.inDev}
                       </div>
                     ) : (
                       <div className="flex items-center gap-1.5 rounded-full border border-neon-blue/25 bg-kosmos-900/85 px-2.5 py-1 font-mono text-xs font-medium text-neon-blue-bright/80 backdrop-blur-sm">
                         <span className="size-1.5 rounded-full bg-neon-blue" />
-                        Live
+                        {portfolio.status.live}
                       </div>
                     )}
                   </div>
@@ -217,14 +210,14 @@ const VerticalFeatures = () => {
                       disabled
                       className="border-white/8 mt-auto inline-flex cursor-not-allowed items-center justify-center rounded-full border bg-white/[0.03] px-5 py-2 text-sm font-medium text-gray-700"
                     >
-                      Coming Soon
+                      {portfolio.comingSoon}
                     </button>
                   ) : (
                     <Link
                       href={c.href ?? '/cases'}
                       className="group/link mt-auto inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors duration-200 hover:text-neon-purple-bright"
                     >
-                      View Case
+                      {portfolio.viewCase}
                       <svg
                         className="size-3.5 transition-transform duration-200 group-hover/link:translate-x-1"
                         fill="none"
@@ -258,7 +251,7 @@ const VerticalFeatures = () => {
             href="/cases"
             className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-8 py-3.5 text-sm font-semibold text-gray-400 backdrop-blur-sm transition-all duration-300 hover:border-neon-purple/35 hover:text-white hover:shadow-neon-purple"
           >
-            View all cases
+            {portfolio.viewAll}
             <svg
               className="size-4"
               fill="none"

@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d0b1a"/>
+      <stop offset="100%" style="stop-color:#080614"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1530;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#120f25;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="accentLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#b026ff"/>
+      <stop offset="100%" style="stop-color:#0047ff"/>
+    </linearGradient>
+    <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#b026ff"/>
+      <stop offset="100%" style="stop-color:#5512cc"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="18" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- dot grid pattern -->
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.8" fill="rgba(176,38,255,0.18)"/>
+    </pattern>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <!-- Dot grid -->
+  <rect width="800" height="420" fill="url(#dots)" opacity="0.5"/>
+
+  <!-- Ambient glow blobs -->
+  <ellipse cx="160" cy="120" rx="200" ry="160" fill="rgba(176,38,255,0.07)" filter="url(#softGlow)"/>
+  <ellipse cx="680" cy="300" rx="180" ry="140" fill="rgba(0,71,255,0.06)" filter="url(#softGlow)"/>
+
+  <!-- ── TOP BAR ── -->
+  <rect x="0" y="0" width="800" height="52" fill="rgba(255,255,255,0.025)" rx="0"/>
+  <rect x="0" y="51" width="800" height="1" fill="rgba(255,255,255,0.06)"/>
+  <!-- Logo / title -->
+  <circle cx="30" cy="26" r="8" fill="none" stroke="url(#accentLine)" stroke-width="1.5"/>
+  <text x="46" y="31" font-family="monospace" font-size="12" fill="rgba(255,255,255,0.85)" font-weight="600" letter-spacing="0.5">GMI Doc Verifier</text>
+  <!-- Top bar status -->
+  <circle cx="710" cy="26" r="4" fill="#22c55e" opacity="0.9" filter="url(#glow)"/>
+  <text x="720" y="31" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.4)" letter-spacing="1">НІЧНИЙ ЦИКЛ · 03:14</text>
+
+  <!-- ── LEFT PANEL: stats ── -->
+  <!-- Card 1 -->
+  <rect x="22" y="70" width="148" height="72" rx="10" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="22" y="70" width="148" height="2" rx="1" fill="url(#accentLine)" opacity="0.7"/>
+  <text x="38" y="95" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)" letter-spacing="1.5">ЕПІЗОДІВ</text>
+  <text x="38" y="120" font-family="monospace" font-size="26" font-weight="700" fill="white">47</text>
+  <text x="86" y="120" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.3)"> / ніч</text>
+
+  <!-- Card 2 -->
+  <rect x="22" y="152" width="148" height="72" rx="10" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="38" y="177" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)" letter-spacing="1.5">ДОКУМЕНТІВ</text>
+  <text x="38" y="202" font-family="monospace" font-size="26" font-weight="700" fill="white">37</text>
+  <text x="86" y="202" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.3)"> шаблонів</text>
+
+  <!-- Card 3 -->
+  <rect x="22" y="234" width="148" height="72" rx="10" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="38" y="259" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)" letter-spacing="1.5">ЗНАЙДЕНО</text>
+  <text x="38" y="284" font-family="monospace" font-size="26" font-weight="700" fill="#f97316">12</text>
+  <text x="80" y="284" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.3)"> проблем</text>
+
+  <!-- Card 4 -->
+  <rect x="22" y="316" width="148" height="72" rx="10" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="38" y="341" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)" letter-spacing="1.5">КРИТИЧНИХ</text>
+  <text x="38" y="366" font-family="monospace" font-size="26" font-weight="700" fill="#ef4444">3</text>
+  <text x="60" y="366" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.3)"> потребують уваги</text>
+
+  <!-- ── MAIN PANEL: document list ── -->
+  <rect x="186" y="70" width="380" height="318" rx="12" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="186" y="70" width="380" height="2" rx="1" fill="url(#accentLine)"/>
+
+  <!-- Panel header -->
+  <text x="204" y="94" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.5)" letter-spacing="2">ПЕРЕВІРКА ДОКУМЕНТІВ · ЕПІЗОД #1847</text>
+
+  <!-- Column headers -->
+  <rect x="186" y="102" width="380" height="1" fill="rgba(255,255,255,0.05)"/>
+  <text x="204" y="118" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.25)" letter-spacing="1">ДОКУМЕНТ</text>
+  <text x="454" y="118" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.25)" letter-spacing="1">РІВЕНЬ</text>
+  <text x="524" y="118" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.25)" letter-spacing="1">СТАТУС</text>
+  <rect x="186" y="124" width="380" height="1" fill="rgba(255,255,255,0.05)"/>
+
+  <!-- Row 1 — OK -->
+  <rect x="200" y="132" width="6" height="22" rx="3" fill="#22c55e" opacity="0.8"/>
+  <text x="216" y="148" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Картка стаціонарного хворого</text>
+  <text x="454" y="148" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)">HIGH</text>
+  <rect x="524" y="134" width="36" height="16" rx="8" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+  <text x="534" y="146" font-family="monospace" font-size="8" fill="#22c55e">OK</text>
+  <rect x="186" y="157" width="380" height="1" fill="rgba(255,255,255,0.04)"/>
+
+  <!-- Row 2 — WARNING -->
+  <rect x="200" y="164" width="6" height="22" rx="3" fill="#f97316" opacity="0.9"/>
+  <text x="216" y="180" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Щоденник лікаря (день 3)</text>
+  <text x="454" y="180" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)">HIGH</text>
+  <rect x="518" y="166" width="48" height="16" rx="8" fill="rgba(249,115,22,0.15)" stroke="rgba(249,115,22,0.3)" stroke-width="1"/>
+  <text x="524" y="178" font-family="monospace" font-size="8" fill="#f97316">WARN</text>
+  <rect x="186" y="189" width="380" height="1" fill="rgba(255,255,255,0.04)"/>
+
+  <!-- Row 3 — ERROR -->
+  <rect x="200" y="196" width="6" height="22" rx="3" fill="#ef4444" opacity="0.9"/>
+  <text x="216" y="212" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Шкала NIHSS при виписці</text>
+  <text x="454" y="212" font-family="monospace" font-size="9" fill="#ef4444">CRIT</text>
+  <rect x="516" y="198" width="50" height="16" rx="8" fill="rgba(239,68,68,0.15)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+  <text x="521" y="210" font-family="monospace" font-size="8" fill="#ef4444">MISSING</text>
+  <rect x="186" y="221" width="380" height="1" fill="rgba(255,255,255,0.04)"/>
+
+  <!-- Row 4 — OK -->
+  <rect x="200" y="228" width="6" height="22" rx="3" fill="#22c55e" opacity="0.8"/>
+  <text x="216" y="244" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Консультація невролога</text>
+  <text x="454" y="244" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)">MED</text>
+  <rect x="524" y="230" width="36" height="16" rx="8" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+  <text x="534" y="242" font-family="monospace" font-size="8" fill="#22c55e">OK</text>
+  <rect x="186" y="253" width="380" height="1" fill="rgba(255,255,255,0.04)"/>
+
+  <!-- Row 5 — WARNING -->
+  <rect x="200" y="260" width="6" height="22" rx="3" fill="#f97316" opacity="0.9"/>
+  <text x="216" y="276" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Шкала ковтання GUSS</text>
+  <text x="454" y="276" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)">MED</text>
+  <rect x="518" y="262" width="48" height="16" rx="8" fill="rgba(249,115,22,0.15)" stroke="rgba(249,115,22,0.3)" stroke-width="1"/>
+  <text x="524" y="274" font-family="monospace" font-size="8" fill="#f97316">WARN</text>
+  <rect x="186" y="285" width="380" height="1" fill="rgba(255,255,255,0.04)"/>
+
+  <!-- Row 6 — OK -->
+  <rect x="200" y="292" width="6" height="22" rx="3" fill="#22c55e" opacity="0.8"/>
+  <text x="216" y="308" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,0.75)">Епікриз при виписці</text>
+  <text x="454" y="308" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)">HIGH</text>
+  <rect x="524" y="294" width="36" height="16" rx="8" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+  <text x="534" y="306" font-family="monospace" font-size="8" fill="#22c55e">OK</text>
+  <rect x="186" y="317" width="380" height="1" fill="rgba(255,255,255,0.04)"/>
+
+  <!-- Row 7 — faded/more -->
+  <text x="216" y="340" font-family="sans-serif" font-size="11" fill="rgba(255,255,255,0.2)">+ ще 31 документ...</text>
+
+  <!-- Progress bar bottom -->
+  <rect x="204" y="362" width="344" height="6" rx="3" fill="rgba(255,255,255,0.06)"/>
+  <rect x="204" y="362" width="268" height="6" rx="3" fill="url(#progressGrad)" opacity="0.85"/>
+  <text x="204" y="382" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.3)">78% перевірено</text>
+  <text x="488" y="382" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.3)">29 / 37</text>
+
+  <!-- ── RIGHT PANEL: RAG + recommendation ── -->
+  <rect x="582" y="70" width="196" height="148" rx="12" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="582" y="70" width="196" height="2" rx="1" fill="url(#accentLine)"/>
+  <text x="598" y="92" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)" letter-spacing="1.5">AI-РЕКОМЕНДАЦІЯ</text>
+  <!-- AI judge chip -->
+  <rect x="598" y="100" width="60" height="16" rx="8" fill="rgba(176,38,255,0.12)" stroke="rgba(176,38,255,0.3)" stroke-width="1"/>
+  <text x="607" y="112" font-family="monospace" font-size="8" fill="rgba(176,38,255,0.85)">AI-суддя</text>
+  <rect x="664" y="100" width="40" height="16" rx="8" fill="rgba(0,71,255,0.12)" stroke="rgba(0,71,255,0.3)" stroke-width="1"/>
+  <text x="671" y="112" font-family="monospace" font-size="8" fill="rgba(100,140,255,0.85)">RAG</text>
+
+  <text x="598" y="134" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.55)">Шкала NIHSS відсутня</text>
+  <text x="598" y="150" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.55)">у виписному епікризі.</text>
+  <text x="598" y="170" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">Згідно з наказом МОЗ</text>
+  <text x="598" y="185" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">#722 п. 4.3 обов'язково</text>
+  <text x="598" y="200" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,0.35)">заповнюється лікарем.</text>
+
+  <!-- Right panel 2: pipeline -->
+  <rect x="582" y="232" width="196" height="156" rx="12" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="582" y="232" width="196" height="2" rx="1" fill="url(#accentLine)"/>
+  <text x="598" y="254" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.7)" letter-spacing="1.5">PIPELINE</text>
+
+  <!-- Step 1 -->
+  <circle cx="604" cy="276" r="10" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.4)" stroke-width="1"/>
+  <text x="599" y="280" font-family="monospace" font-size="9" fill="#22c55e" font-weight="700">1</text>
+  <text x="622" y="273" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.6)">Rules Engine</text>
+  <text x="622" y="285" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.3)">48 груп правил</text>
+
+  <line x1="604" y1="292" x2="604" y2="304" stroke="rgba(176,38,255,0.3)" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <!-- Step 2 -->
+  <circle cx="604" cy="314" r="10" fill="rgba(176,38,255,0.15)" stroke="rgba(176,38,255,0.4)" stroke-width="1"/>
+  <text x="599" y="318" font-family="monospace" font-size="9" fill="rgba(176,38,255,0.9)" font-weight="700">2</text>
+  <text x="622" y="311" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.6)">AI-суддя (LLM)</text>
+  <text x="622" y="323" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.3)">аналіз змісту</text>
+
+  <line x1="604" y1="330" x2="604" y2="342" stroke="rgba(176,38,255,0.3)" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <!-- Step 3 -->
+  <circle cx="604" cy="352" r="10" fill="rgba(0,71,255,0.15)" stroke="rgba(0,71,255,0.4)" stroke-width="1"/>
+  <text x="599" y="356" font-family="monospace" font-size="9" fill="rgba(100,140,255,0.9)" font-weight="700">3</text>
+  <text x="622" y="349" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.6)">RAG · МОЗ протоколи</text>
+  <text x="622" y="361" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.3)">обґрунтована порада</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="398" width="800" height="1" fill="rgba(255,255,255,0.06)"/>
+  <text x="22" y="414" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.2)" letter-spacing="1">READ-ONLY · SYSTEM NEVER MODIFIES MEDICAL RECORDS · PILOT v1.0 · LVIV UA</text>
+  <circle cx="770" cy="409" r="4" fill="rgba(176,38,255,0.5)" filter="url(#glow)"/>
+</svg>

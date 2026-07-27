@@ -6,6 +6,8 @@ import type { CSSProperties } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '../button/Button';
+import { LanguageSwitcher } from '../i18n/LanguageSwitcher';
+import { useT } from '../i18n/LocaleContext';
 import { Section } from '../layout/Section';
 import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
 import { ThemeToggle } from '../navigation/ThemeToggle';
@@ -50,13 +52,6 @@ const Counter = ({ end, suffix, delay = 0 }: CounterProps) => {
     </span>
   );
 };
-
-const stats = [
-  { end: 50, suffix: 'M+', label: 'Users served' },
-  { end: 10, suffix: '+', label: 'Products shipped' },
-  { end: 5, suffix: '', label: 'Industries' },
-  { end: 4, suffix: 'yrs', label: 'In production' },
-];
 
 /* ─── Mobile lightweight sphere ──────────────── */
 const MobileSphere = () => (
@@ -302,6 +297,9 @@ const AnimatedSphere = () => (
 
 /* ─── Hero ────────────────────────────────────── */
 const Hero = () => {
+  const t = useT();
+  const { hero, nav } = t;
+
   const schemaData = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
@@ -321,9 +319,6 @@ const Hero = () => {
       'Next.js',
     ],
   };
-
-  const headline1 = ['Scaling', 'Businesses'];
-  const headline2 = ['with AI &', 'Software.'];
 
   return (
     <>
@@ -355,9 +350,10 @@ const Hero = () => {
       <NavbarTwoColumns
         logo={<Logo xl />}
         themeToggle={<ThemeToggle />}
+        langSwitcher={<LanguageSwitcher />}
         navItems={[
           {
-            label: 'Services',
+            label: nav.services,
             href: '#services',
             icon: (
               <svg
@@ -377,7 +373,7 @@ const Hero = () => {
             ),
           },
           {
-            label: 'Portfolio',
+            label: nav.portfolio,
             href: '#cases',
             icon: (
               <svg
@@ -397,7 +393,7 @@ const Hero = () => {
             ),
           },
           {
-            label: 'Tech Stack',
+            label: nav.techStack,
             href: '#techstack',
             icon: (
               <svg
@@ -416,7 +412,7 @@ const Hero = () => {
             ),
           },
           {
-            label: 'Team',
+            label: nav.team,
             href: '#team',
             icon: (
               <svg
@@ -437,7 +433,7 @@ const Hero = () => {
             ),
           },
           {
-            label: 'Start Project',
+            label: nav.startProject,
             href: '/contact/',
             isButton: true,
             icon: (
@@ -512,7 +508,7 @@ const Hero = () => {
                 className="border-neon-purple/22 bg-neon-purple/7 mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 font-mono text-xs font-medium tracking-wide text-neon-purple-bright/85"
               >
                 <span className="animate-pulse-dot size-1.5 rounded-full bg-neon-purple" />
-                Available for new projects
+                {hero.badge}
               </motion.div>
 
               {/* Headline */}
@@ -521,7 +517,7 @@ const Hero = () => {
                 style={{ lineHeight: '1.1' }}
               >
                 <span className="block overflow-hidden pb-[0.2em]">
-                  {headline1.map((word, i) => (
+                  {hero.headline1.map((word, i) => (
                     <motion.span
                       key={word}
                       className="mr-[0.22em] inline-block"
@@ -538,7 +534,7 @@ const Hero = () => {
                   ))}
                 </span>
                 <span className="block overflow-hidden pb-[0.2em]">
-                  {headline2.map((word, i) => (
+                  {hero.headline2.map((word, i) => (
                     <motion.span
                       key={word}
                       className="text-gradient mr-[0.22em] inline-block"
@@ -567,9 +563,7 @@ const Hero = () => {
                 }}
                 className="mb-10 max-w-[480px] text-base leading-relaxed text-gray-500 sm:text-lg"
               >
-                We build premium AI-powered software and autonomous agents
-                designed to automate workflows, scale operations, and directly
-                multiply your business revenue.
+                {hero.subtitle}
               </motion.p>
 
               {/* CTAs */}
@@ -579,12 +573,12 @@ const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.62 }}
                 className="flex flex-wrap items-center gap-4"
               >
-                <Link href="#cases" aria-label="View our portfolio">
-                  <Button xl>View Portfolio</Button>
+                <Link href="#cases" aria-label={hero.cta.primary}>
+                  <Button xl>{hero.cta.primary}</Button>
                 </Link>
-                <Link href="#services" aria-label="Our services">
+                <Link href="#services" aria-label={hero.cta.secondary}>
                   <Button xl outline>
-                    Our Services
+                    {hero.cta.secondary}
                   </Button>
                 </Link>
               </motion.div>
@@ -598,12 +592,12 @@ const Hero = () => {
               >
                 <span className="flex items-center gap-1.5">
                   <span className="size-1 animate-pulse rounded-full bg-green-500/70" />
-                  sys.online
+                  {hero.readout.online}
                 </span>
                 <span className="h-3 w-px bg-white/10" />
-                <span>response &lt; 24h</span>
+                <span>{hero.readout.response}</span>
                 <span className="h-3 w-px bg-white/10" />
-                <span>lviv, ua · remote</span>
+                <span>{hero.readout.location}</span>
               </motion.div>
             </div>
 
@@ -636,7 +630,7 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.82 }}
             className="border-white/6 mt-20 grid grid-cols-2 gap-x-6 gap-y-8 border-t pt-12 sm:grid-cols-4"
           >
-            {stats.map((stat, i) => (
+            {hero.stats.map((stat, i) => (
               <div key={stat.label} className="flex flex-col gap-1">
                 <div className="font-mono text-3xl font-bold tracking-tightest text-white md:text-4xl">
                   <Counter
@@ -661,7 +655,7 @@ const Hero = () => {
           transition={{ delay: 1.4, duration: 0.6 }}
         >
           <span className="font-mono text-[10px] uppercase tracking-widest text-gray-800">
-            scroll
+            {hero.scroll}
           </span>
           <motion.div
             animate={{ y: [0, 5, 0] }}

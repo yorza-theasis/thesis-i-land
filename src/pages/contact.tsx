@@ -4,15 +4,64 @@ import { useState } from 'react';
 
 import { Background } from '../background/Background';
 import { CenteredFooter } from '../footer/CenteredFooter';
+import { LanguageSwitcher } from '../i18n/LanguageSwitcher';
+import { LocaleProvider, useT } from '../i18n/LocaleContext';
+import type { Locale } from '../i18n/translations';
 import { Meta } from '../layout/Meta';
 import { Section } from '../layout/Section';
 import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
-import { subPageNavItems } from '../navigation/navItems';
+import { getSubPageNavItems } from '../navigation/navItems';
 import { ThemeToggle } from '../navigation/ThemeToggle';
 import { Logo } from '../templates/Logo';
 import { AppConfig } from '../utils/AppConfig';
 
-const Contact = () => {
+const socialIcons = (
+  <>
+    <Link
+      href="/contact/"
+      className="text-gray-600 transition-colors hover:text-neon-purple-bright"
+      aria-label="Email us"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        width="20"
+        height="20"
+      >
+        <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    </Link>
+    <Link
+      href="https://www.linkedin.com/company/thesis-i"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-gray-600 transition-colors hover:text-neon-purple-bright"
+      aria-label="LinkedIn"
+    >
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    </Link>
+    <Link
+      href="https://t.me/vu_boru"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-gray-600 transition-colors hover:text-neon-purple-bright"
+      aria-label="Telegram"
+    >
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+        <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+      </svg>
+    </Link>
+  </>
+);
+
+const ContactPageInner = ({ locale }: { locale: Locale }) => {
+  const { contactPage, nav } = useT();
+  const base = locale === 'ua' ? '/ua' : '';
+
   const [status, setStatus] = useState<
     'idle' | 'submitting' | 'success' | 'error'
   >('idle');
@@ -64,28 +113,24 @@ const Contact = () => {
   return (
     <div className="bg-kosmos-950 text-gray-300 antialiased">
       <Meta
-        title={`Contact - ${AppConfig.site_name}`}
-        description="Get in touch with us. We'd love to hear about your project."
+        title={`${contactPage.title} — ${AppConfig.site_name}`}
+        description={contactPage.subtitle}
       />
 
-      {/* Glassmorphic navbar */}
       <NavbarTwoColumns
         logo={<Logo xl />}
         themeToggle={<ThemeToggle />}
-        navItems={subPageNavItems}
+        navItems={getSubPageNavItems(locale)}
+        langSwitcher={<LanguageSwitcher subPath="contact/" />}
       />
 
-      {/* Main content */}
       <Background withGrid withGlow>
         <Section yPadding="pt-36 pb-24">
           <div className="mx-auto max-w-xl">
             <h1 className="mb-4 text-4xl font-bold tracking-tightest text-white">
-              Get in Touch
+              {contactPage.title}
             </h1>
-            <p className="mb-8 text-lg text-gray-400">
-              Have a project in mind? Fill out the form below and we&apos;ll get
-              back to you as soon as possible.
-            </p>
+            <p className="mb-8 text-lg text-gray-400">{contactPage.subtitle}</p>
 
             {status === 'success' ? (
               <div className="glass-card rounded-xl p-8 text-center">
@@ -105,16 +150,16 @@ const Contact = () => {
                   </svg>
                 </div>
                 <h2 className="mb-2 text-2xl font-bold text-white">
-                  Thank you!
+                  {contactPage.success.title}
                 </h2>
                 <p className="mb-6 text-gray-400">
-                  Your message has been sent. We&apos;ll be in touch soon.
+                  {contactPage.success.subtitle}
                 </p>
                 <Link
-                  href="/"
+                  href={`${base}/`}
                   className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-neon-purple to-neon-blue px-6 py-2.5 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
                 >
-                  Back to Homepage
+                  {contactPage.success.backHome}
                 </Link>
               </div>
             ) : (
@@ -124,7 +169,8 @@ const Contact = () => {
                     htmlFor="name"
                     className="mb-2 block font-mono text-sm font-medium text-gray-400"
                   >
-                    Name <span className="text-neon-purple">*</span>
+                    {contactPage.fields.name}{' '}
+                    <span className="text-neon-purple">*</span>
                   </label>
                   <input
                     type="text"
@@ -140,7 +186,8 @@ const Contact = () => {
                     htmlFor="email"
                     className="mb-2 block font-mono text-sm font-medium text-gray-400"
                   >
-                    Email <span className="text-neon-purple">*</span>
+                    {contactPage.fields.email}{' '}
+                    <span className="text-neon-purple">*</span>
                   </label>
                   <input
                     type="email"
@@ -156,7 +203,7 @@ const Contact = () => {
                     htmlFor="company"
                     className="mb-2 block font-mono text-sm font-medium text-gray-400"
                   >
-                    Company
+                    {contactPage.fields.company}
                   </label>
                   <input
                     type="text"
@@ -171,7 +218,8 @@ const Contact = () => {
                     htmlFor="message"
                     className="mb-2 block font-mono text-sm font-medium text-gray-400"
                   >
-                    Message <span className="text-neon-purple">*</span>
+                    {contactPage.fields.message}{' '}
+                    <span className="text-neon-purple">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -193,7 +241,9 @@ const Contact = () => {
                   disabled={status === 'submitting'}
                   className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-neon-purple to-neon-blue px-8 py-3.5 text-base font-semibold text-white shadow-neon-purple transition-all duration-300 hover:-translate-y-0.5 hover:shadow-neon-purple-lg disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                  {status === 'submitting'
+                    ? contactPage.submitting
+                    : contactPage.submit}
                 </button>
               </form>
             )}
@@ -204,75 +254,18 @@ const Contact = () => {
       {/* Footer */}
       <div className="border-white/8 border-t bg-kosmos-950">
         <Section yPadding="py-12">
-          <CenteredFooter
-            logo={<Logo />}
-            iconList={
-              <>
-                <Link
-                  href="/contact/"
-                  className="text-gray-600 transition-colors hover:text-neon-purple-bright"
-                  aria-label="Email us"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                  >
-                    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://www.linkedin.com/company/thesis-i"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 transition-colors hover:text-neon-purple-bright"
-                  aria-label="LinkedIn"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                  >
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://t.me/vu_boru"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 transition-colors hover:text-neon-purple-bright"
-                  aria-label="Telegram"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                  >
-                    <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
-                  </svg>
-                </Link>
-              </>
-            }
-          >
+          <CenteredFooter logo={<Logo />} iconList={socialIcons}>
             <li>
-              <Link href="/#services">Services</Link>
+              <Link href={`${base}/#services`}>{nav.services}</Link>
             </li>
             <li>
-              <Link href="/#cases">Cases</Link>
+              <Link href={`${base}/cases`}>{nav.portfolio}</Link>
             </li>
             <li>
-              <Link href="/#team">Team</Link>
+              <Link href={`${base}/#team`}>{nav.team}</Link>
             </li>
             <li>
-              <Link href="/contact/">Contact</Link>
+              <Link href={`${base}/contact/`}>{nav.startProject}</Link>
             </li>
           </CenteredFooter>
         </Section>
@@ -281,4 +274,10 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+const ContactPage = ({ locale = 'en' as Locale }: { locale?: Locale }) => (
+  <LocaleProvider locale={locale}>
+    <ContactPageInner locale={locale} />
+  </LocaleProvider>
+);
+
+export default ContactPage;

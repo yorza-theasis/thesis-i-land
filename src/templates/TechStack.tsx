@@ -1,4 +1,5 @@
 import { Background } from '../background/Background';
+import { useT } from '../i18n/LocaleContext';
 import { Section } from '../layout/Section';
 
 const techStack = [
@@ -79,20 +80,24 @@ const MarqueeRow = ({
   </div>
 );
 
-const TechStack = () => (
-  <Background withGrid withGlow>
-    <Section
-      id="techstack"
-      eyebrow="Tools of the trade"
-      title="Technology Stack"
-      description="Battle-tested technologies we use to deliver robust, scalable solutions across the full product lifecycle."
-    >
-      <div className="flex flex-col gap-4">
-        <MarqueeRow items={row1} speed={45} />
-        <MarqueeRow items={row2} speed={35} reverse />
-      </div>
-    </Section>
-  </Background>
-);
+const TechStack = () => {
+  const { techStack: t } = useT();
+
+  return (
+    <Background withGrid withGlow>
+      <Section
+        id="techstack"
+        eyebrow={t.eyebrow}
+        title={t.title}
+        description={t.description}
+      >
+        <div className="flex flex-col gap-4">
+          <MarqueeRow items={row1} speed={45} />
+          <MarqueeRow items={row2} speed={35} reverse />
+        </div>
+      </Section>
+    </Background>
+  );
+};
 
 export { TechStack };

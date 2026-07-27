@@ -1,7 +1,10 @@
 import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 
+import { LocaleProvider } from '../i18n/LocaleContext';
+import type { Locale } from '../i18n/translations';
+import { translations } from '../i18n/translations';
 import { Meta } from '../layout/Meta';
-import { AppConfig } from '../utils/AppConfig';
 import { Footer } from './Footer';
 import { Hero } from './Hero';
 
@@ -17,17 +20,29 @@ const TechStack = dynamic(() =>
 );
 const Banner = dynamic(() => import('./Banner').then((mod) => mod.Banner));
 
-const Base = () => (
-  <div className="bg-kosmos-950 text-gray-300 antialiased">
-    <Meta title={AppConfig.title} description={AppConfig.description} />
-    <Hero />
-    <Sponsors />
-    <VerticalFeatures />
-    <Team />
-    <TechStack />
-    <Banner />
-    <Footer />
-  </div>
-);
+type BaseProps = { locale?: Locale };
+
+const Base = ({ locale = 'en' }: BaseProps) => {
+  const t = translations[locale];
+
+  useEffect(() => {
+    document.documentElement.lang = locale === 'ua' ? 'uk' : 'en';
+  }, [locale]);
+
+  return (
+    <LocaleProvider locale={locale}>
+      <div className="bg-kosmos-950 text-gray-300 antialiased">
+        <Meta title={t.meta.title} description={t.meta.description} />
+        <Hero />
+        <Sponsors />
+        <VerticalFeatures />
+        <Team />
+        <TechStack />
+        <Banner />
+        <Footer />
+      </div>
+    </LocaleProvider>
+  );
+};
 
 export { Base };

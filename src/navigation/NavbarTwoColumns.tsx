@@ -15,6 +15,7 @@ type INavbarProps = {
   navItems?: NavItem[];
   children?: ReactNode;
   themeToggle?: ReactNode;
+  langSwitcher?: ReactNode;
 };
 
 type NavItemContentProps = {
@@ -45,6 +46,7 @@ const NavbarTwoColumns = ({
   navItems,
   children,
   themeToggle,
+  langSwitcher,
 }: INavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -107,6 +109,7 @@ const NavbarTwoColumns = ({
           )}
 
           <div className="flex items-center gap-2">
+            {langSwitcher}
             {!isScrolled && themeToggle && (
               <motion.div
                 initial={{ opacity: 0 }}
