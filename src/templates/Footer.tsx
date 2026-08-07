@@ -32,7 +32,6 @@ const Footer = () => {
                 { label: footer.links.services, href: '#services' },
                 { label: footer.links.portfolio, href: '#cases' },
                 { label: footer.links.techStack, href: '#techstack' },
-                { label: footer.links.team, href: '#team' },
                 { label: footer.links.contact, href: '/contact/' },
               ].map((link) => (
                 <li key={link.label}>

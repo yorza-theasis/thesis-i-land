@@ -36,24 +36,6 @@ const casesIcon = (
   </svg>
 );
 
-const teamIcon = (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-);
-
 const contactIcon = (
   <svg
     width="20"
@@ -76,7 +58,6 @@ export const getSubPageNavItems = (locale: Locale): NavItem[] => {
   return [
     { label: t.nav.services, href: `${base}/#services`, icon: servicesIcon },
     { label: t.nav.portfolio, href: `${base}/cases`, icon: casesIcon },
-    { label: t.nav.team, href: `${base}/#team`, icon: teamIcon },
     {
       label: t.nav.startProject,
       href: `${base}/contact/`,
@@ -89,6 +70,5 @@ export const getSubPageNavItems = (locale: Locale): NavItem[] => {
 export const subPageNavItems: NavItem[] = [
   { label: 'Services', href: '/#services', icon: servicesIcon },
   { label: 'Cases', href: '/cases', icon: casesIcon },
-  { label: 'Team', href: '/#team', icon: teamIcon },
   { label: 'Contact', href: '/contact/', isButton: true, icon: contactIcon },
 ];

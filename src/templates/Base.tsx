@@ -14,7 +14,6 @@ const Sponsors = dynamic(() =>
 const VerticalFeatures = dynamic(() =>
   import('./VerticalFeatures').then((mod) => mod.VerticalFeatures),
 );
-const Team = dynamic(() => import('./Team').then((mod) => mod.Team));
 const TechStack = dynamic(() =>
   import('./TechStack').then((mod) => mod.TechStack),
 );
@@ -36,7 +35,6 @@ const Base = ({ locale = 'en' }: BaseProps) => {
         <Hero />
         <Sponsors />
         <VerticalFeatures />
-        <Team />
         <TechStack />
         <Banner />
         <Footer />
