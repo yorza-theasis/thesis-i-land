@@ -13,11 +13,6 @@ type CaseTranslation = {
   imageAlt: string;
 };
 
-type TeamMemberTranslation = {
-  role: string;
-  bio: string;
-};
-
 type StatTranslation = {
   end: number;
   suffix: string;
@@ -30,7 +25,6 @@ export type Translations = {
     services: string;
     portfolio: string;
     techStack: string;
-    team: string;
     startProject: string;
   };
   hero: {
@@ -59,13 +53,6 @@ export type Translations = {
     comingSoon: string;
     viewAll: string;
     cases: CaseTranslation[];
-  };
-  team: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    linkedin: string;
-    members: TeamMemberTranslation[];
   };
   techStack: {
     eyebrow: string;
@@ -104,7 +91,6 @@ export type Translations = {
       services: string;
       portfolio: string;
       techStack: string;
-      team: string;
       contact: string;
     };
   };
@@ -121,7 +107,6 @@ export const translations: Record<Locale, Translations> = {
       services: 'Services',
       portfolio: 'Portfolio',
       techStack: 'Tech Stack',
-      team: 'Team',
       startProject: 'Start Project',
     },
     hero: {
@@ -223,23 +208,6 @@ export const translations: Record<Locale, Translations> = {
         },
       ],
     },
-    team: {
-      eyebrow: 'The studio',
-      title: 'Meet the Team',
-      description:
-        'Deep expertise and one shared mission: building software that makes a difference.',
-      linkedin: 'LinkedIn',
-      members: [
-        {
-          role: 'Head of Backend Engineering',
-          bio: '5+ years in backend engineering specializing in scalable microservices. Led development teams at GlobalLogic and CodeLions, driving architectural decisions from service boundaries to API contracts. Deep expertise across fintech, energy, semiconductor, and transportation domains with both greenfield and legacy modernization projects.',
-        },
-        {
-          role: 'Head of Frontend Engineering',
-          bio: '4+ years of front-end development experience building modern web and mobile applications. Expertise in creating performant, responsive user interfaces using Next.js, pure React, and React Native for cross-platform solutions.',
-        },
-      ],
-    },
     techStack: {
       eyebrow: 'Tools of the trade',
       title: 'Technology Stack',
@@ -316,7 +284,6 @@ export const translations: Record<Locale, Translations> = {
         services: 'Services',
         portfolio: 'Portfolio',
         techStack: 'Tech Stack',
-        team: 'Team',
         contact: 'Contact',
       },
     },
@@ -332,7 +299,6 @@ export const translations: Record<Locale, Translations> = {
       services: 'Послуги',
       portfolio: 'Портфоліо',
       techStack: 'Стек',
-      team: 'Команда',
       startProject: 'Почати проєкт',
     },
     hero: {
@@ -434,23 +400,6 @@ export const translations: Record<Locale, Translations> = {
         },
       ],
     },
-    team: {
-      eyebrow: 'Студія',
-      title: 'Наша команда',
-      description:
-        'Глибока експертиза та єдина місія: будувати програмне забезпечення, що має значення.',
-      linkedin: 'LinkedIn',
-      members: [
-        {
-          role: 'Керівник бекенд-розробки',
-          bio: '5+ років у бекенд-розробці зі спеціалізацією на масштабованих мікросервісах. Очолював команди розробки у GlobalLogic та CodeLions, приймаючи архітектурні рішення від меж сервісів до API-контрактів. Глибока експертиза у фінтех, енергетиці, напівпровідниках та транспорті — у greenfield- та legacy-проєктах.',
-        },
-        {
-          role: 'Керівник фронтенд-розробки',
-          bio: '4+ роки досвіду фронтенд-розробки у створенні сучасних веб- та мобільних застосунків. Експертиза у розробці продуктивних адаптивних інтерфейсів на Next.js, React та React Native для крос-платформних рішень.',
-        },
-      ],
-    },
     techStack: {
       eyebrow: 'Інструменти ремесла',
       title: 'Технологічний стек',
@@ -528,7 +477,6 @@ export const translations: Record<Locale, Translations> = {
         services: 'Послуги',
         portfolio: 'Портфоліо',
         techStack: 'Стек',
-        team: 'Команда',
         contact: 'Контакти',
       },
     },

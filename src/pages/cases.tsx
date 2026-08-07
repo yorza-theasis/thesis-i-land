@@ -402,9 +402,6 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
               <Link href={`${base}/cases`}>{nav.portfolio}</Link>
             </li>
             <li>
-              <Link href={`${base}/#team`}>{nav.team}</Link>
-            </li>
-            <li>
               <Link href={`${base}/contact/`}>{nav.startProject}</Link>
             </li>
           </CenteredFooter>
