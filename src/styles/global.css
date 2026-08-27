@@ -12,22 +12,22 @@
     --card-foreground: #e5e2e1;
     --popover: #131313;
     --popover-foreground: #e5e2e1;
-    --primary: #9d34ff;
+    --primary: #b026ff;
     --primary-foreground: #ffffff;
     --secondary: #121215;
     --secondary-foreground: #e5e2e1;
     --muted: #121215;
     --muted-foreground: #9ca3af;
-    --accent: #1155ff;
+    --accent: #0047ff;
     --accent-foreground: #ffffff;
     --destructive: oklch(0.704 0.191 22.216);
     --border: rgba(255, 255, 255, 0.05);
     --input: rgba(255, 255, 255, 0.04);
-    --ring: rgba(157, 52, 255, 0.4);
+    --ring: rgba(176, 38, 255, 0.4);
     --radius: 0.75rem;
     --sidebar: #0a0a0c;
     --sidebar-foreground: #e5e2e1;
-    --sidebar-primary: #9d34ff;
+    --sidebar-primary: #b026ff;
     --sidebar-primary-foreground: #ffffff;
     --sidebar-accent: #121215;
     --sidebar-accent-foreground: #e5e2e1;
@@ -43,6 +43,9 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     @apply font-sans;
     -webkit-tap-highlight-color: transparent;
+    /* Absorbs the Base.tsx wrapper's negative-margin bleed (see comment
+       there) without ever showing a horizontal scrollbar. */
+    overflow-x: hidden;
   }
 
   body {
@@ -50,6 +53,7 @@
     color: #e5e2e1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   /* Film grain — desktop only */
@@ -121,6 +125,16 @@
   100% { left: 200%; }
 }
 
+@keyframes grid-drift {
+  from { background-position: 0 0; }
+  to   { background-position: 40px 40px; }
+}
+
+@keyframes grid-breathe {
+  0%, 100% { opacity: 0.03; }
+  50%       { opacity: 0.06; }
+}
+
 /* ─── Animation Utility Classes ────────────────────────── */
 
 .animate-pulse-dot     { animation: pulse-dot 2s ease-in-out infinite; }
@@ -128,6 +142,8 @@
 .animate-float         { animation: float 4s ease-in-out infinite; }
 .animate-morph-sphere  { animation: morph-sphere 9s ease-in-out infinite; }
 .animate-spin-ring     { animation: spin-ring 28s linear infinite; }
+.animate-grid-drift    { animation: grid-drift 70s linear infinite; }
+.animate-grid-breathe  { animation: grid-breathe 6s ease-in-out infinite; }
 .animate-counter-spin-ring { animation: counter-spin-ring 18s linear infinite; }
 
 /* ─── Glassmorphism — desktop with blur, mobile solid ──── */
@@ -267,6 +283,13 @@
 
 .glow-purple {
   box-shadow: 0 0 20px rgba(176, 38, 255, 0.35), 0 0 60px rgba(176, 38, 255, 0.1);
+}
+
+.glow-purple-hover:hover {
+  box-shadow:
+    0 0 24px rgba(176, 38, 255, 0.5),
+    0 0 70px rgba(176, 38, 255, 0.2),
+    0 0 120px rgba(0, 71, 255, 0.1);
 }
 
 /* ─── Light mode ─────────────────────────────────────── */

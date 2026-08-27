@@ -1,4 +1,3 @@
-import { Background } from '../background/Background';
 import { useT } from '../i18n/LocaleContext';
 import { Section } from '../layout/Section';
 
@@ -58,16 +57,24 @@ const MarqueeRow = ({
   speed?: number;
 }) => (
   <div className="relative overflow-hidden py-1.5">
-    <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-kosmos-950 to-transparent" />
-    <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-kosmos-950 to-transparent" />
-    <div className="flex">
+    {/* Edge fade via mask (not an opaque overlay), so the shared global
+        background shows through instead of a solid patch cutting it off. */}
+    <div
+      className="flex"
+      style={{
+        WebkitMaskImage:
+          'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)',
+        maskImage:
+          'linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)',
+      }}
+    >
       <div
         className="flex shrink-0 gap-3 pr-3"
         style={{
           animation: `marquee ${speed}s linear infinite ${reverse ? 'reverse' : ''}`,
         }}
       >
-        {[...items, ...items, ...items].map((tech, i) => (
+        {[...items, ...items].map((tech, i) => (
           <span
             key={`${tech}-${i}`}
             className="bg-white/4 border-white/8 shrink-0 whitespace-nowrap rounded-full border px-4 py-1.5 font-mono text-xs font-medium text-gray-400 transition-colors duration-200 hover:border-neon-purple/30 hover:text-neon-purple-bright"
@@ -84,19 +91,17 @@ const TechStack = () => {
   const { techStack: t } = useT();
 
   return (
-    <Background withGrid withGlow>
-      <Section
-        id="techstack"
-        eyebrow={t.eyebrow}
-        title={t.title}
-        description={t.description}
-      >
-        <div className="flex flex-col gap-4">
-          <MarqueeRow items={row1} speed={45} />
-          <MarqueeRow items={row2} speed={35} reverse />
-        </div>
-      </Section>
-    </Background>
+    <Section
+      id="techstack"
+      eyebrow={t.eyebrow}
+      title={t.title}
+      description={t.description}
+    >
+      <div className="flex flex-col gap-4">
+        <MarqueeRow items={row1} speed={45} />
+        <MarqueeRow items={row2} speed={35} reverse />
+      </div>
+    </Section>
   );
 };
 

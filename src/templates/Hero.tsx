@@ -1,9 +1,9 @@
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import Head from 'next/head';
 import Link from 'next/link';
 import Script from 'next/script';
 import type { CSSProperties } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Button } from '../button/Button';
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher';
@@ -13,16 +13,26 @@ import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
 import { ThemeToggle } from '../navigation/ThemeToggle';
 import { Logo } from './Logo';
 
-/* ─── Animated counter ───────────────────────── */
-type CounterProps = { end: number; suffix: string; delay?: number };
+/* ─── Animated counter ─────────────────────────
+ * The final value is always the element's real text content — set once on
+ * mount and restored at the end of the animation — so crawlers and
+ * screen readers (and anyone with JS disabled) always see the real number,
+ * not a "0" that only becomes correct after a count-up animation runs. */
+type CounterProps = {
+  end: number;
+  suffix: string;
+  delay?: number;
+  onProgress?: (progress: number) => void;
+};
 
-const Counter = ({ end, suffix, delay = 0 }: CounterProps) => {
+const Counter = ({ end, suffix, delay = 0, onProgress }: CounterProps) => {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
-  const [value, setValue] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+  const finalText = `${end}${suffix}`;
 
   useEffect(() => {
-    if (!inView) return undefined;
+    if (!inView || prefersReducedMotion) return undefined;
     let intervalId: ReturnType<typeof setInterval>;
     const t = setTimeout(() => {
       const step = 16;
@@ -32,10 +42,13 @@ const Counter = ({ end, suffix, delay = 0 }: CounterProps) => {
       intervalId = setInterval(() => {
         cur += inc;
         if (cur >= end) {
-          setValue(end);
+          if (ref.current) ref.current.textContent = finalText;
+          onProgress?.(1);
           clearInterval(intervalId);
         } else {
-          setValue(Math.floor(cur));
+          if (ref.current)
+            ref.current.textContent = `${Math.floor(cur)}${suffix}`;
+          onProgress?.(cur / end);
         }
       }, step);
     }, delay);
@@ -43,14 +56,9 @@ const Counter = ({ end, suffix, delay = 0 }: CounterProps) => {
       clearTimeout(t);
       clearInterval(intervalId);
     };
-  }, [inView, end, delay]);
+  }, [inView, end, suffix, delay, finalText, prefersReducedMotion, onProgress]);
 
-  return (
-    <span ref={ref}>
-      {value}
-      {suffix}
-    </span>
-  );
+  return <span ref={ref}>{finalText}</span>;
 };
 
 /* ─── Mobile lightweight sphere ──────────────── */
@@ -65,13 +73,19 @@ const MobileSphere = () => (
     />
     <div
       className="animate-spin-ring absolute size-[155px] rounded-full will-change-transform"
-      style={{ border: '1px solid rgba(176,38,255,0.13)' }}
+      style={{
+        border: '1px solid rgba(176,38,255,0.13)',
+        opacity: 'calc(0.4 + 0.6 * var(--data-density, 1))',
+        transition: 'opacity 200ms linear',
+      }}
     />
     <div
       className="animate-counter-spin-ring absolute size-[115px] rounded-full will-change-transform"
       style={{
         border: '1px dashed rgba(0,71,255,0.1)',
         animationDuration: '12s',
+        opacity: 'calc(0.4 + 0.6 * var(--data-density, 1))',
+        transition: 'opacity 200ms linear',
       }}
     />
     <div
@@ -101,6 +115,8 @@ const DataRing = () => {
         width: 530,
         height: 530,
         animation: 'spin-ring 90s linear infinite',
+        opacity: 'calc(0.35 + 0.65 * var(--data-density, 1))',
+        transition: 'opacity 200ms linear',
       }}
       viewBox="0 0 530 530"
     >
@@ -161,22 +177,31 @@ const DataRing = () => {
 };
 
 /* ─── Floating tech label ─────────────────────── */
-type FloatLabelProps = { text: string; style: CSSProperties; delay: number };
+type FloatLabelProps = {
+  text: string;
+  style: CSSProperties;
+  delay: number;
+  reduced?: boolean;
+};
 
-const FloatLabel = ({ text, style, delay }: FloatLabelProps) => (
+const FloatLabel = ({ text, style, delay, reduced }: FloatLabelProps) => (
   <motion.div
     className="animate-float border-neon-purple/18 absolute rounded-lg border bg-kosmos-900/85 px-3 py-1.5 font-mono text-xs font-medium text-neon-purple-bright/75 backdrop-blur-md"
     style={style}
     initial={{ opacity: 0, scale: 0.7 }}
     animate={{ opacity: 1, scale: 1 }}
-    transition={{ delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+    transition={
+      reduced
+        ? { duration: 0 }
+        : { delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+    }
   >
     {text}
   </motion.div>
 );
 
 /* ─── Full animated sphere ────────────────────── */
-const AnimatedSphere = () => (
+const AnimatedSphere = ({ reduced }: { reduced: boolean }) => (
   <div className="relative flex size-[530px] items-center justify-center">
     <div
       className="pointer-events-none absolute size-[460px] rounded-full opacity-45 blur-[100px]"
@@ -252,7 +277,12 @@ const AnimatedSphere = () => (
       <div
         key={i}
         className={`animate-float absolute rounded-full ${p.cls}`}
-        style={{ ...p.pos, animationDelay: p.delay }}
+        style={{
+          ...p.pos,
+          animationDelay: p.delay,
+          opacity: 'calc(0.3 + 0.7 * var(--data-density, 1))',
+          transition: 'opacity 200ms linear',
+        }}
       />
     ))}
 
@@ -263,7 +293,11 @@ const AnimatedSphere = () => (
       <motion.path
         initial={{ pathLength: 0, opacity: 0 }}
         animate={{ pathLength: 1, opacity: 1 }}
-        transition={{ duration: 3, delay: 1.2, ease: 'easeInOut' }}
+        transition={
+          reduced
+            ? { duration: 0 }
+            : { duration: 3, delay: 1.2, ease: 'easeInOut' }
+        }
         d="M -20 80 L 60 150 L 265 265 L 260 -40 L 500 100 L 265 265 L 550 350 L 265 550 L 265 265 L 80 530 L -20 430 L 60 150 M -20 80 L 260 -40 M 500 100 L 550 350 M -20 430 L 80 530"
         fill="none"
         stroke="rgba(176,38,255,0.35)"
@@ -276,22 +310,50 @@ const AnimatedSphere = () => (
       text="Python / FastAPI"
       style={{ left: -40, top: 60 }}
       delay={0.8}
+      reduced={reduced}
     />
     <FloatLabel
       text="Kotlin / KMP"
       style={{ left: 60, top: 150 }}
       delay={0.9}
+      reduced={reduced}
     />
-    <FloatLabel text="AI Agents" style={{ left: 220, top: -60 }} delay={1.0} />
-    <FloatLabel text="Spring Boot" style={{ left: 470, top: 80 }} delay={1.1} />
-    <FloatLabel text="LLMs & RAG" style={{ left: 520, top: 330 }} delay={1.2} />
+    <FloatLabel
+      text="AI Agents"
+      style={{ left: 220, top: -60 }}
+      delay={1.0}
+      reduced={reduced}
+    />
+    <FloatLabel
+      text="Spring Boot"
+      style={{ left: 470, top: 80 }}
+      delay={1.1}
+      reduced={reduced}
+    />
+    <FloatLabel
+      text="LLMs & RAG"
+      style={{ left: 520, top: 330 }}
+      delay={1.2}
+      reduced={reduced}
+    />
     <FloatLabel
       text="React Native"
       style={{ left: 225, top: 540 }}
       delay={1.3}
+      reduced={reduced}
     />
-    <FloatLabel text="Kubernetes" style={{ left: 50, top: 520 }} delay={1.4} />
-    <FloatLabel text="Next.js" style={{ left: -40, top: 410 }} delay={1.5} />
+    <FloatLabel
+      text="Kubernetes"
+      style={{ left: 50, top: 520 }}
+      delay={1.4}
+      reduced={reduced}
+    />
+    <FloatLabel
+      text="Next.js"
+      style={{ left: -40, top: 410 }}
+      delay={1.5}
+      reduced={reduced}
+    />
   </div>
 );
 
@@ -299,6 +361,21 @@ const AnimatedSphere = () => (
 const Hero = () => {
   const t = useT();
   const { hero, nav } = t;
+  const prefersReducedMotion = useReducedMotion();
+
+  // The sphere's ring/particle density tracks the stats count-up progress —
+  // it reads as a visualization of scale filling in, not just decoration.
+  // Written directly to a CSS var (no setState) so ~90 ticks/sec never
+  // re-renders React; descendants pick it up via inheritance.
+  const sphereWrapRef = useRef<HTMLDivElement>(null);
+  const counterProgressRef = useRef<number[]>(hero.stats.map(() => 0));
+  const handleCounterProgress = (index: number, value: number) => {
+    counterProgressRef.current[index] = value;
+    const avg =
+      counterProgressRef.current.reduce((a, b) => a + b, 0) /
+      counterProgressRef.current.length;
+    sphereWrapRef.current?.style.setProperty('--data-density', `${avg}`);
+  };
 
   const schemaData = {
     '@context': 'https://schema.org',
@@ -435,11 +512,11 @@ const Hero = () => {
       />
 
       {/* Hero */}
-      <main className="relative overflow-hidden bg-kosmos-950">
-        {/* Ambient mesh */}
+      <main className="relative">
+        {/* Ambient mesh — no clipping, glows bleed into adjacent sections */}
         <div className="pointer-events-none absolute inset-0 z-0">
-          <div className="bg-neon-purple/6 absolute left-[-10%] top-[-20%] size-[800px] rounded-full blur-[140px]" />
-          <div className="bg-neon-blue/4 absolute bottom-[-20%] right-[-10%] size-[700px] rounded-full blur-[120px]" />
+          <div className="absolute left-[-10%] top-[-15%] size-[900px] rounded-full bg-neon-purple/[0.07] blur-[150px]" />
+          <div className="absolute bottom-[-18%] right-[-10%] size-[800px] rounded-full bg-neon-blue/[0.05] blur-[140px]" />
         </div>
 
         {/* Dot grid */}
@@ -452,7 +529,9 @@ const Hero = () => {
           }}
         />
 
-        {/* Perspective vanishing grid — bottom of hero */}
+        {/* Perspective vanishing grid — bottom of hero. Faded via a mask
+            (not an opaque overlay) so the shared global background shows
+            through cleanly instead of a solid patch cutting it off. */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[220px] overflow-hidden">
           <div
             style={{
@@ -464,9 +543,12 @@ const Hero = () => {
               transform: 'perspective(350px) rotateX(55deg)',
               transformOrigin: 'top center',
               opacity: 0.5,
+              WebkitMaskImage:
+                'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.7) 50%, black 100%)',
+              maskImage:
+                'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.7) 50%, black 100%)',
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-kosmos-950 via-kosmos-950/70 to-transparent" />
         </div>
 
         <Section yPadding="pt-40 pb-28">
@@ -582,14 +664,16 @@ const Hero = () => {
 
             {/* Right — varies by breakpoint */}
             <motion.div
+              ref={sphereWrapRef}
               className="flex items-center justify-center"
+              style={{ '--data-density': 1 } as CSSProperties}
               initial={{ opacity: 0, scale: 0.82, filter: 'blur(24px)' }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              transition={{
-                duration: 1.2,
-                delay: 0.22,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : { duration: 1.2, delay: 0.22, ease: [0.16, 1, 0.3, 1] }
+              }
             >
               {/* Mobile + Tablet: sphere */}
               <div className="lg:hidden">
@@ -597,12 +681,12 @@ const Hero = () => {
               </div>
               {/* Desktop: full sphere */}
               <div className="hidden lg:flex">
-                <AnimatedSphere />
+                <AnimatedSphere reduced={!!prefersReducedMotion} />
               </div>
             </motion.div>
           </div>
 
-          {/* Stats strip */}
+          {/* Stats strip — each stat links to the portfolio section that backs it up */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -610,18 +694,24 @@ const Hero = () => {
             className="border-white/6 mt-20 grid grid-cols-2 gap-x-6 gap-y-8 border-t pt-12 sm:grid-cols-4"
           >
             {hero.stats.map((stat, i) => (
-              <div key={stat.label} className="flex flex-col gap-1">
-                <div className="font-mono text-3xl font-bold tracking-tightest text-white md:text-4xl">
+              <Link
+                key={stat.label}
+                href="#cases"
+                aria-label={`${stat.label}: ${stat.end}${stat.suffix} — ${nav.portfolio}`}
+                className="group flex flex-col gap-1 outline-none"
+              >
+                <div className="font-mono text-3xl font-bold tracking-tightest text-white transition-colors duration-200 group-hover:text-neon-purple-bright group-focus-visible:text-neon-purple-bright md:text-4xl">
                   <Counter
                     end={stat.end}
                     suffix={stat.suffix}
                     delay={i * 120}
+                    onProgress={(p) => handleCounterProgress(i, p)}
                   />
                 </div>
-                <div className="text-xs text-gray-600 sm:text-sm">
+                <div className="text-xs text-gray-600 transition-colors duration-200 group-hover:text-gray-400 sm:text-sm">
                   {stat.label}
                 </div>
-              </div>
+              </Link>
             ))}
           </motion.div>
         </Section>

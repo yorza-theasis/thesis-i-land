@@ -17,9 +17,9 @@ const HudCorners = () => (
 );
 
 const CTABanner = (props: ICTABannerProps) => (
-  <div className="border-white/8 relative overflow-hidden rounded-3xl border bg-kosmos-900 p-16 text-center">
+  <div className="border-white/8 relative rounded-3xl border bg-kosmos-900 p-16 text-center">
     <HudCorners />
-    {/* Dot grid bg */}
+    {/* Dot grid bg — sized to inset-0, so it never needs clipping */}
     <div
       className="pointer-events-none absolute inset-0 opacity-[0.035]"
       style={{
@@ -29,17 +29,18 @@ const CTABanner = (props: ICTABannerProps) => (
       }}
     />
 
-    {/* Center glow */}
+    {/* Center glow — no overflow-hidden on the card, so these bleed past
+        its rounded border instead of getting flattened at the edge */}
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
       <div className="bg-neon-purple/14 size-[700px] rounded-full blur-[130px]" />
     </div>
     <div className="bg-neon-blue/8 pointer-events-none absolute left-1/4 top-0 size-[400px] -translate-x-1/2 rounded-full blur-[100px]" />
 
-    {/* Animated scan line */}
+    {/* Animated scan line — kept within 0%–100% since nothing clips it now */}
     <motion.div
       className="pointer-events-none absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-neon-purple/45 to-transparent"
-      initial={{ top: '-2%' }}
-      animate={{ top: '102%' }}
+      initial={{ top: '0%' }}
+      animate={{ top: '100%' }}
       transition={{
         duration: 4,
         repeat: Infinity,

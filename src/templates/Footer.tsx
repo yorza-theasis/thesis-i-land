@@ -7,7 +7,7 @@ const Footer = () => {
   const { footer } = useT();
 
   return (
-    <footer className="border-white/6 relative border-t bg-kosmos-950">
+    <footer className="border-white/6 relative border-t">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon-purple/25 to-transparent" />
       <div className="mx-auto max-w-screen-xl px-6 py-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3">

@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 
+import { GlobalBackground } from '../background/GlobalBackground';
 import { LocaleProvider } from '../i18n/LocaleContext';
 import type { Locale } from '../i18n/translations';
 import { translations } from '../i18n/translations';
@@ -30,8 +31,16 @@ const Base = ({ locale = 'en' }: BaseProps) => {
 
   return (
     <LocaleProvider locale={locale}>
-      <div className="bg-kosmos-950 text-gray-300 antialiased">
+      <div
+        className="mx-[-300px] overflow-x-clip px-[300px] text-gray-300 antialiased"
+        // Clip 300px further out than the viewport on each side (margin
+        // pulls the box out, padding pushes content back to the same visual
+        // position) so ambient glows fully fade before hitting the clip
+        // line instead of being flattened at the edge. html/body carry
+        // their own overflow-x: hidden to absorb this bleed.
+      >
         <Meta title={t.meta.title} description={t.meta.description} />
+        <GlobalBackground />
         <Hero />
         <Sponsors />
         <VerticalFeatures />

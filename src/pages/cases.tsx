@@ -2,6 +2,7 @@ import type { Variants } from 'framer-motion';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
+import { GlobalBackground } from '../background/GlobalBackground';
 import { Button } from '../button/Button';
 import { CenteredFooter } from '../footer/CenteredFooter';
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher';
@@ -73,6 +74,90 @@ const CASES_META: CasesMeta[] = [
     status: 'completed',
     href: 'https://www.niania24.com/ua',
   },
+  {
+    num: '05',
+    title: 'IBD Registry',
+    category: ['MedTech', 'Patient Registry', 'Next.js'],
+    image: '/assets/images/shot_zzk.png',
+    imageAlt: 'IBD Registry Dashboard',
+    stack: [
+      'Next.js 16',
+      'TypeScript',
+      'FastAPI',
+      'Tailwind CSS v4',
+      'Zustand',
+      'Zod',
+    ],
+    highlights: ['Magic Link Auth', 'Role-Based Access', 'PRO2 Scoring'],
+    status: 'completed',
+  },
+  {
+    num: '06',
+    title: 'Cardiology Doc Audit',
+    category: ['AI & HealthTech', 'NER', 'On-premise'],
+    image: '/assets/images/gmi.svg',
+    imageAlt: 'Cardiology Documentation Audit',
+    stack: ['NER Pipeline', 'ICD-10', 'LLM', 'FastAPI', 'On-premise'],
+    highlights: ['Ukrainian NER', 'ICD-10 Mapping', 'Discrepancy Detection'],
+    status: 'in_progress',
+  },
+  {
+    num: '07',
+    title: 'QPick',
+    category: ['Robotics', 'Retail Automation'],
+    image: '/assets/images/qpick.jpg',
+    imageAlt: 'Q-Pick Robotic Retail Kiosk',
+    stack: [
+      'Computer Vision',
+      'Robotic Arm Control',
+      'Vacuum Gripper',
+      'Machine Learning',
+    ],
+    highlights: [
+      'Real Shelf Conditions',
+      'Adaptive Grip Detection',
+      'Continuous Learning',
+    ],
+    status: 'in_progress',
+  },
+  {
+    num: '08',
+    title: 'AI Agent for Compliance',
+    category: ['AI', 'Compliance'],
+    image: '/assets/images/ai-agent-compliance.jpg',
+    imageAlt: 'AI Agent for Compliance Chat Interface',
+    stack: ['LLM', 'RAG', 'Chroma', 'Guardrails'],
+    highlights: ['Role-Scoped Answers', 'Audit Log', 'PII Redaction'],
+    status: 'completed',
+  },
+  {
+    num: '09',
+    title: 'Butics',
+    category: ['Retail', 'Mobile POS'],
+    image: '/assets/images/butics.jpg',
+    imageAlt: 'Butics Mobile POS in Use',
+    stack: ['Mobile POS', 'Barcode Scanning', 'Visual Catalogue', 'Payments'],
+    highlights: [
+      'Camera Barcode Scan',
+      'No-Barcode Fallback',
+      'Returns & Discounts',
+    ],
+    status: 'completed',
+  },
+  {
+    num: '10',
+    title: 'Nexus',
+    category: ['Personal CRM', 'Privacy'],
+    image: '/assets/images/nexus.jpg',
+    imageAlt: 'Nexus Personal CRM Interface',
+    stack: ['Personal CRM', 'Access Control', 'Multi-Device Sync'],
+    highlights: [
+      'Private Contact Spaces',
+      'Selective Sharing',
+      'Tiered Access',
+    ],
+    status: 'completed',
+  },
 ];
 
 const fadeUp: Variants = {
@@ -137,11 +222,12 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
   }));
 
   return (
-    <div className="bg-kosmos-950 text-gray-300 antialiased">
+    <div className="text-gray-300 antialiased">
       <Meta
         title={`${casesPage.title} — ${AppConfig.site_name}`}
         description={casesPage.subtitle}
       />
+      <GlobalBackground />
 
       <NavbarTwoColumns
         logo={<Logo xl />}
@@ -152,8 +238,10 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
 
       <main>
         {/* Page intro */}
-        <section className="relative overflow-hidden pb-16 pt-40">
-          <div className="pointer-events-none absolute left-1/2 top-0 size-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-purple/5 blur-[130px]" />
+        <section className="relative pb-16 pt-40">
+          {/* No overflow-hidden here — the glow is centered on the section's
+              top edge by design, so clipping it would flatten its top half. */}
+          <div className="pointer-events-none absolute left-1/2 top-0 z-0 size-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-purple/5 blur-[130px]" />
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.025]"
             style={{
@@ -275,15 +363,61 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
                 </motion.div>
 
                 {/* Description */}
-                <motion.p
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.2 }}
-                  className="mb-12 max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg"
-                >
-                  {c.description}
-                </motion.p>
+                {c.goal && c.solution && c.result ? (
+                  <motion.dl
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.2 }}
+                    className="mb-12 max-w-2xl space-y-3 text-base leading-relaxed text-gray-500 md:text-lg"
+                  >
+                    <div>
+                      <dt className="mr-1.5 inline font-mono text-xs font-semibold uppercase tracking-wider text-neon-purple-bright/70">
+                        {casesPage.labels.goal}:
+                      </dt>
+                      <dd className="inline">{c.goal}</dd>
+                    </div>
+                    <div>
+                      <dt className="mr-1.5 inline font-mono text-xs font-semibold uppercase tracking-wider text-neon-purple-bright/70">
+                        {casesPage.labels.solution}:
+                      </dt>
+                      <dd className="inline">{c.solution}</dd>
+                    </div>
+                    <div>
+                      <dt className="mr-1.5 inline font-mono text-xs font-semibold uppercase tracking-wider text-neon-purple-bright/70">
+                        {casesPage.labels.result}:
+                      </dt>
+                      <dd className="inline">
+                        {c.result.map((r, idx) => (
+                          <span key={r.text}>
+                            {idx > 0 && ' · '}
+                            {r.isPlaceholder ? (
+                              <span
+                                data-metric-todo="true"
+                                title="Placeholder — awaiting real metric"
+                                className="cursor-help border-b border-dashed border-neon-purple/40"
+                              >
+                                {r.text}
+                              </span>
+                            ) : (
+                              r.text
+                            )}
+                          </span>
+                        ))}
+                      </dd>
+                    </div>
+                  </motion.dl>
+                ) : (
+                  <motion.p
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.2 }}
+                    className="mb-12 max-w-2xl text-base leading-relaxed text-gray-500 md:text-lg"
+                  >
+                    {c.description}
+                  </motion.p>
+                )}
 
                 {/* Screenshot */}
                 <motion.div
@@ -392,7 +526,7 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
       </main>
 
       {/* Footer */}
-      <div className="border-white/8 border-t bg-kosmos-950">
+      <div className="border-white/8 border-t">
         <Section yPadding="py-12">
           <CenteredFooter logo={<Logo />} iconList={socialIcons}>
             <li>

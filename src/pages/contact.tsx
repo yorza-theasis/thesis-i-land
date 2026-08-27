@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 
-import { Background } from '../background/Background';
+import { GlobalBackground } from '../background/GlobalBackground';
 import { CenteredFooter } from '../footer/CenteredFooter';
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher';
 import { LocaleProvider, useT } from '../i18n/LocaleContext';
@@ -111,11 +111,12 @@ const ContactPageInner = ({ locale }: { locale: Locale }) => {
   };
 
   return (
-    <div className="bg-kosmos-950 text-gray-300 antialiased">
+    <div className="text-gray-300 antialiased">
       <Meta
         title={`${contactPage.title} — ${AppConfig.site_name}`}
         description={contactPage.subtitle}
       />
+      <GlobalBackground />
 
       <NavbarTwoColumns
         logo={<Logo xl />}
@@ -124,135 +125,133 @@ const ContactPageInner = ({ locale }: { locale: Locale }) => {
         langSwitcher={<LanguageSwitcher subPath="contact/" />}
       />
 
-      <Background withGrid withGlow>
-        <Section yPadding="pt-36 pb-24">
-          <div className="mx-auto max-w-xl">
-            <h1 className="mb-4 text-4xl font-bold tracking-tightest text-white">
-              {contactPage.title}
-            </h1>
-            <p className="mb-8 text-lg text-gray-400">{contactPage.subtitle}</p>
+      <Section yPadding="pt-36 pb-24">
+        <div className="mx-auto max-w-xl">
+          <h1 className="mb-4 text-4xl font-bold tracking-tightest text-white">
+            {contactPage.title}
+          </h1>
+          <p className="mb-8 text-lg text-gray-400">{contactPage.subtitle}</p>
 
-            {status === 'success' ? (
-              <div className="glass-card rounded-xl p-8 text-center">
-                <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full border border-neon-purple/30 bg-neon-purple/10">
-                  <svg
-                    className="size-7 text-neon-purple-bright"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <h2 className="mb-2 text-2xl font-bold text-white">
-                  {contactPage.success.title}
-                </h2>
-                <p className="mb-6 text-gray-400">
-                  {contactPage.success.subtitle}
-                </p>
-                <Link
-                  href={`${base}/`}
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-neon-purple to-neon-blue px-6 py-2.5 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
+          {status === 'success' ? (
+            <div className="glass-card rounded-xl p-8 text-center">
+              <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full border border-neon-purple/30 bg-neon-purple/10">
+                <svg
+                  className="size-7 text-neon-purple-bright"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  {contactPage.success.backHome}
-                </Link>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block font-mono text-sm font-medium text-gray-400"
-                  >
-                    {contactPage.fields.name}{' '}
-                    <span className="text-neon-purple">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block font-mono text-sm font-medium text-gray-400"
-                  >
-                    {contactPage.fields.email}{' '}
-                    <span className="text-neon-purple">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="company"
-                    className="mb-2 block font-mono text-sm font-medium text-gray-400"
-                  >
-                    {contactPage.fields.company}
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="mb-2 block font-mono text-sm font-medium text-gray-400"
-                  >
-                    {contactPage.fields.message}{' '}
-                    <span className="text-neon-purple">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={5}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
-                  />
-                </div>
-
-                {status === 'error' && (
-                  <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 font-mono text-sm text-red-400">
-                    {errorMessage}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={status === 'submitting'}
-                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-neon-purple to-neon-blue px-8 py-3.5 text-base font-semibold text-white shadow-neon-purple transition-all duration-300 hover:-translate-y-0.5 hover:shadow-neon-purple-lg disabled:cursor-not-allowed disabled:opacity-50"
+              <h2 className="mb-2 text-2xl font-bold text-white">
+                {contactPage.success.title}
+              </h2>
+              <p className="mb-6 text-gray-400">
+                {contactPage.success.subtitle}
+              </p>
+              <Link
+                href={`${base}/`}
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-neon-purple to-neon-blue px-6 py-2.5 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
+              >
+                {contactPage.success.backHome}
+              </Link>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block font-mono text-sm font-medium text-gray-400"
                 >
-                  {status === 'submitting'
-                    ? contactPage.submitting
-                    : contactPage.submit}
-                </button>
-              </form>
-            )}
-          </div>
-        </Section>
-      </Background>
+                  {contactPage.fields.name}{' '}
+                  <span className="text-neon-purple">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block font-mono text-sm font-medium text-gray-400"
+                >
+                  {contactPage.fields.email}{' '}
+                  <span className="text-neon-purple">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="company"
+                  className="mb-2 block font-mono text-sm font-medium text-gray-400"
+                >
+                  {contactPage.fields.company}
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-2 block font-mono text-sm font-medium text-gray-400"
+                >
+                  {contactPage.fields.message}{' '}
+                  <span className="text-neon-purple">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={5}
+                  className="w-full rounded-xl border border-white/10 bg-white/5 p-3.5 text-white backdrop-blur-sm transition-colors placeholder:text-gray-600 focus:border-neon-purple/50 focus:outline-none focus:ring-1 focus:ring-neon-purple/30"
+                />
+              </div>
+
+              {status === 'error' && (
+                <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 font-mono text-sm text-red-400">
+                  {errorMessage}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-neon-purple to-neon-blue px-8 py-3.5 text-base font-semibold text-white shadow-neon-purple transition-all duration-300 hover:-translate-y-0.5 hover:shadow-neon-purple-lg disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {status === 'submitting'
+                  ? contactPage.submitting
+                  : contactPage.submit}
+              </button>
+            </form>
+          )}
+        </div>
+      </Section>
 
       {/* Footer */}
-      <div className="border-white/8 border-t bg-kosmos-950">
+      <div className="border-white/8 border-t">
         <Section yPadding="py-12">
           <CenteredFooter logo={<Logo />} iconList={socialIcons}>
             <li>
