@@ -28,12 +28,12 @@ module.exports = {
         foreground: 'var(--foreground)',
         /* ── Professional Neon accent palette ── */
         neon: {
-          purple: '#9d34ff',
+          purple: '#b026ff',
           'purple-bright': '#d49bff',
-          'purple-dim': 'rgba(157, 52, 255, 0.12)',
-          blue: '#1155ff',
+          'purple-dim': 'rgba(176, 38, 255, 0.12)',
+          blue: '#0047ff',
           'blue-bright': '#99b8ff',
-          'blue-dim': 'rgba(17, 85, 255, 0.12)',
+          'blue-dim': 'rgba(0, 71, 255, 0.12)',
         },
         /* ── Dark surface scale ── */
         kosmos: {
@@ -113,20 +113,20 @@ module.exports = {
       },
       boxShadow: {
         'neon-purple':
-          '0 0 15px rgba(157, 52, 255, 0.25), 0 0 50px rgba(157, 52, 255, 0.08)',
+          '0 0 15px rgba(176, 38, 255, 0.28), 0 0 50px rgba(176, 38, 255, 0.1)',
         'neon-blue':
-          '0 0 15px rgba(17, 85, 255, 0.25), 0 0 50px rgba(17, 85, 255, 0.08)',
+          '0 0 15px rgba(0, 71, 255, 0.25), 0 0 50px rgba(0, 71, 255, 0.08)',
         'neon-purple-lg':
-          '0 0 30px rgba(157, 52, 255, 0.35), 0 0 80px rgba(157, 52, 255, 0.15)',
+          '0 0 30px rgba(176, 38, 255, 0.45), 0 0 80px rgba(176, 38, 255, 0.18)',
         glass:
           'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.5)',
       },
       backgroundImage: {
-        'gradient-neon': 'linear-gradient(135deg, #9d34ff 0%, #1155ff 100%)',
+        'gradient-neon': 'linear-gradient(135deg, #b026ff 0%, #0047ff 100%)',
         'gradient-neon-soft':
           'linear-gradient(135deg, rgba(176,38,255,0.8) 0%, rgba(0,71,255,0.8) 100%)',
         'gradient-text':
-          'linear-gradient(135deg, #ffffff 0%, #e5b5ff 40%, #b9c3ff 100%)',
+          'linear-gradient(135deg, #ffffff 0%, #d49bff 38%, #a8b8ff 100%)',
         'mesh-purple':
           'radial-gradient(ellipse at 20% 20%, rgba(176,38,255,0.15) 0%, transparent 60%)',
         'mesh-blue':
