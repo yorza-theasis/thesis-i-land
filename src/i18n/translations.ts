@@ -130,7 +130,7 @@ export const translations: Record<Locale, Translations> = {
       headline1: ['Scaling', 'Businesses'],
       headline2: ['with AI &', 'Software.'],
       subtitle:
-        'We build premium AI-powered software and autonomous agents designed to automate workflows, scale operations, and directly multiply your business revenue.',
+        'We take on complex, cross-industry problems other agencies pass on, and stay hands-on from idea to production — so what we ship moves your revenue, not just your roadmap.',
       cta: { primary: 'View Portfolio', secondary: 'Our Services' },
       stats: [
         { end: 50, suffix: 'M+', label: 'Users served' },
@@ -147,38 +147,38 @@ export const translations: Record<Locale, Translations> = {
     },
     services: {
       eyebrow: 'What we build',
-      title: 'Engineering Excellence.',
+      title: 'Capabilities That Pay for Themselves.',
       description:
-        'We operate at the intersection of strong technical craft and product thinking — covering the full stack, from pixel to pipeline.',
+        'Five capability areas, each pointed at one goal — fewer surprises, faster delivery, and software that earns its keep.',
       items: [
         {
           title: 'Mobile & Web Development',
           description:
-            'Cross-platform mobile apps with Kotlin & KMP, and modern web interfaces with React/Next.js. Performant, polished experiences from native Android to the browser.',
+            'One codebase, every platform — so you ship to iOS, Android, and web without tripling your dev budget or your timeline.',
           stat: '8+ apps',
         },
         {
           title: 'Backend & API Development',
           description:
-            'Scalable Java/Spring microservices, RESTful and gRPC APIs, event-driven systems with Kafka — built to handle millions of requests at enterprise scale.',
+            'Systems built to handle your busiest day, not just your demo day — so growth never turns into downtime.',
           stat: '12+ services',
         },
         {
           title: 'Cloud & DevOps',
           description:
-            'Cloud-native infrastructure on AWS and Azure. Docker, Kubernetes, Helm — full CI/CD pipelines with automated deployments, monitoring, and reliable operations.',
+            "Deploys that don't need a war room. Automated pipelines and monitoring mean fewer 2am pages and faster releases.",
           stat: '5+ clusters',
         },
         {
           title: 'Architecture & Consulting',
           description:
-            'Technical leadership from service boundaries and API contracts to technology selection. We bring architectural clarity and engineering confidence to complex systems.',
+            'The right technical decisions made early, before they become expensive to undo six months in.',
           stat: '3 greenfields',
         },
         {
           title: 'Reducing AI-Slop',
           description:
-            'We architect purposeful machine learning systems that directly drive ROI. We replace generic, bloated AI integrations with fine-tuned, scalable models designed for precision and operational efficiency.',
+            'AI that earns its budget line — fine-tuned models built for your actual use case, not a bolted-on chatbot that impresses no one.',
           stat: 'High ROI',
         },
       ],
@@ -403,8 +403,9 @@ export const translations: Record<Locale, Translations> = {
       submitting: 'Sending...',
     },
     banner: {
-      title: "Let's build something remarkable.",
-      subtitle: 'Tell us about your project.',
+      title: "Let's build something that moves the numbers.",
+      subtitle:
+        "Tell us about your project — we'll tell you honestly if we're the right fit.",
       cta: 'Contact Us',
     },
     footer: {
@@ -439,7 +440,7 @@ export const translations: Record<Locale, Translations> = {
       headline1: ['Масштабуємо', 'Бізнеси'],
       headline2: ['за допомогою', 'ШІ та Software.'],
       subtitle:
-        'Ми створюємо якісне програмне забезпечення на основі ШІ та автономні агенти, призначені для автоматизації процесів, масштабування операцій та прямого збільшення доходу вашого бізнесу.',
+        'Ми беремося за складні, міжгалузеві задачі, від яких відмовляються інші студії, і супроводжуємо проєкт від ідеї до продакшну — щоб результат впливав на ваш дохід, а не лише на роадмап.',
       cta: { primary: 'Портфоліо', secondary: 'Наші послуги' },
       stats: [
         { end: 50, suffix: 'M+', label: 'Користувачів' },
@@ -456,38 +457,38 @@ export const translations: Record<Locale, Translations> = {
     },
     services: {
       eyebrow: 'Що ми будуємо',
-      title: 'Інженерна досконалість.',
+      title: 'Можливості, що окупають себе.',
       description:
-        'Ми працюємо на перетині міцного технічного виконання та продуктового мислення — покриваючи повний стек, від пікселя до пайплайну.',
+        "П'ять напрямів, і в кожному — одна мета: менше сюрпризів, швидша доставка та софт, який відпрацьовує свою вартість.",
       items: [
         {
           title: 'Мобільна та веброзробка',
           description:
-            'Крос-платформні мобільні застосунки на Kotlin & KMP та сучасні вебінтерфейси з React/Next.js. Продуктивний, відточений досвід від нативного Android до браузера.',
+            'Один код — усі платформи: iOS, Android і веб без потроєння бюджету й термінів розробки.',
           stat: '8+ застосунків',
         },
         {
           title: 'Бекенд та API-розробка',
           description:
-            'Масштабовані мікросервіси на Java/Spring, RESTful та gRPC API, event-driven системи з Kafka — для обробки мільйонів запитів корпоративного масштабу.',
+            'Системи, розраховані на ваш найнавантаженіший день, а не лише на демо — щоб зростання не оберталося простоєм.',
           stat: '12+ сервісів',
         },
         {
           title: 'Хмара та DevOps',
           description:
-            'Cloud-native інфраструктура на AWS та Azure. Docker, Kubernetes, Helm — повні CI/CD пайплайни з автоматизованими деплоями, моніторингом та надійними операціями.',
+            'Релізи без нічних авралів. Автоматизовані пайплайни та моніторинг — менше дзвінків о другій ночі, швидші релізи.',
           stat: '5+ кластерів',
         },
         {
           title: 'Архітектура та консалтинг',
           description:
-            'Технічне лідерство — від меж сервісів та API-контрактів до вибору технологій. Ми привносимо архітектурну ясність та інженерну впевненість у складні системи.',
+            'Правильні технічні рішення, ухвалені рано — поки їх ще дешево змінити, а не через півроку.',
           stat: '3 greenfields',
         },
         {
           title: 'Боротьба з AI-Slop',
           description:
-            'Ми проєктуємо цілеспрямовані ML-системи, що генерують прямий ROI. Замінюємо роздуті generic AI-інтеграції точно налаштованими, масштабованими моделями для ефективних операцій.',
+            'ШІ, який відпрацьовує свій бюджет — моделі, налаштовані під ваш реальний кейс, а не черговий чат-бот для галочки.',
           stat: 'Високий ROI',
         },
       ],
@@ -713,8 +714,9 @@ export const translations: Record<Locale, Translations> = {
       submitting: 'Надсилається...',
     },
     banner: {
-      title: 'Давайте побудуємо щось видатне.',
-      subtitle: 'Розкажіть нам про свій проєкт.',
+      title: 'Давайте побудуємо те, що вплине на цифри.',
+      subtitle:
+        'Розкажіть про свій проєкт — чесно скажемо, чи підходимо один одному.',
       cta: "Зв'язатися",
     },
     footer: {
