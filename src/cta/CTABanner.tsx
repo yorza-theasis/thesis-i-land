@@ -32,9 +32,9 @@ const CTABanner = (props: ICTABannerProps) => (
     {/* Center glow — no overflow-hidden on the card, so these bleed past
         its rounded border instead of getting flattened at the edge */}
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-      <div className="bg-neon-purple/14 size-[700px] rounded-full blur-[130px]" />
+      <div className="bg-neon-purple/14 size-[700px] rounded-full blur-[70px]" />
     </div>
-    <div className="bg-neon-blue/8 pointer-events-none absolute left-1/4 top-0 size-[400px] -translate-x-1/2 rounded-full blur-[100px]" />
+    <div className="bg-neon-blue/8 pointer-events-none absolute left-1/4 top-0 size-[400px] -translate-x-1/2 rounded-full blur-[55px]" />
 
     {/* Animated scan line — kept within 0%–100% since nothing clips it now */}
     <motion.div

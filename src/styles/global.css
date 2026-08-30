@@ -120,14 +120,29 @@
   to   { transform: rotate(-360deg); }
 }
 
+/* Hero orbit rings — two rotation directions, reused both to drive a ring's
+   spin and (at a matching duration) to cancel it out on the label inside so
+   the label itself stays upright while its position sweeps around. Pure
+   `rotate()` — compositor-only on every engine, so this is safe to run
+   indefinitely on any OS without repaint cost. */
+@keyframes orbit-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes orbit-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
 @keyframes shimmer-x {
   0%   { left: -100%; }
   100% { left: 200%; }
 }
 
 @keyframes grid-drift {
-  from { background-position: 0 0; }
-  to   { background-position: 40px 40px; }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-40px, -40px, 0); }
 }
 
 @keyframes grid-breathe {
@@ -146,6 +161,17 @@
 .animate-grid-breathe  { animation: grid-breathe 6s ease-in-out infinite; }
 .animate-counter-spin-ring { animation: counter-spin-ring 18s linear infinite; }
 
+/* Ring A (inner, tech labels) and Ring B (outer, business labels) rotate in
+   opposite directions at different speeds so they read as two independent
+   orbits, not one rigid unit. The "-cancel" pair shares the exact duration
+   of the ring it belongs to, so nesting it inside that ring's rotation
+   exactly cancels the spin — the label sweeps around the sphere but its own
+   text never tilts. */
+.animate-ring-a        { animation: orbit-cw 46s linear infinite; }
+.animate-ring-a-cancel { animation: orbit-ccw 46s linear infinite; }
+.animate-ring-b        { animation: orbit-ccw 34s linear infinite; }
+.animate-ring-b-cancel { animation: orbit-cw 34s linear infinite; }
+
 /* ─── Glassmorphism — desktop with blur, mobile solid ──── */
 
 .glass-panel {
@@ -157,8 +183,10 @@
 @media (min-width: 768px) {
   .glass-panel {
     background: rgba(255, 255, 255, 0.025);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    /* Kept modest on purpose — backdrop-filter cost scales with blur radius
+       and element area, and this panel is often full-width. */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 
@@ -171,8 +199,10 @@
 @media (min-width: 768px) {
   .glass-card {
     background: rgba(255, 255, 255, 0.032);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    /* Kept modest on purpose — several of these render at once in the
+       services/portfolio grids, and backdrop-filter cost stacks per element. */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 

@@ -24,7 +24,6 @@ type CasesMeta = {
   category: string[];
   image: string;
   imageAlt: string;
-  stack: string[];
   highlights: string[];
   status: CaseStatus;
   href?: string;
@@ -37,7 +36,6 @@ const CASES_META: CasesMeta[] = [
     category: ['AI Agents', 'SaaS', 'FastAPI'],
     image: '/assets/images/extensa.jpg',
     imageAlt: 'Extensa AI Dashboard',
-    stack: ['Python', 'FastAPI', 'Claude AI', 'Celery', 'PostgreSQL'],
     highlights: ['Autonomous AI Agent', 'Dynamic ICPs', 'Background Tasks'],
     status: 'completed',
     href: '#',
@@ -48,7 +46,6 @@ const CASES_META: CasesMeta[] = [
     category: ['AI & HealthTech', 'RAG', 'FastAPI'],
     image: '/assets/images/gmi.svg',
     imageAlt: 'GMI Documentation Verifier Dashboard',
-    stack: ['Python', 'FastAPI', 'Claude AI', 'RAG', 'PostgreSQL'],
     highlights: ['37 Doc Checks', '3-Layer Pipeline', 'Doctor Reports'],
     status: 'in_progress',
   },
@@ -56,9 +53,8 @@ const CASES_META: CasesMeta[] = [
     num: '03',
     title: 'AI Dept Platform',
     category: ['Web Development', 'AI Integration'],
-    image: '/assets/images/684_1x_shots_so.png',
+    image: '/assets/images/684_1x_shots_so.jpg',
     imageAlt: 'AI Dept Platform Dashboard',
-    stack: ['Next.js', 'Spring Boot', 'MongoDB', 'Ollama', 'Kubernetes'],
     highlights: ['Custom RAG', 'K8s Cluster', 'Full Stack'],
     status: 'completed',
     href: 'https://aidept.com.ua/en',
@@ -67,9 +63,8 @@ const CASES_META: CasesMeta[] = [
     num: '04',
     title: 'Niania24',
     category: ['Mobile App', 'Cross-platform'],
-    image: '/assets/images/21_1x_shots_so.png',
+    image: '/assets/images/21_1x_shots_so.jpg',
     imageAlt: 'Niania24 Mobile App',
-    stack: ['React Native', 'Expo', 'Supabase', 'Next.js'],
     highlights: ['iOS & Android', 'Real-time', 'Secure Payments'],
     status: 'completed',
     href: 'https://www.niania24.com/ua',
@@ -78,16 +73,8 @@ const CASES_META: CasesMeta[] = [
     num: '05',
     title: 'IBD Registry',
     category: ['MedTech', 'Patient Registry', 'Next.js'],
-    image: '/assets/images/shot_zzk.png',
+    image: '/assets/images/shot_zzk.jpg',
     imageAlt: 'IBD Registry Dashboard',
-    stack: [
-      'Next.js 16',
-      'TypeScript',
-      'FastAPI',
-      'Tailwind CSS v4',
-      'Zustand',
-      'Zod',
-    ],
     highlights: ['Magic Link Auth', 'Role-Based Access', 'PRO2 Scoring'],
     status: 'completed',
   },
@@ -97,7 +84,6 @@ const CASES_META: CasesMeta[] = [
     category: ['AI & HealthTech', 'NER', 'On-premise'],
     image: '/assets/images/gmi.svg',
     imageAlt: 'Cardiology Documentation Audit',
-    stack: ['NER Pipeline', 'ICD-10', 'LLM', 'FastAPI', 'On-premise'],
     highlights: ['Ukrainian NER', 'ICD-10 Mapping', 'Discrepancy Detection'],
     status: 'in_progress',
   },
@@ -107,12 +93,6 @@ const CASES_META: CasesMeta[] = [
     category: ['Robotics', 'Retail Automation'],
     image: '/assets/images/qpick.jpg',
     imageAlt: 'Q-Pick Robotic Retail Kiosk',
-    stack: [
-      'Computer Vision',
-      'Robotic Arm Control',
-      'Vacuum Gripper',
-      'Machine Learning',
-    ],
     highlights: [
       'Real Shelf Conditions',
       'Adaptive Grip Detection',
@@ -126,7 +106,6 @@ const CASES_META: CasesMeta[] = [
     category: ['AI', 'Compliance'],
     image: '/assets/images/ai-agent-compliance.jpg',
     imageAlt: 'AI Agent for Compliance Chat Interface',
-    stack: ['LLM', 'RAG', 'Chroma', 'Guardrails'],
     highlights: ['Role-Scoped Answers', 'Audit Log', 'PII Redaction'],
     status: 'completed',
   },
@@ -136,7 +115,6 @@ const CASES_META: CasesMeta[] = [
     category: ['Retail', 'Mobile POS'],
     image: '/assets/images/butics.jpg',
     imageAlt: 'Butics Mobile POS in Use',
-    stack: ['Mobile POS', 'Barcode Scanning', 'Visual Catalogue', 'Payments'],
     highlights: [
       'Camera Barcode Scan',
       'No-Barcode Fallback',
@@ -150,7 +128,6 @@ const CASES_META: CasesMeta[] = [
     category: ['Personal CRM', 'Privacy'],
     image: '/assets/images/nexus.jpg',
     imageAlt: 'Nexus Personal CRM Interface',
-    stack: ['Personal CRM', 'Access Control', 'Multi-Device Sync'],
     highlights: [
       'Private Contact Spaces',
       'Selective Sharing',
@@ -241,7 +218,7 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
         <section className="relative pb-16 pt-40">
           {/* No overflow-hidden here — the glow is centered on the section's
               top edge by design, so clipping it would flatten its top half. */}
-          <div className="pointer-events-none absolute left-1/2 top-0 z-0 size-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-purple/5 blur-[130px]" />
+          <div className="pointer-events-none absolute left-1/2 top-0 z-0 size-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon-purple/5 blur-[70px]" />
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.025]"
             style={{
@@ -264,8 +241,8 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.85,
                 delay: 0.08,
@@ -430,6 +407,8 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
                   <img
                     src={c.image}
                     alt={c.imageAlt}
+                    loading="lazy"
+                    decoding="async"
                     className={`aspect-video w-full transition-transform duration-700 group-hover:scale-[1.02] ${c.image.endsWith('.svg') ? 'object-contain' : 'object-cover'}`}
                   />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-kosmos-950/65 to-transparent" />
@@ -441,7 +420,7 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
                   />
                 </motion.div>
 
-                {/* Stack + highlights */}
+                {/* Tags + highlights */}
                 <motion.div
                   variants={fadeUp}
                   initial="hidden"
@@ -450,7 +429,7 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
                   className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between"
                 >
                   <div className="flex flex-wrap gap-2">
-                    {c.stack.map((t) => (
+                    {c.tags.map((t) => (
                       <span
                         key={t}
                         className="border-white/8 rounded-full border bg-white/[0.03] px-3 py-1 font-mono text-xs text-gray-600"
@@ -470,31 +449,40 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
                         {h}
                       </div>
                     ))}
-                    {c.href && (
-                      <a
-                        href={c.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 font-mono text-xs text-neon-purple-bright/65 transition-colors duration-200 hover:text-neon-purple-bright"
-                      >
-                        {casesPage.visitLive}
-                        <svg
-                          className="size-3"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      </a>
-                    )}
                   </div>
                 </motion.div>
+
+                {/* Visit live */}
+                {c.href && (
+                  <motion.div
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.3 }}
+                    className="mt-8"
+                  >
+                    <a href={c.href} target="_blank" rel="noopener noreferrer">
+                      <Button outline>
+                        <span className="flex items-center gap-2">
+                          {casesPage.visitLive}
+                          <svg
+                            className="size-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                            />
+                          </svg>
+                        </span>
+                      </Button>
+                    </a>
+                  </motion.div>
+                )}
               </div>
             </section>
           );
@@ -503,7 +491,7 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
         {/* CTA */}
         <section className="border-white/6 relative border-t py-24">
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <div className="size-[500px] rounded-full bg-neon-purple/5 blur-[110px]" />
+            <div className="size-[500px] rounded-full bg-neon-purple/5 blur-[60px]" />
           </div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -89,12 +89,13 @@ const MobileSphere = () => (
       }}
     />
     <div
-      className="animate-morph-sphere size-[70px] will-change-transform"
+      className="animate-morph-sphere size-[70px]"
       style={{
         background:
           'radial-gradient(circle at 33% 28%, rgba(229,181,255,0.9) 0%, rgba(176,38,255,0.78) 24%, rgba(0,71,255,0.5) 58%, rgba(5,5,14,0.97) 80%)',
         boxShadow:
           '0 0 35px rgba(176,38,255,0.55), 0 0 70px rgba(176,38,255,0.12)',
+        willChange: 'border-radius',
       }}
     >
       <div
@@ -138,10 +139,12 @@ const DataRing = () => {
         let tickLen = 4;
         if (isMajor) tickLen = 14;
         else if (isMid) tickLen = 8;
-        const x1 = 265 + r * Math.cos(rad);
-        const y1 = 265 + r * Math.sin(rad);
-        const x2 = 265 + (r - tickLen) * Math.cos(rad);
-        const y2 = 265 + (r - tickLen) * Math.sin(rad);
+        // Rounded to avoid a hydration mismatch — server and client can
+        // compute the last digit of Math.cos/sin differently.
+        const x1 = +(265 + r * Math.cos(rad)).toFixed(3);
+        const y1 = +(265 + r * Math.sin(rad)).toFixed(3);
+        const x2 = +(265 + (r - tickLen) * Math.cos(rad)).toFixed(3);
+        const y2 = +(265 + (r - tickLen) * Math.sin(rad)).toFixed(3);
         let tickStroke = 'rgba(176,38,255,0.08)';
         if (isMajor) tickStroke = 'rgba(176,38,255,0.55)';
         else if (isMid) tickStroke = 'rgba(176,38,255,0.22)';
@@ -159,8 +162,8 @@ const DataRing = () => {
       })}
       {[0, 90, 180, 270].map((angle) => {
         const rad = ((angle - 90) * Math.PI) / 180;
-        const cx = 265 + 258 * Math.cos(rad);
-        const cy = 265 + 258 * Math.sin(rad);
+        const cx = +(265 + 258 * Math.cos(rad)).toFixed(3);
+        const cy = +(265 + 258 * Math.sin(rad)).toFixed(3);
         return (
           <circle
             key={angle}
@@ -179,15 +182,23 @@ const DataRing = () => {
 /* ─── Floating tech label ─────────────────────── */
 type FloatLabelProps = {
   text: string;
-  style: CSSProperties;
   delay: number;
   reduced?: boolean;
+  variant?: 'tech' | 'business';
 };
 
-const FloatLabel = ({ text, style, delay, reduced }: FloatLabelProps) => (
+const FloatLabel = ({
+  text,
+  delay,
+  reduced,
+  variant = 'tech',
+}: FloatLabelProps) => (
   <motion.div
-    className="animate-float border-neon-purple/18 absolute rounded-lg border bg-kosmos-900/85 px-3 py-1.5 font-mono text-xs font-medium text-neon-purple-bright/75 backdrop-blur-md"
-    style={style}
+    className={`animate-float rounded-lg border px-3 py-1.5 font-mono text-xs font-medium ${
+      variant === 'business'
+        ? 'border-white/10 bg-gradient-to-r from-neon-purple/25 via-kosmos-900/95 to-neon-gold/25 text-neon-gold-bright/90'
+        : 'border-neon-purple/18 bg-kosmos-900/95 text-neon-purple-bright/75'
+    }`}
     initial={{ opacity: 0, scale: 0.7 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={
@@ -200,46 +211,156 @@ const FloatLabel = ({ text, style, delay, reduced }: FloatLabelProps) => (
   </motion.div>
 );
 
+/* ─── Orbit label — placed at a fixed angle/radius on a ring, then nested
+ * inside that ring's rotation with an equal-and-opposite "cancel" spin so
+ * the label sweeps around the sphere while its own text stays upright. All
+ * three transforms involved (ring spin, placement, cancel spin) are plain
+ * `rotate`/`translate` — compositor-only, so this costs nothing extra per
+ * frame regardless of OS or browser. ───────────────────────────────── */
+type OrbitLabelProps = {
+  text: string;
+  angle: number;
+  radius: number;
+  variant: 'tech' | 'business';
+  delay: number;
+  reduced: boolean;
+  cancelSpinClassName: string;
+};
+
+const OrbitLabel = ({
+  text,
+  angle,
+  radius,
+  variant,
+  delay,
+  reduced,
+  cancelSpinClassName,
+}: OrbitLabelProps) => (
+  <div
+    className="absolute left-1/2 top-1/2"
+    style={{
+      // The trailing translate(-50%,-50%) centers the label on the orbit
+      // point. It has to live in this same static inline transform (rather
+      // than a Tailwind translate utility on the child) because the child's
+      // cancel-spin keyframe sets `transform` directly each frame, which
+      // would silently wipe out any transform-utility classes on that
+      // element instead of composing with them.
+      transform: `rotate(${angle}deg) translateX(${radius}px) rotate(${-angle}deg) translate(-50%, -50%)`,
+    }}
+  >
+    <div className={cancelSpinClassName}>
+      <FloatLabel
+        text={text}
+        delay={delay}
+        reduced={reduced}
+        variant={variant}
+      />
+    </div>
+  </div>
+);
+
+const TECH_ORBIT_LABELS = [
+  { text: 'Python / FastAPI', angle: 45 },
+  { text: 'Kotlin / KMP', angle: 135 },
+  { text: 'Kubernetes', angle: 225 },
+  { text: 'Next.js', angle: 315 },
+];
+
 /* ─── Full animated sphere ────────────────────── */
-const AnimatedSphere = ({ reduced }: { reduced: boolean }) => (
-  <div className="relative flex size-[530px] items-center justify-center">
+const AnimatedSphere = ({
+  reduced,
+  businessLabels,
+}: {
+  reduced: boolean;
+  businessLabels: [string, string, string, string];
+}) => (
+  <div
+    className="relative flex size-[530px] items-center justify-center"
+    style={{ perspective: '1300px' }}
+  >
     <div
-      className="pointer-events-none absolute size-[460px] rounded-full opacity-45 blur-[100px]"
+      className="pointer-events-none absolute size-[460px] rounded-full opacity-45 blur-[60px]"
       style={{
         background:
           'radial-gradient(circle, rgba(176,38,255,0.5) 0%, rgba(0,71,255,0.3) 50%, transparent 70%)',
       }}
     />
 
-    <DataRing />
-
+    {/* Orbit scene — tilted in 3D so the rings and labels read as an actual
+        disc seen at an angle instead of flat concentric circles. The tilt
+        itself is static (painted once); only the rotations inside it
+        animate, so the 3D context adds depth without adding per-frame cost. */}
     <div
-      className="animate-spin-ring absolute size-[430px] rounded-full will-change-transform"
-      style={{ border: '1px solid rgba(176,38,255,0.09)' }}
-    />
-    <div
-      className="animate-counter-spin-ring absolute size-[352px] rounded-full will-change-transform"
-      style={{ border: '1px dashed rgba(0,71,255,0.13)' }}
-    />
-    <div
-      className="animate-spin-ring absolute size-[290px] rounded-full will-change-transform"
-      style={{
-        border: '1px solid rgba(176,38,255,0.07)',
-        animationDuration: '20s',
-      }}
+      className="pointer-events-none absolute inset-0"
+      style={{ transformStyle: 'preserve-3d', transform: 'rotateX(24deg)' }}
     >
-      <div className="absolute -top-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-neon-purple/85 shadow-[0_0_8px_rgba(176,38,255,0.9)]" />
-      <div className="absolute -bottom-1 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-neon-blue/60" />
-      <div className="absolute left-0 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-neon-blue/40" />
+      <DataRing />
+
+      <div
+        className="animate-spin-ring absolute size-[430px] rounded-full will-change-transform"
+        style={{ border: '1px solid rgba(176,38,255,0.09)' }}
+      />
+      <div
+        className="animate-counter-spin-ring absolute size-[352px] rounded-full will-change-transform"
+        style={{ border: '1px dashed rgba(0,71,255,0.13)' }}
+      />
+      <div
+        className="animate-spin-ring absolute size-[290px] rounded-full will-change-transform"
+        style={{
+          border: '1px solid rgba(176,38,255,0.07)',
+          animationDuration: '20s',
+        }}
+      >
+        <div className="absolute -top-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-neon-purple/85 shadow-[0_0_8px_rgba(176,38,255,0.9)]" />
+        <div className="absolute -bottom-1 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-neon-blue/60" />
+        <div className="absolute left-0 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-neon-blue/40" />
+      </div>
+
+      {/* Ring A — inner, tech labels, clockwise */}
+      <div className="animate-ring-a absolute inset-0 will-change-transform">
+        {TECH_ORBIT_LABELS.map((item, i) => (
+          <OrbitLabel
+            key={item.text}
+            text={item.text}
+            angle={item.angle}
+            radius={190}
+            variant="tech"
+            delay={0.8 + i * 0.1}
+            reduced={reduced}
+            cancelSpinClassName="animate-ring-a-cancel"
+          />
+        ))}
+      </div>
+
+      {/* Ring B — outer, business/stat labels, counter-clockwise */}
+      <div className="animate-ring-b absolute inset-0 will-change-transform">
+        {businessLabels.map((text, i) => (
+          <OrbitLabel
+            key={text}
+            text={text}
+            angle={i * 90}
+            radius={265}
+            variant="business"
+            delay={1.2 + i * 0.1}
+            reduced={reduced}
+            cancelSpinClassName="animate-ring-b-cancel"
+          />
+        ))}
+      </div>
     </div>
 
     <div
-      className="animate-morph-sphere relative z-10 size-[230px] will-change-transform md:size-[265px]"
+      className="animate-morph-sphere relative z-10 size-[230px] md:size-[265px]"
       style={{
         background:
           'radial-gradient(circle at 32% 26%, rgba(229,181,255,0.94) 0%, rgba(176,38,255,0.8) 20%, rgba(80,10,180,0.72) 42%, rgba(0,71,255,0.52) 60%, rgba(5,5,14,0.98) 80%)',
+        // Trimmed from 4 stacked shadows to 2 — border-radius is animating
+        // every frame here, so every shadow layer gets recomputed on every
+        // frame too. Fewer + smaller layers keeps the glow without paying
+        // for it 9s in a loop, forever, the whole time the hero is visible.
         boxShadow:
-          '0 0 90px rgba(176,38,255,0.65), 0 0 180px rgba(176,38,255,0.16), 0 0 45px rgba(0,71,255,0.28), inset 0 0 60px rgba(0,71,255,0.18)',
+          '0 0 90px rgba(176,38,255,0.55), inset 0 0 50px rgba(0,71,255,0.18)',
+        willChange: 'border-radius',
       }}
     >
       <div
@@ -285,75 +406,6 @@ const AnimatedSphere = ({ reduced }: { reduced: boolean }) => (
         }}
       />
     ))}
-
-    <svg
-      className="pointer-events-none absolute inset-0 z-10 size-full"
-      style={{ overflow: 'visible' }}
-    >
-      <motion.path
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 1 }}
-        transition={
-          reduced
-            ? { duration: 0 }
-            : { duration: 3, delay: 1.2, ease: 'easeInOut' }
-        }
-        d="M -20 80 L 60 150 L 265 265 L 260 -40 L 500 100 L 265 265 L 550 350 L 265 550 L 265 265 L 80 530 L -20 430 L 60 150 M -20 80 L 260 -40 M 500 100 L 550 350 M -20 430 L 80 530"
-        fill="none"
-        stroke="rgba(176,38,255,0.35)"
-        strokeWidth="1.5"
-        strokeDasharray="4 6"
-      />
-    </svg>
-
-    <FloatLabel
-      text="Python / FastAPI"
-      style={{ left: -40, top: 60 }}
-      delay={0.8}
-      reduced={reduced}
-    />
-    <FloatLabel
-      text="Kotlin / KMP"
-      style={{ left: 60, top: 150 }}
-      delay={0.9}
-      reduced={reduced}
-    />
-    <FloatLabel
-      text="AI Agents"
-      style={{ left: 220, top: -60 }}
-      delay={1.0}
-      reduced={reduced}
-    />
-    <FloatLabel
-      text="Spring Boot"
-      style={{ left: 470, top: 80 }}
-      delay={1.1}
-      reduced={reduced}
-    />
-    <FloatLabel
-      text="LLMs & RAG"
-      style={{ left: 520, top: 330 }}
-      delay={1.2}
-      reduced={reduced}
-    />
-    <FloatLabel
-      text="React Native"
-      style={{ left: 225, top: 540 }}
-      delay={1.3}
-      reduced={reduced}
-    />
-    <FloatLabel
-      text="Kubernetes"
-      style={{ left: 50, top: 520 }}
-      delay={1.4}
-      reduced={reduced}
-    />
-    <FloatLabel
-      text="Next.js"
-      style={{ left: -40, top: 410 }}
-      delay={1.5}
-      reduced={reduced}
-    />
   </div>
 );
 
@@ -363,14 +415,30 @@ const Hero = () => {
   const { hero, nav } = t;
   const prefersReducedMotion = useReducedMotion();
 
+  // Reuses the hero's own real numbers so the orbit reads as "this is our
+  // scale," not an invented claim — see hero.stats / hero.readout above.
+  const businessLabels: [string, string, string, string] = [
+    `${hero.stats[0]!.end}${hero.stats[0]!.suffix} ${hero.stats[0]!.label}`,
+    `${hero.stats[1]!.end}${hero.stats[1]!.suffix} ${hero.stats[1]!.label}`,
+    `${hero.stats[2]!.end}${hero.stats[2]!.suffix} ${hero.stats[2]!.label}`,
+    hero.readout.response,
+  ];
+
   // The sphere's ring/particle density tracks the stats count-up progress —
   // it reads as a visualization of scale filling in, not just decoration.
   // Written directly to a CSS var (no setState) so ~90 ticks/sec never
   // re-renders React; descendants pick it up via inheritance.
   const sphereWrapRef = useRef<HTMLDivElement>(null);
   const counterProgressRef = useRef<number[]>(hero.stats.map(() => 0));
+  const lastDensityWriteRef = useRef(0);
   const handleCounterProgress = (index: number, value: number) => {
     counterProgressRef.current[index] = value;
+    // Throttled: the receiving elements transition opacity over 200ms, so
+    // writing this var on every 16ms tick (up to 4 counters at once) was
+    // forcing far more style recalcs than the visible effect needed.
+    const now = Date.now();
+    if (value < 1 && now - lastDensityWriteRef.current < 50) return;
+    lastDensityWriteRef.current = now;
     const avg =
       counterProgressRef.current.reduce((a, b) => a + b, 0) /
       counterProgressRef.current.length;
@@ -515,8 +583,8 @@ const Hero = () => {
       <main className="relative">
         {/* Ambient mesh — no clipping, glows bleed into adjacent sections */}
         <div className="pointer-events-none absolute inset-0 z-0">
-          <div className="absolute left-[-10%] top-[-15%] size-[900px] rounded-full bg-neon-purple/[0.07] blur-[150px]" />
-          <div className="absolute bottom-[-18%] right-[-10%] size-[800px] rounded-full bg-neon-blue/[0.05] blur-[140px]" />
+          <div className="absolute left-[-10%] top-[-15%] size-[900px] rounded-full bg-neon-purple/[0.07] blur-[80px]" />
+          <div className="absolute bottom-[-18%] right-[-10%] size-[800px] rounded-full bg-neon-blue/[0.05] blur-[75px]" />
         </div>
 
         {/* Dot grid */}
@@ -556,22 +624,6 @@ const Hero = () => {
           <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-8">
             {/* Left */}
             <div className="flex flex-col items-start">
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: -6, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 280,
-                  damping: 22,
-                  delay: 0.05,
-                }}
-                className="border-neon-purple/22 bg-neon-purple/7 mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 font-mono text-xs font-medium tracking-wide text-neon-purple-bright/85"
-              >
-                <span className="animate-pulse-dot size-1.5 rounded-full bg-neon-purple" />
-                {hero.badge}
-              </motion.div>
-
               {/* Headline */}
               <h1
                 className="mb-6 text-5xl font-bold tracking-tightest text-white md:text-6xl xl:text-[4.25rem]"
@@ -582,8 +634,8 @@ const Hero = () => {
                     <motion.span
                       key={word}
                       className="mr-[0.22em] inline-block"
-                      initial={{ y: '110%', filter: 'blur(10px)' }}
-                      animate={{ y: 0, filter: 'blur(0px)' }}
+                      initial={{ y: '110%' }}
+                      animate={{ y: 0 }}
                       transition={{
                         delay: 0.1 + i * 0.09,
                         duration: 0.9,
@@ -599,8 +651,8 @@ const Hero = () => {
                     <motion.span
                       key={word}
                       className="text-gradient mr-[0.22em] inline-block"
-                      initial={{ y: '110%', filter: 'blur(10px)' }}
-                      animate={{ y: 0, filter: 'blur(0px)' }}
+                      initial={{ y: '110%' }}
+                      animate={{ y: 0 }}
                       transition={{
                         delay: 0.28 + i * 0.09,
                         duration: 0.9,
@@ -615,14 +667,14 @@ const Hero = () => {
 
               {/* Sub */}
               <motion.p
-                initial={{ opacity: 0, y: 16, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.75,
                   delay: 0.52,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="mb-10 max-w-[480px] text-base leading-relaxed text-gray-500 sm:text-lg"
+                className="mb-10 max-w-[480px] text-base leading-relaxed text-gray-400 sm:text-lg"
               >
                 {hero.subtitle}
               </motion.p>
@@ -667,8 +719,8 @@ const Hero = () => {
               ref={sphereWrapRef}
               className="flex items-center justify-center"
               style={{ '--data-density': 1 } as CSSProperties}
-              initial={{ opacity: 0, scale: 0.82, filter: 'blur(24px)' }}
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, scale: 0.82 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={
                 prefersReducedMotion
                   ? { duration: 0 }
@@ -681,24 +733,28 @@ const Hero = () => {
               </div>
               {/* Desktop: full sphere */}
               <div className="hidden lg:flex">
-                <AnimatedSphere reduced={!!prefersReducedMotion} />
+                <AnimatedSphere
+                  reduced={!!prefersReducedMotion}
+                  businessLabels={businessLabels}
+                />
               </div>
             </motion.div>
           </div>
 
-          {/* Stats strip — each stat links to the portfolio section that backs it up */}
+          {/* Stats strip — centered as its own compact block below the
+              two-column layout above, not stretched to match either column */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.82 }}
-            className="border-white/6 mt-20 grid grid-cols-2 gap-x-6 gap-y-8 border-t pt-12 sm:grid-cols-4"
+            className="border-white/6 mx-auto mt-20 grid max-w-xl grid-cols-3 gap-x-6 gap-y-8 border-t pt-12 text-center sm:gap-x-10"
           >
             {hero.stats.map((stat, i) => (
               <Link
                 key={stat.label}
                 href="#cases"
                 aria-label={`${stat.label}: ${stat.end}${stat.suffix} — ${nav.portfolio}`}
-                className="group flex flex-col gap-1 outline-none"
+                className="group flex flex-col items-center gap-1 outline-none"
               >
                 <div className="font-mono text-3xl font-bold tracking-tightest text-white transition-colors duration-200 group-hover:text-neon-purple-bright group-focus-visible:text-neon-purple-bright md:text-4xl">
                   <Counter

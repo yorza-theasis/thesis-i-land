@@ -12,74 +12,63 @@ type TabFilter = 'all' | CaseStatus;
 const casesMeta: {
   image: string;
   status: CaseStatus;
-  tags: string[];
   href?: string;
   isRealPhoto?: boolean;
 }[] = [
   {
     image: '/assets/images/extensa.jpg',
     status: 'completed',
-    tags: ['Python', 'FastAPI', 'Claude AI', 'Celery'],
     isRealPhoto: true,
     href: '/cases',
   },
   {
     image: '/assets/images/gmi.svg',
     status: 'in_progress',
-    tags: ['Python', 'FastAPI', 'Claude AI', 'RAG', 'PostgreSQL'],
     isRealPhoto: true,
   },
   {
-    image: '/assets/images/21_1x_shots_so.png',
+    image: '/assets/images/21_1x_shots_so.jpg',
     status: 'completed',
-    tags: ['Next.js', 'React Native', 'Spring Boot'],
     href: '/cases',
     isRealPhoto: true,
   },
   {
-    image: '/assets/images/684_1x_shots_so.png',
+    image: '/assets/images/684_1x_shots_so.jpg',
     status: 'completed',
-    tags: ['Next.js', 'Python', 'OpenAI'],
     isRealPhoto: true,
     href: '/cases',
   },
   {
-    image: '/assets/images/shot_zzk.png',
+    image: '/assets/images/shot_zzk.jpg',
     status: 'completed',
-    tags: ['Next.js 16', 'FastAPI', 'Tailwind v4', 'Zustand'],
     isRealPhoto: true,
     href: '/cases',
   },
   {
     image: '/assets/images/gmi.svg',
     status: 'in_progress',
-    tags: ['NER Pipeline', 'ICD-10', 'LLM', 'On-premise'],
     isRealPhoto: false,
   },
   {
     image: '/assets/images/qpick.jpg',
     status: 'in_progress',
-    tags: ['Computer Vision', 'Robotics', 'Machine Learning'],
     isRealPhoto: true,
   },
   {
     image: '/assets/images/ai-agent-compliance.jpg',
     status: 'completed',
-    tags: ['LLM', 'RAG', 'Guardrails'],
     isRealPhoto: true,
     href: '/cases',
   },
   {
     image: '/assets/images/butics.jpg',
     status: 'completed',
-    tags: ['Mobile POS', 'Barcode Scanning'],
     isRealPhoto: true,
     href: '/cases',
   },
   {
     image: '/assets/images/nexus.jpg',
     status: 'completed',
-    tags: ['Personal CRM', 'Access Control'],
     isRealPhoto: true,
     href: '/cases',
   },
@@ -131,15 +120,16 @@ const VerticalFeatures = () => {
       title={portfolio.title}
       description={portfolio.description}
     >
-      {/* Tab filter */}
-      <div className="mb-12 flex justify-center">
-        <div className="border-white/8 flex gap-1 rounded-full border bg-white/[0.03] p-1 backdrop-blur-sm">
+      {/* Tab filter — horizontally scrollable so long locale labels (e.g.
+          "In Development") never overlap or clip on narrow screens */}
+      <div className="mb-12 flex justify-center overflow-x-auto px-4">
+        <div className="border-white/8 flex shrink-0 gap-1 rounded-full border bg-white/[0.03] p-1 backdrop-blur-sm">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
+              className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-all duration-300 sm:gap-2 sm:px-5 sm:text-sm ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-neon-purple to-neon-blue text-white shadow-neon-purple'
                   : 'text-gray-500 hover:text-gray-300'
@@ -181,6 +171,8 @@ const VerticalFeatures = () => {
                 <img
                   src={c.image}
                   alt={c.imageAlt}
+                  loading="lazy"
+                  decoding="async"
                   className={[
                     'size-full transition-all duration-700 group-hover:scale-105',
                     c.isRealPhoto

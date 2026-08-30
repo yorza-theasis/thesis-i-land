@@ -1,7 +1,7 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export type NavItem = {
   label: string;
@@ -21,24 +21,65 @@ type INavbarProps = {
 type NavItemContentProps = {
   item: NavItem;
   isScrolled: boolean;
+  reduced: boolean;
 };
 
-const NavItemContent = ({ item, isScrolled }: NavItemContentProps) => {
+// Crossfades between the icon (compact pill) and label (full-width bar)
+// instead of hard-swapping DOM content mid-layout-animation, which is what
+// made the transition look glitchy.
+const NavItemContent = ({ item, isScrolled, reduced }: NavItemContentProps) => {
+  const fade = reduced
+    ? { duration: 0 }
+    : { duration: 0.2, ease: [0.16, 1, 0.3, 1] as const };
+  const initial = reduced ? false : { opacity: 0 };
+  const exit = reduced ? undefined : { opacity: 0 };
+
+  let content: ReactNode;
   if (isScrolled) {
-    return (
-      <span className="flex size-11 items-center justify-center [&>svg]:size-7">
+    content = (
+      <motion.span
+        key="icon"
+        initial={reduced ? false : { opacity: 0, scale: 0.6 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={reduced ? undefined : { opacity: 0, scale: 0.6 }}
+        transition={fade}
+        className="flex size-11 items-center justify-center [&>svg]:size-7"
+      >
         {item.icon}
-      </span>
+      </motion.span>
     );
-  }
-  if (item.isButton) {
-    return (
-      <span className="inline-flex cursor-pointer items-center justify-center rounded-full border border-black/15 bg-black/5 px-6 py-2.5 font-semibold text-foreground backdrop-blur-sm transition-all duration-300 hover:border-black/25 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:border-white/40 dark:hover:bg-white/10">
+  } else if (item.isButton) {
+    content = (
+      <motion.span
+        key="button"
+        initial={initial}
+        animate={{ opacity: 1 }}
+        exit={exit}
+        transition={fade}
+        className="inline-flex cursor-pointer items-center justify-center rounded-full border border-black/15 bg-black/5 px-6 py-2.5 font-semibold text-foreground backdrop-blur-sm transition-all duration-300 hover:border-black/25 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:border-white/40 dark:hover:bg-white/10"
+      >
         {item.label}
-      </span>
+      </motion.span>
+    );
+  } else {
+    content = (
+      <motion.span
+        key="label"
+        initial={initial}
+        animate={{ opacity: 1 }}
+        exit={exit}
+        transition={fade}
+      >
+        {item.label}
+      </motion.span>
     );
   }
-  return <span>{item.label}</span>;
+
+  return (
+    <AnimatePresence mode="popLayout" initial={false}>
+      {content}
+    </AnimatePresence>
+  );
 };
 
 const NavbarTwoColumns = ({
@@ -50,14 +91,25 @@ const NavbarTwoColumns = ({
 }: INavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const tickingRef = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (tickingRef.current) return;
+      tickingRef.current = true;
+      requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 50);
+        tickingRef.current = false;
+      });
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const pillTransition = prefersReducedMotion
+    ? { duration: 0 }
+    : { type: 'spring' as const, bounce: 0, duration: 0.6 };
 
   return (
     <>
@@ -68,10 +120,14 @@ const NavbarTwoColumns = ({
       >
         <motion.div
           layout
-          transition={{ type: 'spring', bounce: 0, duration: 0.6 }}
+          transition={pillTransition}
           className={`pointer-events-auto flex items-center justify-between transition-colors duration-500 ${
             isScrolled
-              ? 'rounded-full border border-white/10 bg-kosmos-900/40 px-8 py-3.5 shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl'
+              ? // No backdrop-blur here on purpose: this pill is `position: fixed`,
+                // and backdrop-filter on a fixed element forces Safari/macOS to
+                // repaint the blurred region on every scroll frame. A solid,
+                // near-opaque background reads the same without the repaint cost.
+                'rounded-full border border-white/10 bg-kosmos-900/90 px-8 py-3.5 shadow-[0_8px_32px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)]'
               : 'glass-panel border-white/6 w-full border-b px-6 py-4'
           }`}
           style={{
@@ -80,6 +136,7 @@ const NavbarTwoColumns = ({
         >
           <motion.div
             layout
+            transition={pillTransition}
             className={`flex items-center ${isScrolled ? 'md:mr-12' : ''}`}
           >
             <Link href="/">{logo}</Link>
@@ -89,16 +146,21 @@ const NavbarTwoColumns = ({
             <nav className="hidden md:block">
               <motion.ul
                 layout
+                transition={pillTransition}
                 className={`flex items-center font-medium ${isScrolled ? 'gap-10' : 'gap-6 text-sm'}`}
               >
                 {navItems.map((item) => (
-                  <motion.li layout key={item.href}>
+                  <motion.li layout transition={pillTransition} key={item.href}>
                     <Link
                       href={item.href}
                       aria-label={item.label}
                       className="flex items-center text-gray-400 transition-colors duration-200 hover:text-white"
                     >
-                      <NavItemContent item={item} isScrolled={isScrolled} />
+                      <NavItemContent
+                        item={item}
+                        isScrolled={isScrolled}
+                        reduced={!!prefersReducedMotion}
+                      />
                     </Link>
                   </motion.li>
                 ))}
@@ -110,15 +172,21 @@ const NavbarTwoColumns = ({
 
           <div className="flex items-center gap-2">
             {langSwitcher}
-            {!isScrolled && themeToggle && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                {themeToggle}
-              </motion.div>
-            )}
+            <AnimatePresence initial={false}>
+              {!isScrolled && themeToggle && (
+                <motion.div
+                  key="theme-toggle"
+                  initial={prefersReducedMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={prefersReducedMotion ? undefined : { opacity: 0 }}
+                  transition={
+                    prefersReducedMotion ? { duration: 0 } : { duration: 0.2 }
+                  }
+                >
+                  {themeToggle}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {navItems && (
               <button
@@ -161,11 +229,13 @@ const NavbarTwoColumns = ({
       <AnimatePresence>
         {isMobileOpen && navItems && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-0 z-[99] flex min-h-dvh flex-col bg-kosmos-950/95 px-6 pb-8 pt-24 backdrop-blur-xl md:hidden"
+            exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+            transition={
+              prefersReducedMotion ? { duration: 0 } : { duration: 0.2 }
+            }
+            className="fixed inset-x-0 top-0 z-[99] flex min-h-dvh flex-col bg-kosmos-950 px-6 pb-8 pt-24 md:hidden"
           >
             <nav>
               <ul className="flex flex-col gap-1">

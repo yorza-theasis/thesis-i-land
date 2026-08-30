@@ -11,6 +11,7 @@ type CaseTranslation = {
   category: string;
   description: string;
   imageAlt: string;
+  tags: string[];
 };
 
 type StatTranslation = {
@@ -32,6 +33,7 @@ type CasesPageCaseTranslation = {
   goal?: string;
   solution?: string;
   result?: CaseResultItem[];
+  tags: string[];
 };
 
 export type Translations = {
@@ -43,7 +45,6 @@ export type Translations = {
     startProject: string;
   };
   hero: {
-    badge: string;
     headline1: string[];
     headline2: string[];
     subtitle: string;
@@ -117,7 +118,7 @@ export const translations: Record<Locale, Translations> = {
     meta: {
       title: 'thesis-i | Expert Mobile & Backend Solutions in Lviv',
       description:
-        'thesis-i is a software development studio specializing in high-performance mobile apps and scalable backend systems. Building digital excellence since 2020.',
+        'thesis-i is a software development studio specializing in high-performance mobile apps and scalable backend systems.',
     },
     nav: {
       services: 'Services',
@@ -126,7 +127,6 @@ export const translations: Record<Locale, Translations> = {
       startProject: 'Start Project',
     },
     hero: {
-      badge: 'Available for new projects',
       headline1: ['Scaling', 'Businesses'],
       headline2: ['with AI &', 'Software.'],
       subtitle:
@@ -136,7 +136,6 @@ export const translations: Record<Locale, Translations> = {
         { end: 50, suffix: 'M+', label: 'Users served' },
         { end: 10, suffix: '+', label: 'Products shipped' },
         { end: 5, suffix: '', label: 'Industries' },
-        { end: 4, suffix: 'yrs', label: 'In production' },
       ],
       readout: {
         online: 'sys.online',
@@ -200,6 +199,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'A FastAPI-based B2B platform using an autonomous Claude GoalAgent to continuously build, refine, and test Ideal Customer Profiles (ICPs) based on direct feedback and onboarding goals.',
           imageAlt: 'Extensa AI Dashboard',
+          tags: [
+            'Sales Automation',
+            'Lead Generation',
+            'Agentic AI',
+            'B2B SaaS',
+          ],
         },
         {
           title: 'GMI Doc Verifier',
@@ -207,6 +212,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Nightly AI assistant for acute stroke (AIS) wards that automatically verifies 37 mandatory clinical documents per patient episode against official MoH protocols — using a three-layer pipeline of rules-engine, LLM content analysis, and RAG-based protocol lookup — surfacing discrepancies and missing entries as actionable doctor reports.',
           imageAlt: 'GMI Documentation Verifier Dashboard',
+          tags: [
+            'Patient Safety',
+            'Compliance Automation',
+            'Clinical AI',
+            'Risk Reduction',
+          ],
         },
         {
           title: 'Niania24',
@@ -214,6 +225,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Childcare service platform connecting families with trusted babysitters. Full-stack web and mobile solution with real-time booking, reviews, and secure payments.',
           imageAlt: 'Niania24 platform screenshot',
+          tags: [
+            'Marketplace Growth',
+            'Trust & Safety',
+            'Consumer App',
+            'Cross-Platform Reach',
+          ],
         },
         {
           title: 'AI Department',
@@ -221,6 +238,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Internal AI-powered platform for automating department workflows, documentation, and reporting — built to reduce ops overhead and surface actionable insights.',
           imageAlt: 'AI Department tool screenshot',
+          tags: [
+            'Ops Efficiency',
+            'Internal Tooling',
+            'Process Automation',
+            'Enterprise Scale',
+          ],
         },
         {
           title: 'IBD Registry',
@@ -228,6 +251,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Centralized patient registry for inflammatory bowel disease (UC/CD) for Ukrainian medical institutions — doctors manage clinical records, patients submit periodic PRO2 self-assessments, with passwordless magic-link auth and role-based routing.',
           imageAlt: 'IBD Registry Dashboard',
+          tags: [
+            'Patient Outcomes',
+            'Regulatory Compliance',
+            'Clinical Data',
+            'Care Coordination',
+          ],
         },
         {
           title: 'Cardiology Doc Audit',
@@ -235,6 +264,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'AI system for detecting discrepancies in cardiology patient documentation — NER extracts clinical entities, normalizes to ICD-10 codes, compares across forms, and generates plain-language explanations for doctors via LLM. Fully on-premise.',
           imageAlt: 'Cardiology Documentation Audit',
+          tags: [
+            'Documentation Accuracy',
+            'Compliance Risk',
+            'Clinical Auditing',
+            'Data Privacy',
+          ],
         },
         {
           title: 'QPick',
@@ -242,6 +277,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             "A robotic-arm system that identifies and picks individual retail products under real shelf conditions — even with similar packaging, reflective, or dark materials — continuously improving from every pick attempt. Built for Żabka, one of Poland's largest retail chains.",
           imageAlt: 'Q-Pick Robotic Retail Kiosk',
+          tags: [
+            'Labor Cost Reduction',
+            'Retail Automation',
+            'Fulfillment Speed',
+            'Scalable Ops',
+          ],
         },
         {
           title: 'AI Agent for Compliance',
@@ -249,6 +290,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'An AI assistant that answers employee questions from internal company documents in natural language — respecting role-based access, redacting sensitive data, and logging every exchange for audit.',
           imageAlt: 'AI Agent for Compliance Chat Interface',
+          tags: [
+            'Employee Productivity',
+            'Compliance Risk',
+            'Knowledge Access',
+            'Data Governance',
+          ],
         },
         {
           title: 'Butics',
@@ -256,6 +303,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'A mobile point-of-sale app for small retail stores, identifying products by barcode scan, product code, or visual catalogue — with basket management, discounts, payments, and returns built in.',
           imageAlt: 'Butics Mobile POS in Use',
+          tags: [
+            'Faster Checkout',
+            'Retail Efficiency',
+            'Small Business Tools',
+            'Sales Enablement',
+          ],
         },
         {
           title: 'Nexus',
@@ -263,6 +316,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'A private contact management platform where professionals keep their own contact space, share selectively with teams, and collaborate without losing control over private data.',
           imageAlt: 'Nexus Personal CRM Interface',
+          tags: [
+            'Network Monetization',
+            'Privacy-First',
+            'Team Collaboration',
+            'Relationship Management',
+          ],
         },
       ],
     },
@@ -297,6 +356,12 @@ export const translations: Record<Locale, Translations> = {
             { text: '30% faster ICP turnaround' },
             { text: '120 leads processed per week' },
           ],
+          tags: [
+            'Sales Automation',
+            'Lead Generation',
+            'Agentic AI',
+            'B2B SaaS',
+          ],
         },
         {
           subtitle: 'AI-Powered Clinical Documentation Audit',
@@ -306,6 +371,12 @@ export const translations: Record<Locale, Translations> = {
           result: [
             { text: '37 automated checks per patient, every night' },
             { text: '70% reduction in manual review time' },
+          ],
+          tags: [
+            'Patient Safety',
+            'Compliance Automation',
+            'Clinical AI',
+            'Risk Reduction',
           ],
         },
         {
@@ -317,6 +388,12 @@ export const translations: Record<Locale, Translations> = {
             { text: '45% less time spent on reporting' },
             { text: '3 workflows automated' },
           ],
+          tags: [
+            'Ops Efficiency',
+            'Internal Tooling',
+            'Process Automation',
+            'Enterprise Scale',
+          ],
         },
         {
           subtitle: 'Universal App for iOS and Android',
@@ -327,16 +404,34 @@ export const translations: Record<Locale, Translations> = {
             { text: '1,714 active families' },
             { text: 'booking completed in 3 min' },
           ],
+          tags: [
+            'Marketplace Growth',
+            'Trust & Safety',
+            'Consumer App',
+            'Cross-Platform Reach',
+          ],
         },
         {
           subtitle: 'IBD Patient Registry for Ukrainian Clinics',
           description:
             "Centralized registry for inflammatory bowel disease patients — doctors manage structured clinical records for UC and Crohn's disease, patients submit periodic PRO2 self-assessments scored server-side, with passwordless magic-link auth and role-based routing for DOCTOR / MODERATOR / PATIENT / ADMIN roles. BFF layer on Next.js API routes proxies requests to a FastAPI backend, hiding tokens from the client.",
+          tags: [
+            'Patient Outcomes',
+            'Regulatory Compliance',
+            'Clinical Data',
+            'Care Coordination',
+          ],
         },
         {
           subtitle: 'AI Error Detection in Cardiology Documentation',
           description:
             'Detects discrepancies in patient medical documentation before MoH submission — NER extracts clinical entities, normalizes to ICD-10 codes, compares across related forms per patient, and generates plain-language explanations for doctors via LLM. RAG is used only as an explanation layer, not a decision mechanism. Runs fully on-premise against a read-only 5 TB database copy.',
+          tags: [
+            'Documentation Accuracy',
+            'Compliance Risk',
+            'Clinical Auditing',
+            'Data Privacy',
+          ],
         },
         {
           subtitle: 'Robotic Product Picking for Retail Fulfillment',
@@ -347,6 +442,12 @@ export const translations: Record<Locale, Translations> = {
             {
               text: "Clear path toward automating repetitive physical retail operations for Żabka, one of Poland's largest convenience retail chains",
             },
+          ],
+          tags: [
+            'Labor Cost Reduction',
+            'Retail Automation',
+            'Fulfillment Speed',
+            'Scalable Ops',
           ],
         },
         {
@@ -359,6 +460,12 @@ export const translations: Record<Locale, Translations> = {
               text: 'Employees find internal information faster while the company keeps full control over who can access what',
             },
           ],
+          tags: [
+            'Employee Productivity',
+            'Compliance Risk',
+            'Knowledge Access',
+            'Data Governance',
+          ],
         },
         {
           subtitle: 'Mobile Point-of-Sale for Small Retail Stores',
@@ -370,6 +477,12 @@ export const translations: Record<Locale, Translations> = {
               text: 'A simpler sales workflow for employees, especially in small stores that cannot always rely on barcodes',
             },
           ],
+          tags: [
+            'Faster Checkout',
+            'Retail Efficiency',
+            'Small Business Tools',
+            'Sales Enablement',
+          ],
         },
         {
           subtitle: 'Private Contact Sharing for Professional Networks',
@@ -380,6 +493,12 @@ export const translations: Record<Locale, Translations> = {
             {
               text: 'A professional CRM experience with privacy built into the product rather than added on later',
             },
+          ],
+          tags: [
+            'Network Monetization',
+            'Privacy-First',
+            'Team Collaboration',
+            'Relationship Management',
           ],
         },
       ],
@@ -427,7 +546,7 @@ export const translations: Record<Locale, Translations> = {
     meta: {
       title: 'thesis-i | Мобільна та бекенд-розробка у Львові',
       description:
-        'thesis-i — студія розробки програмного забезпечення, що спеціалізується на мобільних застосунках та масштабованих бекенд-системах. Будуємо цифрову досконалість з 2020 року.',
+        'thesis-i — студія розробки програмного забезпечення, що спеціалізується на мобільних застосунках та масштабованих бекенд-системах.',
     },
     nav: {
       services: 'Послуги',
@@ -436,7 +555,6 @@ export const translations: Record<Locale, Translations> = {
       startProject: 'Почати проєкт',
     },
     hero: {
-      badge: 'Відкрито до нових проєктів',
       headline1: ['Масштабуємо', 'Бізнеси'],
       headline2: ['за допомогою', 'ШІ та Software.'],
       subtitle:
@@ -446,7 +564,6 @@ export const translations: Record<Locale, Translations> = {
         { end: 50, suffix: 'M+', label: 'Користувачів' },
         { end: 10, suffix: '+', label: 'Продуктів' },
         { end: 5, suffix: '', label: 'Галузей' },
-        { end: 4, suffix: 'р.', label: 'У продакшні' },
       ],
       readout: {
         online: 'sys.online',
@@ -510,6 +627,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             "FastAPI-платформа B2B з автономним GoalAgent на базі Claude для безперервного формування, вдосконалення та тестування Ідеальних профілів клієнтів (ICP) на основі зворотного зв'язку та цілей.",
           imageAlt: 'Extensa AI Dashboard',
+          tags: [
+            'Автоматизація продажів',
+            'Генерація лідів',
+            'Агентний ШІ',
+            'B2B SaaS',
+          ],
         },
         {
           title: 'GMI Doc Verifier',
@@ -517,6 +640,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             "AI-асистент нічної перевірки медичної документації для відділень гострого мозкового інсульту. Автоматично верифікує 37 обов'язкових документів епізоду за протоколами МОЗ — через механізм правил, AI-аналіз змісту та RAG-довідник — і формує для лікаря звіт із конкретними рекомендаціями.",
           imageAlt: 'GMI Doc Verifier дашборд',
+          tags: [
+            'Безпека пацієнтів',
+            'Автоматизація комплаєнсу',
+            'Клінічний ШІ',
+            'Зниження ризиків',
+          ],
         },
         {
           title: 'Niania24',
@@ -524,6 +653,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             "Платформа для пошуку нянь, що з'єднує сім'ї з перевіреними бебіситтерами. Повностекове веб- та мобільне рішення з онлайн-бронюванням, відгуками та захищеними платежами.",
           imageAlt: 'Niania24 скріншот платформи',
+          tags: [
+            'Зростання маркетплейсу',
+            'Довіра та безпека',
+            'Споживчий застосунок',
+            'Кросплатформність',
+          ],
         },
         {
           title: 'AI Department',
@@ -531,6 +666,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Внутрішня платформа на основі ШІ для автоматизації робочих процесів відділу, документообігу та звітності — для зменшення операційних витрат та видобування корисних аналітичних даних.',
           imageAlt: 'AI Department скріншот',
+          tags: [
+            'Операційна ефективність',
+            'Внутрішні інструменти',
+            'Автоматизація процесів',
+            'Корпоративний масштаб',
+          ],
         },
         {
           title: 'ЗЗК Реєстр',
@@ -538,6 +679,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Централізований реєстр пацієнтів із запальними захворюваннями кишечника (ВК/ХК) для українських медичних закладів — лікарі ведуть клінічні записи, пацієнти подають самооцінки (PRO2), автентифікація magic link та рольовий доступ.',
           imageAlt: 'ЗЗК Реєстр',
+          tags: [
+            'Результати лікування',
+            'Регуляторний комплаєнс',
+            'Клінічні дані',
+            'Координація допомоги',
+          ],
         },
         {
           title: 'Аудит кардіодокументації',
@@ -545,6 +692,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Система виявлення розбіжностей у медичній документації кардіологічних пацієнтів — NER-екстракція сутностей, нормалізація до МКХ-10, порівняння між документами та формування пояснень лікарю природною мовою через LLM. Повністю on-premise.',
           imageAlt: 'Аудит кардіологічної документації',
+          tags: [
+            'Точність документації',
+            'Комплаєнс-ризики',
+            'Клінічний аудит',
+            'Приватність даних',
+          ],
         },
         {
           title: 'QPick',
@@ -552,6 +705,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Роботизована рука, що розпізнає та бере окремі товари в реальних умовах полиці — навіть зі схожим пакуванням, дзеркальними чи темними матеріалами — і постійно вдосконалюється з кожною спробою. Створено для Żabka, однієї з найбільших мереж рітейлу Польщі.',
           imageAlt: 'Q-Pick роботизований кіоск',
+          tags: [
+            'Скорочення витрат на працю',
+            'Автоматизація рітейлу',
+            'Швидкість фулфілменту',
+            'Масштабовані операції',
+          ],
         },
         {
           title: 'AI Agent for Compliance',
@@ -559,6 +718,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'AI-асистент, що відповідає на запитання співробітників на основі внутрішніх документів компанії природною мовою — з урахуванням рольового доступу, приховуванням чутливих даних та логуванням кожного обміну для аудиту.',
           imageAlt: 'AI Agent for Compliance чат-інтерфейс',
+          tags: [
+            'Продуктивність команди',
+            'Комплаєнс-ризики',
+            'Доступ до знань',
+            'Управління даними',
+          ],
         },
         {
           title: 'Butics',
@@ -566,6 +731,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Мобільний POS-застосунок для невеликих магазинів, що ідентифікує товари скануванням штрихкоду, внутрішнім кодом або вибором із візуального каталогу — з кошиком, знижками, оплатою та поверненнями.',
           imageAlt: 'Butics мобільний POS у роботі',
+          tags: [
+            'Швидша каса',
+            'Ефективність рітейлу',
+            'Інструменти для малого бізнесу',
+            'Підтримка продажів',
+          ],
         },
         {
           title: 'Nexus',
@@ -573,6 +744,12 @@ export const translations: Record<Locale, Translations> = {
           description:
             'Платформа управління контактами, де фахівці ведуть власний простір контактів, вибірково діляться ними з командою та співпрацюють, не втрачаючи контролю над приватними даними.',
           imageAlt: 'Nexus інтерфейс особистого CRM',
+          tags: [
+            'Монетизація мережі',
+            'Приватність насамперед',
+            'Командна співпраця',
+            'Управління контактами',
+          ],
         },
       ],
     },
@@ -607,6 +784,12 @@ export const translations: Record<Locale, Translations> = {
             { text: '30% швидше формування ICP' },
             { text: '120 оброблених лідів/тиждень' },
           ],
+          tags: [
+            'Автоматизація продажів',
+            'Генерація лідів',
+            'Агентний ШІ',
+            'B2B SaaS',
+          ],
         },
         {
           subtitle: 'AI-аудит клінічної документації',
@@ -616,6 +799,12 @@ export const translations: Record<Locale, Translations> = {
           result: [
             { text: '37 автоматичних перевірок/пацієнта щоночі' },
             { text: '70% скорочення часу ручної перевірки' },
+          ],
+          tags: [
+            'Безпека пацієнтів',
+            'Автоматизація комплаєнсу',
+            'Клінічний ШІ',
+            'Зниження ризиків',
           ],
         },
         {
@@ -627,6 +816,12 @@ export const translations: Record<Locale, Translations> = {
             { text: '45% менше часу на звітність' },
             { text: '3 автоматизовані процеси' },
           ],
+          tags: [
+            'Операційна ефективність',
+            'Внутрішні інструменти',
+            'Автоматизація процесів',
+            'Корпоративний масштаб',
+          ],
         },
         {
           subtitle: 'Єдиний застосунок для iOS та Android',
@@ -637,16 +832,34 @@ export const translations: Record<Locale, Translations> = {
             { text: '1 714 активних сімей' },
             { text: 'бронювання за 3 хв' },
           ],
+          tags: [
+            'Зростання маркетплейсу',
+            'Довіра та безпека',
+            'Споживчий застосунок',
+            'Кросплатформність',
+          ],
         },
         {
           subtitle: 'Реєстр пацієнтів із ЗЗК для українських клінік',
           description:
             'Централізований реєстр пацієнтів із запальними захворюваннями кишечника — лікарі ведуть структуровані клінічні записи для ВК та хвороби Крона, пацієнти подають PRO2-самооцінки з автоматичним розрахунком балів, автентифікація magic link без паролів та рольова маршрутизація (ЛІКАР / МОДЕРАТОР / ПАЦІЄНТ / АДМІН). BFF-шар на Next.js API routes проксує запити до FastAPI бекенду, приховуючи токен від клієнта.',
+          tags: [
+            'Результати лікування',
+            'Регуляторний комплаєнс',
+            'Клінічні дані',
+            'Координація допомоги',
+          ],
         },
         {
           subtitle: 'AI-виявлення помилок у кардіологічній документації',
           description:
             "Виявляє розбіжності в медичній документації кардіологічних пацієнтів до подання в МОЗ — NER-екстракція клінічних сутностей, нормалізація до МКХ-10, порівняння між пов'язаними формами одного пацієнта та формування пояснень лікарю природною мовою через LLM. RAG використовується лише як шар пояснення, а не механізм прийняття рішення. Повністю on-premise на read-only копії бази 5 ТБ.",
+          tags: [
+            'Точність документації',
+            'Комплаєнс-ризики',
+            'Клінічний аудит',
+            'Приватність даних',
+          ],
         },
         {
           subtitle: 'Роботизований підбір товарів для рітейл-фулфілменту',
@@ -657,6 +870,12 @@ export const translations: Record<Locale, Translations> = {
             {
               text: 'Чіткий шлях до автоматизації повторюваних фізичних операцій рітейлу для Żabka — однієї з найбільших мереж роздрібної торгівлі Польщі',
             },
+          ],
+          tags: [
+            'Скорочення витрат на працю',
+            'Автоматизація рітейлу',
+            'Швидкість фулфілменту',
+            'Масштабовані операції',
           ],
         },
         {
@@ -669,6 +888,12 @@ export const translations: Record<Locale, Translations> = {
               text: 'Співробітники швидше знаходять внутрішню інформацію, а компанія зберігає повний контроль над тим, хто й до чого має доступ',
             },
           ],
+          tags: [
+            'Продуктивність команди',
+            'Комплаєнс-ризики',
+            'Доступ до знань',
+            'Управління даними',
+          ],
         },
         {
           subtitle: 'Мобільний POS для невеликих роздрібних магазинів',
@@ -680,6 +905,12 @@ export const translations: Record<Locale, Translations> = {
               text: 'Простіший робочий процес продажу для персоналу, особливо в невеликих магазинах, де не можна покладатися лише на штрихкоди',
             },
           ],
+          tags: [
+            'Швидша каса',
+            'Ефективність рітейлу',
+            'Інструменти для малого бізнесу',
+            'Підтримка продажів',
+          ],
         },
         {
           subtitle: 'Приватний обмін контактами для професійних мереж',
@@ -690,6 +921,12 @@ export const translations: Record<Locale, Translations> = {
             {
               text: 'CRM-досвід професійного рівня з приватністю, закладеною в продукт, а не доданою згодом',
             },
+          ],
+          tags: [
+            'Монетизація мережі',
+            'Приватність насамперед',
+            'Командна співпраця',
+            'Управління контактами',
           ],
         },
       ],

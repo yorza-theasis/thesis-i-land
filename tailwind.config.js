@@ -34,6 +34,12 @@ module.exports = {
           blue: '#0047ff',
           'blue-bright': '#99b8ff',
           'blue-dim': 'rgba(0, 71, 255, 0.12)',
+          // Warm counterpart used for business/stat labels — chosen to sit on
+          // the warm side of the purple hue (through magenta/rose) rather
+          // than a raw amber, so it reads as a gradient shift, not a clash.
+          gold: '#e8a94a',
+          'gold-bright': '#f6cd8e',
+          'gold-dim': 'rgba(232, 169, 74, 0.12)',
         },
         /* ── Dark surface scale ── */
         kosmos: {
