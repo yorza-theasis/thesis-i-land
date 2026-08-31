@@ -9,17 +9,18 @@ import { Section } from '../layout/Section';
 type CaseStatus = 'completed' | 'in_progress';
 type TabFilter = 'all' | CaseStatus;
 
+// Index here lines up 1:1 with CASES_META in src/pages/cases.tsx (same case
+// order) — used below to build each card's `/cases#case-N` anchor, since
+// there's no other shared id between the two lists.
 const casesMeta: {
   image: string;
   status: CaseStatus;
-  href?: string;
   isRealPhoto?: boolean;
 }[] = [
   {
     image: '/assets/images/extensa.jpg',
     status: 'completed',
     isRealPhoto: true,
-    href: '/cases',
   },
   {
     image: '/assets/images/gmi.svg',
@@ -29,20 +30,17 @@ const casesMeta: {
   {
     image: '/assets/images/21_1x_shots_so.jpg',
     status: 'completed',
-    href: '/cases',
     isRealPhoto: true,
   },
   {
     image: '/assets/images/684_1x_shots_so.jpg',
     status: 'completed',
     isRealPhoto: true,
-    href: '/cases',
   },
   {
     image: '/assets/images/shot_zzk.jpg',
     status: 'completed',
     isRealPhoto: true,
-    href: '/cases',
   },
   {
     image: '/assets/images/gmi.svg',
@@ -58,19 +56,16 @@ const casesMeta: {
     image: '/assets/images/ai-agent-compliance.jpg',
     status: 'completed',
     isRealPhoto: true,
-    href: '/cases',
   },
   {
     image: '/assets/images/butics.jpg',
     status: 'completed',
     isRealPhoto: true,
-    href: '/cases',
   },
   {
     image: '/assets/images/nexus.jpg',
     status: 'completed',
     isRealPhoto: true,
-    href: '/cases',
   },
 ];
 
@@ -92,9 +87,11 @@ const VerticalFeatures = () => {
   const { portfolio } = useT();
   const [activeTab, setActiveTab] = useState<TabFilter>('all');
 
-  const casesData = portfolio.cases
-    .slice(0, casesMeta.length)
-    .map((c, i) => ({ ...c, ...casesMeta[i]! }));
+  const casesData = portfolio.cases.slice(0, casesMeta.length).map((c, i) => ({
+    ...c,
+    ...casesMeta[i]!,
+    caseId: `case-${String(i + 1).padStart(2, '0')}`,
+  }));
 
   const tabs: { id: TabFilter; label: string }[] = [
     { id: 'all', label: portfolio.tabs.all },
@@ -244,7 +241,7 @@ const VerticalFeatures = () => {
                   </button>
                 ) : (
                   <Link
-                    href={c.href ?? '/cases'}
+                    href={`/cases#${c.caseId}`}
                     className="group/link mt-auto inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors duration-200 hover:text-neon-purple-bright"
                   >
                     {portfolio.viewCase}

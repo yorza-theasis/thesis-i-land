@@ -280,7 +280,8 @@ const CasesPageInner = ({ locale }: { locale: Locale }) => {
           return (
             <section
               key={c.num}
-              className="border-white/6 relative border-t py-24"
+              id={`case-${c.num}`}
+              className="border-white/6 relative scroll-mt-28 border-t py-24"
             >
               <div
                 aria-hidden="true"
