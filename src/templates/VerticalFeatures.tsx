@@ -9,60 +9,72 @@ import { Section } from '../layout/Section';
 type CaseStatus = 'completed' | 'in_progress';
 type TabFilter = 'all' | CaseStatus;
 
-// Index here lines up 1:1 with CASES_META in src/pages/cases.tsx (same case
-// order) — used below to build each card's `/cases#case-N` anchor, since
-// there's no other shared id between the two lists.
+// `num` must match CASES_META's `num` in src/pages/cases.tsx for the SAME
+// project (matched by image, since this array's own order does NOT match
+// that file's order — e.g. Niania24 and AI Dept Platform are swapped
+// between the two lists). Used to build each card's `/cases#case-N` anchor.
 const casesMeta: {
+  num: string;
   image: string;
   status: CaseStatus;
   isRealPhoto?: boolean;
 }[] = [
   {
+    num: '01',
     image: '/assets/images/extensa.jpg',
     status: 'completed',
     isRealPhoto: true,
   },
   {
+    num: '02',
     image: '/assets/images/gmi.svg',
     status: 'in_progress',
     isRealPhoto: true,
   },
   {
+    num: '04',
     image: '/assets/images/21_1x_shots_so.jpg',
     status: 'completed',
     isRealPhoto: true,
   },
   {
+    num: '03',
     image: '/assets/images/684_1x_shots_so.jpg',
     status: 'completed',
     isRealPhoto: true,
   },
   {
+    num: '05',
     image: '/assets/images/shot_zzk.jpg',
     status: 'completed',
     isRealPhoto: true,
   },
   {
+    num: '06',
     image: '/assets/images/gmi.svg',
     status: 'in_progress',
     isRealPhoto: false,
   },
   {
+    num: '07',
     image: '/assets/images/qpick.jpg',
     status: 'in_progress',
     isRealPhoto: true,
   },
   {
+    num: '08',
     image: '/assets/images/ai-agent-compliance.jpg',
     status: 'completed',
     isRealPhoto: true,
   },
   {
+    num: '09',
     image: '/assets/images/butics.jpg',
     status: 'completed',
     isRealPhoto: true,
   },
   {
+    num: '10',
     image: '/assets/images/nexus.jpg',
     status: 'completed',
     isRealPhoto: true,
@@ -90,7 +102,7 @@ const VerticalFeatures = () => {
   const casesData = portfolio.cases.slice(0, casesMeta.length).map((c, i) => ({
     ...c,
     ...casesMeta[i]!,
-    caseId: `case-${String(i + 1).padStart(2, '0')}`,
+    caseId: `case-${casesMeta[i]!.num}`,
   }));
 
   const tabs: { id: TabFilter; label: string }[] = [

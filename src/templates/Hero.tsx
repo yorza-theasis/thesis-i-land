@@ -61,51 +61,6 @@ const Counter = ({ end, suffix, delay = 0, onProgress }: CounterProps) => {
   return <span ref={ref}>{finalText}</span>;
 };
 
-/* ─── Mobile lightweight sphere ──────────────── */
-const MobileSphere = () => (
-  <div className="relative flex size-[180px] items-center justify-center">
-    <div
-      className="pointer-events-none absolute size-[170px] rounded-full opacity-50 blur-[40px]"
-      style={{
-        background:
-          'radial-gradient(circle, rgba(176,38,255,0.5) 0%, rgba(0,71,255,0.3) 55%, transparent 70%)',
-      }}
-    />
-    <div
-      className="animate-spin-ring absolute size-[155px] rounded-full will-change-transform"
-      style={{
-        border: '1px solid rgba(176,38,255,0.13)',
-        opacity: 'calc(0.4 + 0.6 * var(--data-density, 1))',
-        transition: 'opacity 200ms linear',
-      }}
-    />
-    <div
-      className="animate-counter-spin-ring absolute size-[115px] rounded-full will-change-transform"
-      style={{
-        border: '1px dashed rgba(0,71,255,0.1)',
-        animationDuration: '12s',
-        opacity: 'calc(0.4 + 0.6 * var(--data-density, 1))',
-        transition: 'opacity 200ms linear',
-      }}
-    />
-    <div
-      className="animate-morph-sphere size-[70px]"
-      style={{
-        background:
-          'radial-gradient(circle at 33% 28%, rgba(229,181,255,0.9) 0%, rgba(176,38,255,0.78) 24%, rgba(0,71,255,0.5) 58%, rgba(5,5,14,0.97) 80%)',
-        boxShadow:
-          '0 0 35px rgba(176,38,255,0.55), 0 0 70px rgba(176,38,255,0.12)',
-        willChange: 'border-radius',
-      }}
-    >
-      <div
-        className="absolute rounded-full bg-white/35 blur-[6px]"
-        style={{ width: '38%', height: '28%', top: '14%', left: '16%' }}
-      />
-    </div>
-  </div>
-);
-
 /* ─── SVG data tick ring ──────────────────────── */
 const DataRing = () => {
   const ticks = Array.from({ length: 36 });
@@ -194,10 +149,10 @@ const FloatLabel = ({
   variant = 'tech',
 }: FloatLabelProps) => (
   <motion.div
-    className={`animate-float rounded-lg border px-3 py-1.5 font-mono text-xs font-medium ${
+    className={`animate-float rounded-lg border bg-kosmos-900/95 px-3 py-1.5 font-mono text-xs font-medium ${
       variant === 'business'
-        ? 'border-white/10 bg-gradient-to-r from-neon-purple/25 via-kosmos-900/95 to-neon-gold/25 text-neon-gold-bright/90'
-        : 'border-neon-purple/18 bg-kosmos-900/95 text-neon-purple-bright/75'
+        ? 'border-neon-gold/25 text-neon-gold-bright/90'
+        : 'border-neon-purple/18 text-neon-purple-bright/75'
     }`}
     initial={{ opacity: 0, scale: 0.7 }}
     animate={{ opacity: 1, scale: 1 }}
@@ -265,6 +220,100 @@ const TECH_ORBIT_LABELS = [
   { text: 'Kubernetes', angle: 225 },
   { text: 'Next.js', angle: 315 },
 ];
+
+/* ─── Mobile lightweight sphere ──────────────── */
+const MobileSphere = ({
+  reduced,
+  businessLabels,
+}: {
+  reduced: boolean;
+  businessLabels: [string, string, string, string];
+}) => (
+  <div className="relative flex size-[180px] items-center justify-center">
+    <div
+      className="pointer-events-none absolute size-[170px] rounded-full opacity-50 blur-[40px]"
+      style={{
+        background:
+          'radial-gradient(circle, rgba(176,38,255,0.5) 0%, rgba(0,71,255,0.3) 55%, transparent 70%)',
+      }}
+    />
+    <div
+      className="animate-spin-ring absolute size-[155px] rounded-full will-change-transform"
+      style={{
+        border: '1px solid rgba(176,38,255,0.13)',
+        opacity: 'calc(0.4 + 0.6 * var(--data-density, 1))',
+        transition: 'opacity 200ms linear',
+      }}
+    />
+    <div
+      className="animate-counter-spin-ring absolute size-[115px] rounded-full will-change-transform"
+      style={{
+        border: '1px dashed rgba(0,71,255,0.1)',
+        animationDuration: '12s',
+        opacity: 'calc(0.4 + 0.6 * var(--data-density, 1))',
+        transition: 'opacity 200ms linear',
+      }}
+    />
+
+    {/* Compact orbit — 2 tech + 2 business labels on one ring. Desktop got a
+        full two-ring orbit; this is the same mechanism scaled down instead
+        of the plain unlabeled ball mobile had before. */}
+    <div className="animate-ring-a absolute inset-0 will-change-transform">
+      <OrbitLabel
+        text="Kotlin / KMP"
+        angle={0}
+        radius={118}
+        variant="tech"
+        delay={0.8}
+        reduced={reduced}
+        cancelSpinClassName="animate-ring-a-cancel"
+      />
+      <OrbitLabel
+        text={businessLabels[0]}
+        angle={90}
+        radius={118}
+        variant="business"
+        delay={0.9}
+        reduced={reduced}
+        cancelSpinClassName="animate-ring-a-cancel"
+      />
+      <OrbitLabel
+        text="Next.js"
+        angle={180}
+        radius={118}
+        variant="tech"
+        delay={1.0}
+        reduced={reduced}
+        cancelSpinClassName="animate-ring-a-cancel"
+      />
+      <OrbitLabel
+        text={businessLabels[2]}
+        angle={270}
+        radius={118}
+        variant="business"
+        delay={1.1}
+        reduced={reduced}
+        cancelSpinClassName="animate-ring-a-cancel"
+      />
+    </div>
+
+    <div
+      className="animate-morph-sphere size-[70px]"
+      style={{
+        background:
+          'radial-gradient(circle at 33% 28%, rgba(229,181,255,0.9) 0%, rgba(176,38,255,0.78) 24%, rgba(0,71,255,0.5) 58%, rgba(5,5,14,0.97) 80%)',
+        boxShadow:
+          '0 0 35px rgba(176,38,255,0.55), 0 0 70px rgba(176,38,255,0.12)',
+        willChange: 'border-radius',
+      }}
+    >
+      <div
+        className="absolute rounded-full bg-white/35 blur-[6px]"
+        style={{ width: '38%', height: '28%', top: '14%', left: '16%' }}
+      />
+    </div>
+  </div>
+);
 
 /* ─── Full animated sphere ────────────────────── */
 const AnimatedSphere = ({
@@ -475,12 +524,12 @@ const Hero = () => {
       </Head>
 
       <Script
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         src="https://www.googletagmanager.com/gtag/js?id=AW-18025811889"
       />
       <Script
         id="google-analytics"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -729,7 +778,10 @@ const Hero = () => {
             >
               {/* Mobile + Tablet: sphere */}
               <div className="lg:hidden">
-                <MobileSphere />
+                <MobileSphere
+                  reduced={!!prefersReducedMotion}
+                  businessLabels={businessLabels}
+                />
               </div>
               {/* Desktop: full sphere */}
               <div className="hidden lg:flex">

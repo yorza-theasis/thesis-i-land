@@ -343,14 +343,18 @@ html.light {
   display: none;
 }
 
-/* Surface colors */
-.light .bg-kosmos-950 {
+/* Surface colors — attribute selector, not a class selector, so it also
+   catches opacity-modifier variants like `bg-kosmos-900/90`, which Tailwind
+   emits as one literal class token a plain `.bg-kosmos-900` selector can't
+   match. Without this, the scrolled navbar pill (`bg-kosmos-900/90`) and a
+   few status chips stayed dark in light mode. */
+.light [class*='bg-kosmos-950'] {
   background-color: #f5f4f1 !important;
 }
-.light .bg-kosmos-900 {
+.light [class*='bg-kosmos-900'] {
   background-color: #eeecea !important;
 }
-.light .bg-kosmos-800 {
+.light [class*='bg-kosmos-800'] {
   background-color: #e6e4e0 !important;
 }
 
@@ -380,6 +384,21 @@ html.light {
 }
 .light .text-gray-800 {
   color: #b2afa9 !important;
+}
+
+/* Accent "bright" text — these are pale colors tuned for dark backgrounds
+   (e.g. neon-purple-bright #d49bff), so on a light page they're nearly
+   invisible. Darken them to the same hue instead. Attribute selector so it
+   also catches opacity-modifier variants like `text-neon-purple-bright/75`,
+   which a plain class selector can't match. */
+.light [class*='text-neon-purple-bright'] {
+  color: #7c1fd1 !important;
+}
+.light [class*='text-neon-blue-bright'] {
+  color: #0047ff !important;
+}
+.light [class*='text-neon-gold-bright'] {
+  color: #8a5a12 !important;
 }
 
 /* Always-white text (gradient buttons, icons on colored bg) */
