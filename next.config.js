@@ -18,4 +18,8 @@ module.exports = withBundleAnalyzer({
   images: {
     unoptimized: true,
   },
+  experimental: {
+    // Import only the icons actually used instead of the full barrel.
+    optimizePackageImports: ['@phosphor-icons/react'],
+  },
 });

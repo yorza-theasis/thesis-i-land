@@ -1,54 +1,70 @@
-import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
+import Head from 'next/head';
 
-import { GlobalBackground } from '../background/GlobalBackground';
-import { LocaleProvider } from '../i18n/LocaleContext';
 import type { Locale } from '../i18n/translations';
 import { translations } from '../i18n/translations';
-import { Meta } from '../layout/Meta';
-import { Footer } from './Footer';
+import { SiteShell } from '../layout/SiteShell';
+import { AppConfig } from '../utils/AppConfig';
+import { About } from './About';
+import { Challenges } from './Challenges';
+import { Cta } from './Cta';
+import { Faq } from './Faq';
 import { Hero } from './Hero';
+import { Process } from './Process';
+import { Services } from './Services';
+import { TechStack } from './TechStack';
+import { Work } from './Work';
 
-const Sponsors = dynamic(() =>
-  import('./Sponsors').then((mod) => mod.Sponsors),
-);
-const VerticalFeatures = dynamic(() =>
-  import('./VerticalFeatures').then((mod) => mod.VerticalFeatures),
-);
-const TechStack = dynamic(() =>
-  import('./TechStack').then((mod) => mod.TechStack),
-);
-const Banner = dynamic(() => import('./Banner').then((mod) => mod.Banner));
-
-type BaseProps = { locale?: Locale };
-
-const Base = ({ locale = 'en' }: BaseProps) => {
+const Base = ({ locale = 'en' }: { locale?: Locale }) => {
   const t = translations[locale];
-
-  useEffect(() => {
-    document.documentElement.lang = locale === 'ua' ? 'uk' : 'en';
-  }, [locale]);
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: AppConfig.site_name,
+    url: AppConfig.site_url,
+    logo: `${AppConfig.site_url}/thesis-igraphitegray.png`,
+    image: `${AppConfig.site_url}/thesis-igraphitegray.png`,
+    description: t.meta.description,
+    email: AppConfig.contact.email,
+    sameAs: [AppConfig.contact.linkedin],
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Lviv',
+      addressCountry: 'UA',
+    },
+    knowsAbout: [
+      'Hardware development',
+      'Embedded systems',
+      'Artificial intelligence',
+      'Mobile development',
+      'Backend development',
+      'Cloud and DevOps',
+    ],
+  };
 
   return (
-    <LocaleProvider locale={locale}>
-      <div
-        className="mx-[-300px] overflow-x-clip px-[300px] text-gray-300 antialiased"
-        // Clip 300px further out than the viewport on each side (margin
-        // pulls the box out, padding pushes content back to the same visual
-        // position) so ambient glows fully fade before hitting the clip
-        // line instead of being flattened at the edge. html/body carry
-        // their own overflow-x: hidden to absorb this bleed.
-      >
-        <Meta title={t.meta.title} description={t.meta.description} />
-        <GlobalBackground />
-        <Hero />
-        <Sponsors />
-        <VerticalFeatures />
-        <TechStack />
-        <Banner />
-        <Footer />
-      </div>
-    </LocaleProvider>
+    <SiteShell
+      locale={locale}
+      title={t.meta.title}
+      description={t.meta.description}
+      path=""
+    >
+      <Head>
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      </Head>
+      <Hero />
+      <Challenges />
+      <Services />
+      <Work />
+      <Process />
+      <About />
+      <TechStack />
+      <Faq />
+      <Cta />
+    </SiteShell>
   );
 };
 

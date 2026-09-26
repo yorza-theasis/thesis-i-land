@@ -1,468 +1,153 @@
-@import "tw-animate-css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Tokens ──────────────────────────────────────────────
+   Graphite + paper neutrals taken from the logo artwork, one accent:
+   the blue dot of the "i". Values are RGB channels (see tailwind.config). */
 @layer base {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #e5e2e1;
-    --card: #131313;
-    --card-foreground: #e5e2e1;
-    --popover: #131313;
-    --popover-foreground: #e5e2e1;
-    --primary: #b026ff;
-    --primary-foreground: #ffffff;
-    --secondary: #121215;
-    --secondary-foreground: #e5e2e1;
-    --muted: #121215;
-    --muted-foreground: #9ca3af;
-    --accent: #0047ff;
-    --accent-foreground: #ffffff;
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: rgba(255, 255, 255, 0.05);
-    --input: rgba(255, 255, 255, 0.04);
-    --ring: rgba(176, 38, 255, 0.4);
-    --radius: 0.75rem;
-    --sidebar: #0a0a0c;
-    --sidebar-foreground: #e5e2e1;
-    --sidebar-primary: #b026ff;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #121215;
-    --sidebar-accent-foreground: #e5e2e1;
-    --sidebar-border: rgba(255, 255, 255, 0.05);
-    --sidebar-ring: rgba(157, 52, 255, 0.4);
+  :root,
+  .dark {
+    --bg: 17 17 17;
+    --elev: 23 23 23;
+    --surface: 29 29 29;
+    --ink: 237 237 235;
+    --muted: 163 163 160;
+    --subtle: 128 128 125;
+    --line: 255 255 255;
+    --signal: 10 132 255;
+    --signal-ink: 92 168 255;
+    --grain-opacity: 0.035;
+    color-scheme: dark;
   }
 
-  * {
-    @apply border-border;
+  .light {
+    --bg: 244 243 239;
+    --elev: 238 237 232;
+    --surface: 251 251 249;
+    --ink: 22 22 21;
+    --muted: 82 81 77;
+    --subtle: 112 110 105;
+    --line: 0 0 0;
+    --signal: 10 132 255;
+    --signal-ink: 0 98 204;
+    --grain-opacity: 0.025;
+    color-scheme: light;
   }
 
   html {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    @apply font-sans;
+    /* Non-static root so Framer's useScroll can measure element offsets. */
+    position: relative;
+    touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    /* Absorbs the Base.tsx wrapper's negative-margin bleed (see comment
-       there) without ever showing a horizontal scrollbar. */
-    overflow-x: hidden;
+    scroll-padding-top: 6rem;
   }
 
-  body {
-    background-color: #0a0a0a;
-    color: #e5e2e1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-  }
-
-  /* Film grain — desktop only */
-  @media (min-width: 768px) {
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0.038;
-      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
-      background-size: 220px 220px;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
     }
   }
 
-  /* Thin neon scrollbar */
-  ::-webkit-scrollbar { width: 3px; height: 3px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #b026ff, #0047ff);
-    border-radius: 2px;
+  body {
+    @apply bg-bg font-sans text-ink antialiased;
+    overflow-x: clip;
+    font-feature-settings: 'ss01' on;
   }
 
-  /* Selection highlight */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
   ::selection {
-    background: rgba(176, 38, 255, 0.25);
-    color: #ffffff;
+    background: rgb(var(--signal) / 0.28);
+    color: rgb(var(--ink));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--signal));
+    outline-offset: 3px;
+    border-radius: 0.375rem;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--bg));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--line) / 0.12);
+    border: 3px solid rgb(var(--bg));
+    border-radius: 999px;
   }
 }
 
-/* ─── Keyframe Animations ─────────────────────────────── */
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-page px-5 md:px-8;
+  }
 
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(1.5); }
-}
+  /* Mono micro-label used for eyebrows, indices and metadata. */
+  .label {
+    @apply font-mono text-[11px] font-medium uppercase tracking-label text-subtle;
+  }
 
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-8px); }
-}
-
-@keyframes morph-sphere {
-  0%, 100% { border-radius: 50%; }
-  20%       { border-radius: 58% 42% 46% 54% / 54% 56% 44% 46%; }
-  40%       { border-radius: 44% 56% 54% 46% / 46% 44% 56% 54%; }
-  60%       { border-radius: 54% 46% 42% 58% / 42% 54% 46% 58%; }
-  80%       { border-radius: 46% 54% 60% 40% / 56% 42% 58% 44%; }
-}
-
-@keyframes spin-ring {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes counter-spin-ring {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(-360deg); }
-}
-
-/* Hero orbit rings — two rotation directions, reused both to drive a ring's
-   spin and (at a matching duration) to cancel it out on the label inside so
-   the label itself stays upright while its position sweeps around. Pure
-   `rotate()` — compositor-only on every engine, so this is safe to run
-   indefinitely on any OS without repaint cost. */
-@keyframes orbit-cw {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes orbit-ccw {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(-360deg); }
-}
-
-@keyframes shimmer-x {
-  0%   { left: -100%; }
-  100% { left: 200%; }
-}
-
-@keyframes grid-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-40px, -40px, 0); }
-}
-
-@keyframes grid-breathe {
-  0%, 100% { opacity: 0.03; }
-  50%       { opacity: 0.06; }
-}
-
-/* ─── Animation Utility Classes ────────────────────────── */
-
-.animate-pulse-dot     { animation: pulse-dot 2s ease-in-out infinite; }
-.animate-marquee       { animation: marquee 35s linear infinite; }
-.animate-float         { animation: float 4s ease-in-out infinite; }
-.animate-morph-sphere  { animation: morph-sphere 9s ease-in-out infinite; }
-.animate-spin-ring     { animation: spin-ring 28s linear infinite; }
-.animate-grid-drift    { animation: grid-drift 70s linear infinite; }
-.animate-grid-breathe  { animation: grid-breathe 6s ease-in-out infinite; }
-.animate-counter-spin-ring { animation: counter-spin-ring 18s linear infinite; }
-
-/* Ring A (inner, tech labels) and Ring B (outer, business labels) rotate in
-   opposite directions at different speeds so they read as two independent
-   orbits, not one rigid unit. The "-cancel" pair shares the exact duration
-   of the ring it belongs to, so nesting it inside that ring's rotation
-   exactly cancels the spin — the label sweeps around the sphere but its own
-   text never tilts. */
-.animate-ring-a        { animation: orbit-cw 46s linear infinite; }
-.animate-ring-a-cancel { animation: orbit-ccw 46s linear infinite; }
-.animate-ring-b        { animation: orbit-ccw 34s linear infinite; }
-.animate-ring-b-cancel { animation: orbit-cw 34s linear infinite; }
-
-/* ─── Glassmorphism — desktop with blur, mobile solid ──── */
-
-.glass-panel {
-  background: rgba(10, 10, 10, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
-}
-
-@media (min-width: 768px) {
-  .glass-panel {
-    background: rgba(255, 255, 255, 0.025);
-    /* Kept modest on purpose — backdrop-filter cost scales with blur radius
-       and element area, and this panel is often full-width. */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+  /* Static drafting grid — hero only, faded out with a mask. */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgb(var(--line) / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--line) / 0.045) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 20%, transparent 75%);
   }
 }
 
-.glass-card {
-  background: rgba(17, 17, 17, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-@media (min-width: 768px) {
-  .glass-card {
-    background: rgba(255, 255, 255, 0.032);
-    /* Kept modest on purpose — several of these render at once in the
-       services/portfolio grids, and backdrop-filter cost stacks per element. */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-}
-
-.glass-card:hover {
-  background: rgba(25, 25, 25, 0.98);
-  border-color: rgba(255, 255, 255, 0.13);
-  box-shadow: 0 0 40px rgba(176, 38, 255, 0.06), 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-@media (min-width: 768px) {
-  .glass-card:hover {
-    background: rgba(255, 255, 255, 0.052);
-  }
-}
-
-/* ─── Text Gradients ─────────────────────────────────── */
-
-.text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #e2bfff 45%, #baccff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-purple {
-  background: linear-gradient(135deg, #e5b5ff 0%, #b026ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ─── Shimmer ────────────────────────────────────────── */
-
-.shimmer-hover {
-  position: relative;
-  overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  .shimmer-hover::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.035) 50%,
-      transparent 100%
-    );
-    transform: skewX(-15deg);
-  }
-
-  .shimmer-hover:hover::after {
-    animation: shimmer-x 0.65s ease forwards;
-  }
-}
-
-/* ─── HUD corner brackets ────────────────────────────── */
-
-.hud-tl {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 14px;
-  height: 14px;
-  border-top: 1px solid rgba(176, 38, 255, 0.3);
-  border-left: 1px solid rgba(176, 38, 255, 0.3);
+/* ─── Film grain — fixed, never repainted on scroll ──── */
+.grain {
+  position: fixed;
+  inset: 0;
   pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
 }
 
-.hud-tr {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 14px;
-  height: 14px;
-  border-top: 1px solid rgba(176, 38, 255, 0.3);
-  border-right: 1px solid rgba(176, 38, 255, 0.3);
-  pointer-events: none;
+/* ─── Motion primitives (transform / opacity only) ───── */
+@keyframes ping-soft {
+  0% { transform: scale(1); opacity: 0.55; }
+  80%, 100% { transform: scale(2.6); opacity: 0; }
 }
 
-.hud-bl {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 14px;
-  height: 14px;
-  border-bottom: 1px solid rgba(176, 38, 255, 0.3);
-  border-left: 1px solid rgba(176, 38, 255, 0.3);
-  pointer-events: none;
+@keyframes caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
-.hud-br {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 14px;
-  height: 14px;
-  border-bottom: 1px solid rgba(176, 38, 255, 0.3);
-  border-right: 1px solid rgba(176, 38, 255, 0.3);
-  pointer-events: none;
+@keyframes travel {
+  0% { transform: translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(var(--travel, 100%)); opacity: 0; }
 }
 
-/* ─── Glow ───────────────────────────────────────────── */
-
-.glow-purple {
-  box-shadow: 0 0 20px rgba(176, 38, 255, 0.35), 0 0 60px rgba(176, 38, 255, 0.1);
+@keyframes bar {
+  0%, 100% { transform: scaleY(var(--from, 0.35)); }
+  50% { transform: scaleY(var(--to, 0.9)); }
 }
 
-.glow-purple-hover:hover {
-  box-shadow:
-    0 0 24px rgba(176, 38, 255, 0.5),
-    0 0 70px rgba(176, 38, 255, 0.2),
-    0 0 120px rgba(0, 71, 255, 0.1);
-}
-
-/* ─── Light mode ─────────────────────────────────────── */
-
-html.light {
-  --background: #f5f4f1;
-  --foreground: #0d0d0b;
-  --card: #ffffff;
-  --card-foreground: #0d0d0b;
-  --border: rgba(0, 0, 0, 0.08);
-  color-scheme: light;
-}
-
-.light body {
-  background-color: #f5f4f1;
-  color: #0d0d0b;
-}
-
-/* Hide grain in light mode */
-.light body::before {
-  display: none;
-}
-
-/* Surface colors — attribute selector, not a class selector, so it also
-   catches opacity-modifier variants like `bg-kosmos-900/90`, which Tailwind
-   emits as one literal class token a plain `.bg-kosmos-900` selector can't
-   match. Without this, the scrolled navbar pill (`bg-kosmos-900/90`) and a
-   few status chips stayed dark in light mode. */
-.light [class*='bg-kosmos-950'] {
-  background-color: #f5f4f1 !important;
-}
-.light [class*='bg-kosmos-900'] {
-  background-color: #eeecea !important;
-}
-.light [class*='bg-kosmos-800'] {
-  background-color: #e6e4e0 !important;
-}
-
-/* Borders — invert white-opacity to black-opacity */
-.light [class*='border-white'] {
-  border-color: rgba(0, 0, 0, 0.09) !important;
-}
-
-/* Text — remap dark-mode gray scale to light equivalents */
-.light .text-white {
-  color: #0d0d0b !important;
-}
-.light .text-gray-300 {
-  color: #1e1d1a !important;
-}
-.light .text-gray-400 {
-  color: #38362f !important;
-}
-.light .text-gray-500 {
-  color: #524f49 !important;
-}
-.light .text-gray-600 {
-  color: #706d67 !important;
-}
-.light .text-gray-700 {
-  color: #8f8c88 !important;
-}
-.light .text-gray-800 {
-  color: #b2afa9 !important;
-}
-
-/* Accent "bright" text — these are pale colors tuned for dark backgrounds
-   (e.g. neon-purple-bright #d49bff), so on a light page they're nearly
-   invisible. Darken them to the same hue instead. Attribute selector so it
-   also catches opacity-modifier variants like `text-neon-purple-bright/75`,
-   which a plain class selector can't match. */
-.light [class*='text-neon-purple-bright'] {
-  color: #7c1fd1 !important;
-}
-.light [class*='text-neon-blue-bright'] {
-  color: #0047ff !important;
-}
-.light [class*='text-neon-gold-bright'] {
-  color: #8a5a12 !important;
-}
-
-/* Always-white text (gradient buttons, icons on colored bg) */
-.light [class*='from-neon-purple'].text-white,
-.light [class*='bg-neon-'].text-white {
-  color: white !important;
-}
-
-/* Glass components */
-.light .glass-panel {
-  background: rgba(245, 244, 241, 0.92) !important;
-  border-color: rgba(0, 0, 0, 0.09) !important;
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8) !important;
-}
-@media (min-width: 768px) {
-  .light .glass-panel {
-    background: rgba(245, 244, 241, 0.85) !important;
-  }
-}
-
-.light .glass-card {
-  background: rgba(255, 255, 255, 0.97) !important;
-  border-color: rgba(0, 0, 0, 0.07) !important;
-}
-.light .glass-card:hover {
-  background: rgba(255, 255, 255, 1) !important;
-  border-color: rgba(176, 38, 255, 0.22) !important;
-  box-shadow:
-    0 0 40px rgba(176, 38, 255, 0.06),
-    0 20px 60px rgba(0, 0, 0, 0.08) !important;
-}
-@media (min-width: 768px) {
-  .light .glass-card {
-    background: rgba(255, 255, 255, 0.82) !important;
-  }
-}
-
-/* Text gradient — white-on-white is invisible; use dark-to-purple */
-.light .text-gradient {
-  background: linear-gradient(
-    135deg,
-    #0d0d0b 0%,
-    #6200aa 48%,
-    #0033cc 100%
-  ) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-/* HUD corners — slightly darker in light mode */
-.light .hud-tl,
-.light .hud-tr,
-.light .hud-bl,
-.light .hud-br {
-  border-color: rgba(176, 38, 255, 0.22) !important;
-}
-
-/* Scrollbar */
-.light ::-webkit-scrollbar-track {
-  background: #f5f4f1;
-}
-
-/* ─── Respect reduced motion ─────────────────────────── */
+.animate-ping-soft { animation: ping-soft 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+.animate-caret { animation: caret 1.05s steps(1) infinite; }
+.animate-travel { animation: travel 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.animate-bar { animation: bar 2.8s cubic-bezier(0.45, 0, 0.55, 1) infinite; transform-origin: bottom; }
 
 @media (prefers-reduced-motion: reduce) {
   *,

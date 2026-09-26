@@ -1,81 +1,45 @@
-import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
 
-type ISectionProps = {
-  title?: string;
-  description?: string;
-  eyebrow?: string;
-  yPadding?: string;
-  id?: string;
-  children: ReactNode;
-};
-
-const Section = (props: ISectionProps) => (
-  <div
-    id={props.id}
-    className={`mx-auto max-w-screen-xl px-6 ${
-      props.yPadding ? props.yPadding : 'py-24'
+/* Registration mark drawn where a section rule meets the column edge —
+ * a drafting-table detail that ties the grid to the brand. */
+const Crosshair = ({ side }: { side: 'left' | 'right' }) => (
+  <span
+    aria-hidden="true"
+    className={`absolute top-1/2 size-[11px] -translate-y-1/2 ${
+      side === 'left' ? 'left-[-5px]' : 'right-[-5px]'
     }`}
   >
-    {(props.eyebrow || props.title || props.description) && (
-      <div className="mb-16 text-center">
-        {props.eyebrow && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-4 inline-flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-widest text-neon-purple-bright/60"
-          >
-            <span className="h-px w-6 bg-gradient-to-r from-neon-purple to-neon-blue opacity-60" />
-            {props.eyebrow}
-            <span className="h-px w-6 bg-gradient-to-l from-neon-purple to-neon-blue opacity-60" />
-          </motion.div>
-        )}
-        {props.title && (
-          <>
-            <motion.h2
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{
-                duration: 0.65,
-                delay: 0.05,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="text-4xl font-bold tracking-tighter text-white"
-            >
-              {props.title}
-            </motion.h2>
-            <motion.div
-              initial={{ scaleX: 0, opacity: 0 }}
-              whileInView={{ scaleX: 1, opacity: 1 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{
-                duration: 0.7,
-                delay: 0.2,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="mx-auto mt-5 h-px w-24 origin-left bg-gradient-to-r from-neon-purple via-neon-blue to-transparent"
-            />
-          </>
-        )}
-        {props.description && (
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 text-base leading-relaxed text-gray-500 md:px-20"
-          >
-            {props.description}
-          </motion.p>
-        )}
+    <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-line/40" />
+    <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-line/40" />
+  </span>
+);
+
+type SectionProps = {
+  id?: string;
+  children: ReactNode;
+  className?: string;
+  rule?: boolean;
+};
+
+const Section = ({
+  id,
+  children,
+  className = '',
+  rule = true,
+}: SectionProps) => (
+  <section id={id} className={`relative pb-24 md:pb-36 ${className}`}>
+    {rule && (
+      <div className="container-page">
+        <div className="relative h-px bg-line/10">
+          <Crosshair side="left" />
+          <Crosshair side="right" />
+        </div>
       </div>
     )}
-
-    {props.children}
-  </div>
+    <div className={`container-page ${rule ? 'pt-20 md:pt-28' : ''}`}>
+      {children}
+    </div>
+  </section>
 );
 
 export { Section };

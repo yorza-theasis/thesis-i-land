@@ -1,23 +1,49 @@
 import Link from 'next/link';
 
-import { useLocale } from './LocaleContext';
+import { localeBase, useLocale, useT } from './LocaleContext';
+import type { Locale } from './translations';
 
-const LanguageSwitcher = ({ subPath }: { subPath?: string }) => {
+const LOCALES: { id: Locale; label: string; hrefLang: string }[] = [
+  { id: 'en', label: 'EN', hrefLang: 'en' },
+  { id: 'ua', label: 'UA', hrefLang: 'uk' },
+];
+
+/* Segmented EN / UA control. `subPath` keeps the visitor on the same page
+ * (e.g. "cases/") when switching language. */
+const LanguageSwitcher = ({ subPath = '' }: { subPath?: string }) => {
   const locale = useLocale();
-  const targetLocale = locale === 'en' ? 'ua' : 'en';
-  const targetLabel = locale === 'en' ? 'UA' : 'EN';
-  const targetHref = subPath
-    ? `/${targetLocale}/${subPath}`
-    : `/${targetLocale}/`;
+  const { common } = useT();
 
   return (
-    <Link
-      href={targetHref}
-      className="border-white/12 flex h-8 items-center rounded-full border bg-white/[0.04] px-3 font-mono text-xs font-semibold tracking-wider text-gray-400 transition-all duration-200 hover:border-neon-purple/40 hover:text-neon-purple-bright"
-      aria-label={`Switch to ${targetLabel}`}
+    <div
+      role="group"
+      aria-label={common.switchLanguage}
+      className="flex h-9 items-center rounded-full border border-line/10 p-0.5 font-mono text-[11px] font-medium tracking-[0.08em]"
     >
-      {targetLabel}
-    </Link>
+      {LOCALES.map((l) => {
+        const active = l.id === locale;
+        // English keeps its canonical root URLs rather than the /en/ mirror.
+        const href = `${localeBase(l.id)}/${subPath}`;
+        return active ? (
+          <span
+            key={l.id}
+            aria-current="true"
+            className="flex h-full items-center rounded-full bg-line/[0.08] px-2.5 text-ink"
+          >
+            {l.label}
+          </span>
+        ) : (
+          <Link
+            key={l.id}
+            href={href}
+            hrefLang={l.hrefLang}
+            className="flex h-full items-center rounded-full px-2.5 text-subtle transition-colors duration-300 hover:text-ink"
+          >
+            {l.label}
+          </Link>
+        );
+      })}
+    </div>
   );
 };
 

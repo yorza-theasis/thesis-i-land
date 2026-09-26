@@ -23,4 +23,9 @@ const useT = (): Translations => {
   return translations[locale];
 };
 
-export { LocaleProvider, useLocale, useT };
+/** Path prefix for internal links: '' for English, '/ua' for Ukrainian. */
+const localeBase = (locale: Locale) => (locale === 'ua' ? '/ua' : '');
+
+const useBase = (): string => localeBase(useContext(LocaleContext));
+
+export { localeBase, LocaleProvider, useBase, useLocale, useT };
