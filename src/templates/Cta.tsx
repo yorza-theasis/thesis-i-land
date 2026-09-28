@@ -39,7 +39,7 @@ const Cta = () => {
   const base = useBase();
 
   return (
-    <section id="contact" className="py-24 md:py-32">
+    <section id="contact" className="py-16 sm:py-24 md:py-32">
       <div className="container-page">
         <Reveal>
           <div className="grid gap-12 overflow-hidden rounded-[2rem] bg-signal-strong px-6 py-12 text-white sm:px-10 md:py-16 lg:grid-cols-12 lg:gap-10 lg:px-16 lg:py-20">

@@ -16,7 +16,7 @@ const Section = ({
 }: SectionProps) => (
   <section
     id={id}
-    className={`relative py-24 md:py-32 ${tone === 'alt' ? 'bg-elev' : ''} ${className}`}
+    className={`relative py-16 sm:py-24 md:py-32 ${tone === 'alt' ? 'bg-elev' : ''} ${className}`}
   >
     <div className="container-page">{children}</div>
   </section>

@@ -1,16 +1,6 @@
-import type { Icon } from '@phosphor-icons/react';
-import {
-  Brain,
-  CloudArrowUp,
-  Cpu,
-  Database,
-  DeviceMobile,
-  TreeStructure,
-  Wrench,
-} from '@phosphor-icons/react';
-
 import { RevealGroup, RevealItem } from '../components/motion';
 import { SectionHeader } from '../components/SectionHeader';
+import { SERVICE_ICONS } from '../data/serviceIcons';
 import { useT } from '../i18n/LocaleContext';
 import { Section } from '../layout/Section';
 
@@ -23,16 +13,6 @@ const TAGS = [
   ['AWS', 'Kubernetes', 'Docker', 'Helm'],
   ['System design', 'API design', 'DDD'],
   ['Design', 'Architecture & Logic', 'Backend & Security'],
-];
-
-const ICONS: Icon[] = [
-  Brain,
-  DeviceMobile,
-  Database,
-  Cpu,
-  CloudArrowUp,
-  TreeStructure,
-  Wrench,
 ];
 
 /* One real artefact per capability, cropped to the part that reads at
@@ -50,7 +30,7 @@ const THUMBS: ({ src: string; position: string } | null)[] = [
 /* Screenshots come in light and dark UIs; showing them in greyscale keeps
  * the grid calm, and the colour version fades in (opacity only) on hover. */
 const Thumb = ({ src, position }: { src: string; position: string }) => (
-  <div className="relative aspect-[4/3] w-28 shrink-0 self-start overflow-hidden rounded-xl bg-bg ring-1 ring-line/10 sm:w-36 sm:self-stretch lg:w-40">
+  <div className="relative aspect-[4/3] w-20 shrink-0 self-start overflow-hidden rounded-xl bg-bg ring-1 ring-line/10 xs:w-28 sm:w-40 sm:self-stretch lg:w-36 xl:w-40">
     <img
       src={src}
       alt=""
@@ -80,9 +60,9 @@ const Services = () => {
         description={services.description}
       />
 
-      <RevealGroup className="mt-12 grid gap-3 md:mt-14 md:grid-cols-2 md:gap-4">
+      <RevealGroup className="mt-12 grid gap-3 md:mt-14 md:gap-4 lg:grid-cols-2">
         {services.items.map((service, i) => {
-          const TileIcon = ICONS[i]!;
+          const TileIcon = SERVICE_ICONS[i]!;
           const thumb = THUMBS[i];
 
           if (!thumb) {
@@ -91,7 +71,7 @@ const Services = () => {
               <RevealItem
                 as="article"
                 key={service.title}
-                className="grid gap-4 rounded-[1.25rem] bg-signal/[0.08] p-5 ring-1 ring-signal/25 md:col-span-2 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:p-7"
+                className="grid gap-4 rounded-[1.25rem] bg-signal/[0.08] p-5 ring-1 ring-signal/25 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:p-7 lg:col-span-2"
               >
                 <div className="flex items-start gap-4">
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-signal-strong text-white">
@@ -122,7 +102,7 @@ const Services = () => {
             <RevealItem
               as="article"
               key={service.title}
-              className="group flex gap-4 rounded-[1.25rem] bg-surface p-3 ring-1 ring-line/[0.07] transition-shadow duration-300 hover:ring-line/[0.16] sm:gap-5 sm:p-4"
+              className="group flex min-w-0 gap-4 rounded-[1.25rem] bg-surface p-3 ring-1 ring-line/[0.07] transition-shadow duration-300 hover:ring-line/[0.16] sm:gap-5 sm:p-4"
             >
               <Thumb src={thumb.src} position={thumb.position} />
               <div className="flex min-w-0 flex-1 flex-col py-1 pr-1">
@@ -133,7 +113,7 @@ const Services = () => {
                     aria-hidden="true"
                     className="shrink-0 text-signal-ink"
                   />
-                  <h3 className="truncate text-base font-medium tracking-[-0.01em] text-ink sm:text-lg">
+                  <h3 className="text-base font-medium leading-snug tracking-[-0.01em] text-ink sm:text-lg">
                     {service.title}
                   </h3>
                 </div>
@@ -141,7 +121,7 @@ const Services = () => {
                   {service.description}
                 </p>
                 <p className="mt-auto flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 pt-2 text-xs text-subtle">
-                  <span className="truncate">{TAGS[i]!.join(', ')}</span>
+                  <span className="min-w-0">{TAGS[i]!.join(', ')}</span>
                   <span className="shrink-0 text-signal-ink">
                     {service.stat}
                   </span>

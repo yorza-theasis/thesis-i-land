@@ -20,7 +20,7 @@ const Headline = ({ text }: { text: string }) => {
       .map((word) => ({ word, accent: seg.accent })),
   );
   return (
-    <h1 className="mt-5 text-4xl font-medium leading-[1.04] tracking-display text-ink sm:text-5xl lg:text-[2.875rem] xl:text-[3.5rem]">
+    <h1 className="mt-5 text-[2rem] font-medium leading-[1.04] tracking-display text-ink xs:text-4xl sm:text-5xl lg:text-[2.875rem] xl:text-[3.5rem] [@media(max-height:500px)]:text-4xl">
       {words.map(({ word, accent }, i) => (
         <Fragment key={`${word}-${i}`}>
           <span className="inline-block overflow-hidden pb-[0.1em] align-bottom">
@@ -166,7 +166,7 @@ const Ring = ({
               {n.kind === 'case' ? (
                 <CaseNode id={n.id} size={nodeSize} />
               ) : (
-                <span className="block whitespace-nowrap rounded-full bg-surface px-2.5 py-1 text-[0.6875rem] font-medium text-ink shadow-[0_10px_30px_-14px_rgb(0_0_0/0.5)] ring-1 ring-line/15 sm:px-3 sm:py-1.5 sm:text-sm">
+                <span className="block whitespace-nowrap rounded-full bg-surface px-2.5 py-1 text-xs font-medium text-ink shadow-[0_10px_30px_-14px_rgb(0_0_0/0.5)] ring-1 ring-line/15 sm:px-3 sm:py-1.5 xl:text-[0.8125rem]">
                   {hero.orbit.chips[n.index]}
                 </span>
               )}
@@ -184,7 +184,7 @@ const ProjectOrbit = () => {
     <motion.div
       role="group"
       aria-label={hero.orbit.label}
-      className="orbit relative mx-auto aspect-square w-[88%] max-w-[34rem] sm:w-full"
+      className="orbit relative mx-auto aspect-square w-full max-w-[34rem]"
       initial={{ opacity: 0, scale: 0.94 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 1.1, ease: EASE, delay: 0.2 }}
@@ -235,9 +235,9 @@ const Hero = () => {
   const base = useBase();
 
   return (
-    <section className="flex min-h-[100dvh] items-center pb-16 pt-24">
+    <section className="flex min-h-[100dvh] items-center pb-16 pt-24 [@media(max-height:500px)]:pt-20">
       <div className="container-page grid w-full items-center gap-14 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-6">
+        <div className="lg:col-span-7">
           <Reveal>
             <p className="text-sm text-muted">{hero.eyebrow}</p>
           </Reveal>
@@ -258,8 +258,13 @@ const Hero = () => {
             </div>
           </Reveal>
         </div>
-        <div className="lg:col-span-6">
-          <ProjectOrbit />
+        <div className="lg:col-span-5">
+          {/* Rotating square layers grow diagonally mid-turn; clipping here
+              keeps them from widening the page, and the padding leaves room
+              for nodes and their hover labels at the ring edge. */}
+          <div className="-mx-5 overflow-hidden px-[calc(13%+1.25rem)] pb-[14%] pt-[10%] sm:mx-0 sm:px-[10%]">
+            <ProjectOrbit />
+          </div>
         </div>
       </div>
     </section>
@@ -270,16 +275,19 @@ const Hero = () => {
 const Stats = () => {
   const { hero } = useT();
   return (
-    <section className="pb-24">
+    <section className="pb-16 sm:pb-24">
       <div className="container-page">
         <Reveal>
           <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-[1.5rem] bg-line/10 ring-1 ring-line/10 lg:grid-cols-4">
             {hero.stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col bg-bg p-6 md:p-8">
+              <div
+                key={stat.label}
+                className="flex min-w-0 flex-col bg-bg p-5 sm:p-6 md:p-8"
+              >
                 <dt className="order-2 mt-3 text-sm font-medium text-ink">
                   {stat.label}
                 </dt>
-                <dd className="order-1 text-4xl font-medium tabular-nums tracking-[-0.03em] text-ink md:text-5xl">
+                <dd className="order-1 text-3xl font-medium tabular-nums tracking-[-0.03em] text-ink xs:text-4xl md:text-5xl">
                   {stat.value}
                   <span className="text-signal-ink">{stat.suffix}</span>
                 </dd>

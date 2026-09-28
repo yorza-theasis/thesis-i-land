@@ -64,30 +64,30 @@ const Process = () => {
             screens, horizontal from lg. */}
         <span
           aria-hidden="true"
-          className="absolute inset-y-5 left-[calc(1.25rem-0.5px)] w-px bg-line/10 lg:hidden"
+          className="absolute inset-y-5 left-[calc(1.25rem-0.5px)] w-px bg-line/10 xl:hidden"
         />
         <motion.span
           aria-hidden="true"
           style={{ scaleY: progress }}
-          className="absolute inset-y-5 left-[calc(1.25rem-0.5px)] w-px origin-top bg-signal lg:hidden"
+          className="absolute inset-y-5 left-[calc(1.25rem-0.5px)] w-px origin-top bg-signal xl:hidden"
         />
         <span
           aria-hidden="true"
-          className="absolute inset-x-5 top-[calc(1.25rem-0.5px)] hidden h-px bg-line/10 lg:block"
+          className="absolute inset-x-5 top-[calc(1.25rem-0.5px)] hidden h-px bg-line/10 xl:block"
         />
         <motion.span
           aria-hidden="true"
           style={{ scaleX: progress }}
-          className="absolute inset-x-5 top-[calc(1.25rem-0.5px)] hidden h-px origin-left bg-signal lg:block"
+          className="absolute inset-x-5 top-[calc(1.25rem-0.5px)] hidden h-px origin-left bg-signal xl:block"
         />
 
         <ol
           ref={trackRef}
-          className="relative grid gap-10 lg:grid-cols-5 lg:gap-8"
+          className="relative grid gap-10 xl:grid-cols-5 xl:gap-8"
         >
           {process.steps.map((step, i) => (
-            <li key={step.title} className="relative pl-16 lg:pl-0">
-              <div className="absolute left-0 top-0 lg:static">
+            <li key={step.title} className="relative pl-16 xl:pl-0">
+              <div className="absolute left-0 top-0 xl:static">
                 <StepNode
                   progress={progress}
                   index={i}
@@ -95,14 +95,19 @@ const Process = () => {
                   StepIcon={STEP_ICONS[i]!}
                 />
               </div>
-              <Reveal delay={i * 0.06} className="lg:mt-8">
-                <h3 className="text-2xl font-medium tracking-heading text-ink">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
-                  {step.description}
-                </p>
-                <div className="mt-5 rounded-2xl bg-elev p-4 ring-1 ring-line/[0.06]">
+              <Reveal
+                delay={i * 0.06}
+                className="md:grid md:grid-cols-2 md:items-start md:gap-8 xl:mt-8 xl:block"
+              >
+                <div>
+                  <h3 className="text-2xl font-medium tracking-heading text-ink">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
+                    {step.description}
+                  </p>
+                </div>
+                <div className="mt-5 rounded-2xl bg-elev p-4 ring-1 ring-line/[0.06] md:mt-0 xl:mt-5">
                   <p className="label">{process.deliverable}</p>
                   <p className="mt-1 text-sm leading-relaxed text-ink">
                     {step.deliverable}

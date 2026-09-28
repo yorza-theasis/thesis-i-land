@@ -109,7 +109,9 @@ const ToolTile = ({ tool }: { tool: Tool }) => {
           />
         )
       )}
-      <span className="truncate text-sm text-ink">{tool.name}</span>
+      <span className="min-w-0 text-sm leading-tight text-ink">
+        {tool.name}
+      </span>
     </li>
   );
 };
@@ -120,7 +122,7 @@ const TechStack = () => {
   const order = [1, 0, 2];
   const span = ['lg:col-span-12', 'lg:col-span-7', 'lg:col-span-5'];
   const cols = [
-    'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6',
+    'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6',
     'grid-cols-2 sm:grid-cols-3',
     'grid-cols-2',
   ];
