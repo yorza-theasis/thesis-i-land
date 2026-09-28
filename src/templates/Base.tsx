@@ -58,12 +58,12 @@ const Base = ({ locale = 'en' }: { locale?: Locale }) => {
       <Hero />
       <Stats />
       <Challenges />
+      <Process />
       <Services />
       <Work />
-      <Process />
       <About />
-      <TechStack />
       <Faq />
+      <TechStack />
       <Cta />
     </SiteShell>
   );

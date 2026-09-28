@@ -23,10 +23,11 @@ module.exports = {
         signal: {
           DEFAULT: token('signal'),
           ink: token('signal-ink'),
+          strong: token('signal-strong'),
         },
       },
       maxWidth: {
-        page: '1320px',
+        page: '82.5rem',
       },
       letterSpacing: {
         display: '-0.045em',

@@ -18,7 +18,7 @@ const LanguageSwitcher = ({ subPath = '' }: { subPath?: string }) => {
     <div
       role="group"
       aria-label={common.switchLanguage}
-      className="flex h-9 items-center rounded-full border border-line/10 p-0.5 font-mono text-[11px] font-medium tracking-[0.08em]"
+      className="flex h-9 items-center rounded-full border border-line/10 p-0.5 font-mono text-[0.6875rem] font-medium tracking-[0.08em]"
     >
       {LOCALES.map((l) => {
         const active = l.id === locale;

@@ -5,7 +5,7 @@ type LogoProps = { size?: number };
 /* Monogram artwork swaps with the theme (black glyph on paper, white on
  * graphite); the blue dot is identical in both files. */
 const Logo = ({ size = 30 }: LogoProps) => (
-  <span className="inline-flex items-center gap-2.5 text-[17px] font-medium tracking-[-0.02em] text-ink">
+  <span className="inline-flex items-center gap-2.5 text-[1.0625rem] font-medium tracking-[-0.02em] text-ink">
     <img
       src="/tslight.png"
       alt=""

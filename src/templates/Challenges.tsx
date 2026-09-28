@@ -7,7 +7,7 @@ import { Frame } from '../components/Frame';
 import { EASE, Reveal } from '../components/motion';
 import { SectionHeader } from '../components/SectionHeader';
 import type { CaseId } from '../data/cases';
-import { caseHref } from '../data/cases';
+import { caseHref, caseThumb, getCase } from '../data/cases';
 import { useBase, useT } from '../i18n/LocaleContext';
 import { Section } from '../layout/Section';
 
@@ -15,41 +15,55 @@ import { Section } from '../layout/Section';
 const PROOF: CaseId[][] = [
   ['niania', 'extensa'],
   ['aidept', 'ibd'],
-  ['gmi', 'compliance'],
+  ['compliance', 'gmi'],
   ['qpick', 'crsf'],
-  ['wirebender', 'cardio'],
+  ['wirebender', 'butics'],
 ];
 
-const ProofLinks = ({ ids }: { ids: CaseId[] }) => {
-  const { cases, challenges } = useT();
+const ProofCard = ({ id }: { id: CaseId }) => {
+  const { cases } = useT();
   const base = useBase();
+  const thumb = caseThumb(getCase(id));
   return (
-    <div>
-      <p className="label">{challenges.proof}</p>
-      <ul className="mt-3 space-y-1">
-        {ids.map((id) => (
-          <li key={id}>
-            <Link
-              href={caseHref(base, id)}
-              className="group -mx-3 flex items-center justify-between gap-4 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-line/[0.05]"
-            >
-              <span>
-                <span className="text-[15px] text-ink">{cases[id].title}</span>
-                <span className="ml-2 text-sm text-subtle">
-                  {cases[id].category}
-                </span>
-              </span>
-              <ArrowUpRight
-                size={16}
-                weight="regular"
-                aria-hidden="true"
-                className="shrink-0 text-subtle transition-transform duration-300 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:text-ink"
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Link
+      href={caseHref(base, id)}
+      className="group flex items-center gap-4 rounded-2xl bg-bg/60 p-2 pr-4 ring-1 ring-line/[0.08] transition-colors duration-300 hover:bg-bg"
+    >
+      <span
+        className="relative block aspect-[4/3] w-20 shrink-0 overflow-hidden rounded-xl"
+        style={
+          thumb?.background ? { backgroundColor: thumb.background } : undefined
+        }
+      >
+        {thumb && (
+          <img
+            src={thumb.src}
+            alt=""
+            loading="lazy"
+            className={`size-full transition-transform duration-700 ease-out group-hover:scale-105 ${
+              thumb.background ? 'object-contain p-1' : 'object-cover'
+            }`}
+            style={
+              thumb.position ? { objectPosition: thumb.position } : undefined
+            }
+          />
+        )}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[0.9375rem] font-medium text-ink">
+          {cases[id].title}
+        </span>
+        <span className="block truncate text-sm text-subtle">
+          {cases[id].category}
+        </span>
+      </span>
+      <ArrowUpRight
+        size={16}
+        weight="regular"
+        aria-hidden="true"
+        className="shrink-0 text-subtle transition-transform duration-300 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:text-ink"
+      />
+    </Link>
   );
 };
 
@@ -59,11 +73,14 @@ const Answer = ({ index }: { index: number }) => {
   return (
     <>
       <p className="text-sm font-medium text-signal-ink">{item.capability}</p>
-      <p className="mt-4 text-xl font-medium leading-snug tracking-[-0.02em] text-ink md:text-2xl">
+      <p className="mt-3 text-xl font-medium leading-snug tracking-[-0.02em] text-ink md:text-[1.375rem]">
         {item.answer}
       </p>
-      <div className="mt-8">
-        <ProofLinks ids={PROOF[index]!} />
+      <p className="label mt-8">{challenges.proof}</p>
+      <div className="mt-3 grid gap-2">
+        {PROOF[index]!.map((id) => (
+          <ProofCard key={id} id={id} />
+        ))}
       </div>
     </>
   );
@@ -75,7 +92,7 @@ const Challenges = () => {
   const [active, setActive] = useState(0);
 
   return (
-    <Section id="challenges">
+    <Section id="challenges" tone="alt">
       <SectionHeader
         title={challenges.title}
         description={challenges.description}
@@ -83,11 +100,16 @@ const Challenges = () => {
 
       <div className="mt-14 grid gap-10 md:mt-16 lg:grid-cols-12 lg:gap-12">
         <Reveal className="lg:col-span-7">
-          <ul>
+          <ul className="space-y-1">
             {challenges.items.map((item, i) => {
               const isActive = i === active;
               return (
-                <li key={item.problem}>
+                <li
+                  key={item.problem}
+                  className={`border-l-2 pl-5 transition-colors duration-500 md:pl-6 ${
+                    isActive ? 'border-signal' : 'border-line/10'
+                  }`}
+                >
                   <button
                     type="button"
                     aria-expanded={isActive}
@@ -126,7 +148,7 @@ const Challenges = () => {
 
         <div className="hidden lg:col-span-5 lg:block">
           <div className="sticky top-28">
-            <Frame innerClassName="p-8 xl:p-10">
+            <Frame innerClassName="p-7 xl:p-9">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={active}
@@ -134,7 +156,6 @@ const Challenges = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.4, ease: EASE }}
-                  className="min-h-[320px]"
                 >
                   <Answer index={active} />
                 </motion.div>

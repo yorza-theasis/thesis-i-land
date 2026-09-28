@@ -24,6 +24,9 @@ const CaseMedia = ({ meta, alt, figureCaption }: CaseMediaProps) => {
               loading="lazy"
               decoding="async"
               className={imgClass}
+              style={
+                media.position ? { objectPosition: media.position } : undefined
+              }
             />
           </div>
         ))}

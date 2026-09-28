@@ -4,11 +4,20 @@ type SectionProps = {
   id?: string;
   children: ReactNode;
   className?: string;
+  /** "alt" sections sit on a slightly lifted band so neighbours read apart. */
+  tone?: 'base' | 'alt';
 };
 
-/* Sections are separated by spacing alone, no decorative rules. */
-const Section = ({ id, children, className = '' }: SectionProps) => (
-  <section id={id} className={`relative py-24 md:py-32 ${className}`}>
+const Section = ({
+  id,
+  children,
+  className = '',
+  tone = 'base',
+}: SectionProps) => (
+  <section
+    id={id}
+    className={`relative py-24 md:py-32 ${tone === 'alt' ? 'bg-elev' : ''} ${className}`}
+  >
     <div className="container-page">{children}</div>
   </section>
 );

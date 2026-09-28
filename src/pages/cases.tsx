@@ -53,7 +53,7 @@ const CaseStudy = ({ meta }: { meta: CaseMeta }) => {
                   <dt className="text-sm font-medium text-ink">
                     {casesPage.labels.goal}
                   </dt>
-                  <dd className="mt-1.5 text-[15px] leading-relaxed text-muted">
+                  <dd className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">
                     {c.goal}
                   </dd>
                 </div>
@@ -61,7 +61,7 @@ const CaseStudy = ({ meta }: { meta: CaseMeta }) => {
                   <dt className="text-sm font-medium text-ink">
                     {casesPage.labels.solution}
                   </dt>
-                  <dd className="mt-1.5 text-[15px] leading-relaxed text-muted">
+                  <dd className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">
                     {c.solution}
                   </dd>
                 </div>
@@ -73,7 +73,7 @@ const CaseStudy = ({ meta }: { meta: CaseMeta }) => {
                     {c.result.map((r) => (
                       <p
                         key={r.text}
-                        className="text-[15px] leading-relaxed text-ink"
+                        className="text-[0.9375rem] leading-relaxed text-ink"
                       >
                         {r.text}
                       </p>
@@ -82,7 +82,7 @@ const CaseStudy = ({ meta }: { meta: CaseMeta }) => {
                 </div>
               </dl>
             ) : (
-              <p className="mt-10 text-[15px] leading-relaxed text-muted">
+              <p className="mt-10 text-[0.9375rem] leading-relaxed text-muted">
                 {c.description}
               </p>
             )}

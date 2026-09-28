@@ -29,7 +29,7 @@ export type CaseMedia =
       /** Small renders are shown whole on a matching backdrop instead of upscaled. */
       contain?: { background: string };
     }
-  | { kind: 'diptych'; src: [string, string] }
+  | { kind: 'diptych'; src: [string, string]; position?: string }
   // Projects without publishable screenshots get a typographic figure
   // instead of a fake dashboard illustration.
   | { kind: 'figure'; value: string };
@@ -58,7 +58,11 @@ export const CASES: CaseMeta[] = [
     num: '02',
     type: 'software',
     status: 'in_progress',
-    media: { kind: 'figure', value: '37' },
+    media: {
+      kind: 'diptych',
+      src: ['/assets/images/gmi-doc-1.jpg', '/assets/images/gmi-doc-2.jpg'],
+      position: '50% 0%',
+    },
     stack: ['Rules engine', 'LLM analysis', 'RAG'],
   },
   {
@@ -92,7 +96,7 @@ export const CASES: CaseMeta[] = [
     num: '06',
     type: 'software',
     status: 'in_progress',
-    media: { kind: 'figure', value: '5 TB' },
+    media: { kind: 'image', src: '/assets/images/dmd-illustration.jpg' },
     stack: ['NER', 'ICD-10 mapping', 'LLM', 'On-premise'],
   },
   {
@@ -177,6 +181,24 @@ export const CASES: CaseMeta[] = [
     stack: ['PCB design', 'CRSF protocol', 'Fiber-optic link'],
   },
 ];
+
+/** First image of a case, for small thumbnails. */
+export const caseThumb = (
+  meta: CaseMeta,
+): { src: string; background?: string; position?: string } | null => {
+  const { media } = meta;
+  if (media.kind === 'image') {
+    return {
+      src: media.src,
+      background: media.contain?.background,
+      position: media.position,
+    };
+  }
+  if (media.kind === 'diptych') {
+    return { src: media.src[0], position: media.position };
+  }
+  return null;
+};
 
 export const getCase = (id: CaseId): CaseMeta =>
   CASES.find((c) => c.id === id)!;

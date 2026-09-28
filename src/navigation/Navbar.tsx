@@ -20,7 +20,7 @@ type NavbarProps = {
   subPath?: string;
 };
 
-const SECTION_IDS = ['services', 'cases', 'process', 'about', 'faq'] as const;
+const SECTION_IDS = ['process', 'services', 'cases', 'about', 'faq'] as const;
 
 /* Highlights the nav item whose section currently crosses the upper third
  * of the viewport. Sections that don't exist on the page are ignored. */
@@ -70,9 +70,9 @@ const Navbar = ({ subPath = '' }: NavbarProps) => {
   }, [open]);
 
   const items = [
+    { id: 'process', label: nav.process },
     { id: 'services', label: nav.services },
     { id: 'cases', label: nav.work },
-    { id: 'process', label: nav.process },
     { id: 'about', label: nav.about },
     { id: 'faq', label: nav.faq },
   ].map((item) => ({ ...item, href: `${base}/#${item.id}` }));

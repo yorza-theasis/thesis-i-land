@@ -36,7 +36,8 @@ export type Translations = {
     skip: string;
   };
   common: {
-    /** The one label for every contact CTA on the site. */
+    /** The one label for every contact CTA on the site.
+     * Titles may wrap a phrase in *asterisks* to render it in the accent colour. */
     bookCall: string;
     /** The one label for every "see the portfolio" CTA. */
     allCases: string;
@@ -53,7 +54,8 @@ export type Translations = {
     eyebrow: string;
     headline: string;
     subtitle: string;
-    imageAlt: { extensa: string; qpick: string };
+    /** Accessible name for the project orbit and its text chips. */
+    orbit: { label: string; chips: string[] };
     stats: Stat[];
   };
   challenges: {
@@ -79,7 +81,12 @@ export type Translations = {
     statementMuted: string;
     principles: { title: string; text: string }[];
   };
-  techStack: { title: string; description: string; groups: string[] };
+  techStack: {
+    title: string;
+    description: string;
+    groups: string[];
+    also: string;
+  };
   faq: { title: string; items: { q: string; a: string }[] };
   cta: {
     title: string;
@@ -164,12 +171,12 @@ export const translations: Record<Locale, Translations> = {
     },
     hero: {
       eyebrow: 'Hardware & software development studio',
-      headline: 'We turn complex problems into working products',
+      headline: 'We turn complex problems into *working products*',
       subtitle:
         'AI systems, apps, platforms and devices, built by one team from idea to launch.',
-      imageAlt: {
-        extensa: 'Extensa AI outreach dashboard',
-        qpick: 'QPick robotic picking kiosk built for Żabka',
+      orbit: {
+        label: 'Projects we have delivered',
+        chips: ['AI systems', 'Hardware', 'Mobile & web'],
       },
       stats: [
         {
@@ -199,7 +206,7 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     challenges: {
-      title: 'Found your challenge?',
+      title: 'Found your *challenge*?',
       description:
         'Tired of uncertainty, poor quality and endless iterations? We turn complexity into simplicity and ideas into products that work.',
       proof: 'Where we did it',
@@ -239,7 +246,7 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     services: {
-      title: 'Capabilities that pay for themselves',
+      title: 'Capabilities that *pay for themselves*',
       description:
         'Seven capability areas pointed at one goal: fewer surprises, faster delivery and technology that earns its keep.',
       items: [
@@ -288,13 +295,13 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     work: {
-      title: "Software and hardware we've shipped",
+      title: "Software and hardware *we've shipped*",
       description:
         'A glimpse into the projects we have delivered across industries. Details shared within NDA boundaries.',
       more: 'More projects',
     },
     process: {
-      title: 'From ambiguity to a working product',
+      title: 'From ambiguity to a *working product*',
       description:
         'A trusted partner for the whole journey: we take ownership from the first idea to a working product and stay close at every step.',
       deliverable: 'You get',
@@ -355,6 +362,7 @@ export const translations: Record<Locale, Translations> = {
       description:
         'Battle-tested technologies we use to deliver robust, scalable solutions across the full product lifecycle.',
       groups: ['Product', 'Platform', 'AI & hardware'],
+      also: 'Also',
     },
     faq: {
       title: 'Questions we hear often',
@@ -772,12 +780,12 @@ export const translations: Record<Locale, Translations> = {
     },
     hero: {
       eyebrow: 'Студія розробки hardware та software',
-      headline: 'Перетворюємо складні задачі на робочі продукти',
+      headline: 'Перетворюємо складні задачі на *робочі продукти*',
       subtitle:
         'AI-системи, застосунки, платформи й пристрої від однієї команди, від ідеї до запуску.',
-      imageAlt: {
-        extensa: 'Дашборд аутричу Extensa AI',
-        qpick: 'Роботизований кіоск QPick для Żabka',
+      orbit: {
+        label: 'Проєкти, які ми реалізували',
+        chips: ['AI-системи', 'Hardware', 'Мобайл і веб'],
       },
       stats: [
         {
@@ -807,7 +815,7 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     challenges: {
-      title: 'Впізнали свою задачу?',
+      title: 'Впізнали свою *задачу*?',
       description:
         'Втомилися від невизначеності, низької якості та нескінченних ітерацій? Ми перетворюємо складне на просте, а ідеї на продукти, що працюють.',
       proof: 'Де ми це робили',
@@ -846,7 +854,7 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     services: {
-      title: 'Можливості, що окупають себе',
+      title: 'Можливості, що *окупають себе*',
       description:
         'Сім напрямів з однією метою: менше сюрпризів, швидша доставка та технології, які відпрацьовують свою вартість.',
       items: [
@@ -895,13 +903,13 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     work: {
-      title: 'Software та hardware, які ми запустили',
+      title: 'Software та hardware, які ми *запустили*',
       description:
         'Огляд проєктів, реалізованих у різних галузях. Деталі надаються в межах NDA.',
       more: 'Інші проєкти',
     },
     process: {
-      title: 'Від невизначеності до робочого продукту',
+      title: 'Від невизначеності до *робочого продукту*',
       description:
         'Надійний партнер на всьому шляху: відповідаємо за результат від першої ідеї до робочого продукту й залишаємося поруч на кожному кроці.',
       deliverable: 'Результат',
@@ -962,6 +970,7 @@ export const translations: Record<Locale, Translations> = {
       description:
         'Перевірені технології, якими ми користуємося для надійних, масштабованих рішень протягом усього продуктового циклу.',
       groups: ['Продукт', 'Платформа', 'ШІ та hardware'],
+      also: 'Також',
     },
     faq: {
       title: 'Часті запитання',

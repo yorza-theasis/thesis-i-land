@@ -25,9 +25,9 @@ const Footer = () => {
   const base = useBase();
 
   const links = [
+    { label: nav.process, href: `${base}/#process` },
     { label: nav.services, href: `${base}/#services` },
     { label: nav.work, href: `${base}/cases/` },
-    { label: nav.process, href: `${base}/#process` },
     { label: nav.about, href: `${base}/#about` },
     { label: nav.faq, href: `${base}/#faq` },
     { label: common.bookCall, href: `${base}/contact/` },

@@ -27,7 +27,7 @@ import { AppConfig } from '../utils/AppConfig';
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 const inputClass =
-  'w-full rounded-xl border border-line/[0.12] bg-bg px-4 py-3.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-300 placeholder:text-subtle hover:border-line/20 focus:border-signal/60 focus:outline-none focus:ring-4 focus:ring-signal/15';
+  'w-full rounded-xl border border-line/[0.12] bg-bg px-4 py-3.5 text-[0.9375rem] text-ink transition-[border-color,box-shadow] duration-300 placeholder:text-subtle hover:border-line/20 focus:border-signal/60 focus:outline-none focus:ring-4 focus:ring-signal/15';
 
 const channels = [
   {
@@ -132,7 +132,7 @@ const ContactContent = () => {
             <p className="mt-12 text-base font-medium text-ink">
               {contactPage.nextLabel}
             </p>
-            <ol className="mt-3 list-decimal space-y-2 pl-5 text-[15px] text-muted marker:text-subtle">
+            <ol className="mt-3 list-decimal space-y-2 pl-5 text-[0.9375rem] text-muted marker:text-subtle">
               {contactPage.next.map((step) => (
                 <li key={step}>{step}</li>
               ))}
@@ -151,7 +151,7 @@ const ContactContent = () => {
                     {...(href.startsWith('http')
                       ? { target: '_blank', rel: 'noopener noreferrer' }
                       : {})}
-                    className="group inline-flex items-center gap-3 text-[15px] text-muted transition-colors duration-300 hover:text-ink"
+                    className="group inline-flex items-center gap-3 text-[0.9375rem] text-muted transition-colors duration-300 hover:text-ink"
                   >
                     <Icon size={20} weight="light" aria-hidden="true" />
                     {label}

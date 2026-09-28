@@ -8,30 +8,33 @@
 @layer base {
   :root,
   .dark {
-    --bg: 17 17 17;
-    --elev: 23 23 23;
-    --surface: 29 29 29;
+    --bg: 20 20 20;
+    --elev: 27 27 27;
+    --surface: 35 35 35;
     --ink: 237 237 235;
-    --muted: 163 163 160;
-    --subtle: 128 128 125;
+    --muted: 168 168 165;
+    --subtle: 132 132 129;
     --line: 255 255 255;
     --signal: 10 132 255;
     --signal-ink: 92 168 255;
-    --grain-opacity: 0.035;
+    /* Button fill: the logo blue, deepened so white labels pass AA. */
+    --signal-strong: 0 112 224;
+    --grain-opacity: 0.03;
     color-scheme: dark;
   }
 
   .light {
-    --bg: 244 243 239;
-    --elev: 238 237 232;
-    --surface: 251 251 249;
-    --ink: 22 22 21;
-    --muted: 82 81 77;
-    --subtle: 112 110 105;
+    --bg: 245 245 244;
+    --elev: 236 236 234;
+    --surface: 255 255 255;
+    --ink: 22 22 22;
+    --muted: 82 82 80;
+    --subtle: 102 102 99;
     --line: 0 0 0;
     --signal: 10 132 255;
     --signal-ink: 0 98 204;
-    --grain-opacity: 0.025;
+    --signal-strong: 0 112 224;
+    --grain-opacity: 0.02;
     color-scheme: light;
   }
 
@@ -41,6 +44,19 @@
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     scroll-padding-top: 6rem;
+  }
+
+  /* Everything is rem-based, so large 3K/4K screens scale up together
+     instead of leaving a small column in the middle. */
+  @media (min-width: 1800px) {
+    html {
+      font-size: 17px;
+    }
+  }
+  @media (min-width: 2300px) {
+    html {
+      font-size: 18px;
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -109,6 +125,27 @@
   opacity: var(--grain-opacity);
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
   background-size: 240px 240px;
+}
+
+/* ─── Hero orbit: rings rotate, node content counter-rotates to stay
+   upright. Transform-only, paused on hover so nodes stay clickable. ──── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+.orbit-cw { animation: spin 140s linear infinite; }
+.orbit-ccw { animation: spin-reverse 180s linear infinite; }
+.orbit-cw .orbit-upright { animation: spin-reverse 140s linear infinite; }
+.orbit-ccw .orbit-upright { animation: spin 180s linear infinite; }
+.orbit:hover .orbit-cw,
+.orbit:hover .orbit-ccw,
+.orbit:hover .orbit-upright,
+.orbit:focus-within .orbit-cw,
+.orbit:focus-within .orbit-ccw,
+.orbit:focus-within .orbit-upright {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -11,7 +11,7 @@ class MyDocument extends Document {
     return (
       <Html lang={lang} suppressHydrationWarning>
         <Head>
-          <meta name="theme-color" content="#111111" />
+          <meta name="theme-color" content="#141414" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"

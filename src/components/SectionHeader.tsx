@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react';
-
+import { Accented } from './Accented';
 import { Reveal } from './motion';
 
 type SectionHeaderProps = {
-  title: ReactNode;
+  /** Plain text; wrap a phrase in *asterisks* to accent it. */
+  title: string;
   description?: string;
 };
 
@@ -12,7 +12,7 @@ const SectionHeader = ({ title, description }: SectionHeaderProps) => (
   <div className="max-w-3xl">
     <Reveal>
       <h2 className="text-[2rem] font-medium leading-[1.06] tracking-heading text-ink sm:text-[2.625rem] lg:text-5xl">
-        {title}
+        <Accented text={title} />
       </h2>
     </Reveal>
     {description && (

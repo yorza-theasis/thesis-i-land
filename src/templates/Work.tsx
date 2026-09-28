@@ -44,7 +44,7 @@ const WorkCard = ({ id, aspect }: { id: CaseId; aspect: string }) => {
           <h3 className="mt-2 text-2xl font-medium tracking-heading text-ink md:text-[1.75rem]">
             {copy.title}
           </h3>
-          <p className="mt-2 line-clamp-2 max-w-[52ch] text-[15px] leading-relaxed text-muted">
+          <p className="mt-2 line-clamp-2 max-w-[52ch] text-[0.9375rem] leading-relaxed text-muted">
             {copy.summary}
           </p>
           <p className="mt-3">
