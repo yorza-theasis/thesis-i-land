@@ -7,6 +7,7 @@ import { SectionHeader } from '../components/SectionHeader';
 import { useT } from '../i18n/LocaleContext';
 import { Section } from '../layout/Section';
 
+/* Fills as the scroll-driven track reaches this step. */
 const StepNode = ({
   progress,
   index,
@@ -40,15 +41,10 @@ const Process = () => {
 
   return (
     <Section id="process">
-      <SectionHeader
-        index="04"
-        label={process.label}
-        title={process.title}
-        description={process.description}
-      />
+      <SectionHeader title={process.title} description={process.description} />
 
-      <div className="relative mt-16 md:mt-24">
-        {/* Track: vertical on small screens, horizontal from lg. Filled by scroll. */}
+      <div className="relative mt-14 md:mt-20">
+        {/* Progress track: vertical on small screens, horizontal from lg. */}
         <span
           aria-hidden="true"
           className="absolute inset-y-2 left-[7px] w-px bg-line/10 lg:hidden"
@@ -74,23 +70,20 @@ const Process = () => {
         >
           {process.steps.map((step, i) => (
             <li key={step.title} className="relative pl-10 lg:pl-0">
-              <div className="absolute left-0 top-0 lg:static">
+              <div className="absolute left-0 top-1 lg:static">
                 <StepNode progress={progress} index={i} total={total} />
               </div>
               <Reveal delay={i * 0.06} className="lg:mt-10">
-                <p className="font-mono text-xs text-subtle">0{i + 1}</p>
-                <h3 className="mt-3 text-2xl font-medium tracking-heading text-ink">
+                <h3 className="text-2xl font-medium tracking-heading text-ink">
                   {step.title}
                 </h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-muted">
                   {step.description}
                 </p>
-                <div className="mt-6 border-t border-line/10 pt-4">
-                  <p className="label">{process.deliverable}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-ink">
-                    {step.deliverable}
-                  </p>
-                </div>
+                <p className="label mt-6">{process.deliverable}</p>
+                <p className="mt-1 text-sm leading-relaxed text-ink">
+                  {step.deliverable}
+                </p>
               </Reveal>
             </li>
           ))}

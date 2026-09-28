@@ -30,7 +30,7 @@ const Footer = () => {
     { label: nav.process, href: `${base}/#process` },
     { label: nav.about, href: `${base}/#about` },
     { label: nav.faq, href: `${base}/#faq` },
-    { label: nav.startProject, href: `${base}/contact/` },
+    { label: common.bookCall, href: `${base}/contact/` },
   ];
 
   return (

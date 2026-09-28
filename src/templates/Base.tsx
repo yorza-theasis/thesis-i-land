@@ -8,7 +8,7 @@ import { About } from './About';
 import { Challenges } from './Challenges';
 import { Cta } from './Cta';
 import { Faq } from './Faq';
-import { Hero } from './Hero';
+import { Hero, Stats } from './Hero';
 import { Process } from './Process';
 import { Services } from './Services';
 import { TechStack } from './TechStack';
@@ -56,6 +56,7 @@ const Base = ({ locale = 'en' }: { locale?: Locale }) => {
         />
       </Head>
       <Hero />
+      <Stats />
       <Challenges />
       <Services />
       <Work />

@@ -31,12 +31,15 @@ export type Translations = {
     process: string;
     about: string;
     faq: string;
-    startProject: string;
     menu: string;
     close: string;
     skip: string;
   };
   common: {
+    /** The one label for every contact CTA on the site. */
+    bookCall: string;
+    /** The one label for every "see the portfolio" CTA. */
+    allCases: string;
     all: string;
     software: string;
     hardware: string;
@@ -50,72 +53,43 @@ export type Translations = {
     eyebrow: string;
     headline: string;
     subtitle: string;
-    cta: { primary: string; secondary: string };
-    facts: string[];
-    now: { label: string; project: string };
-    captions: { extensa: string; qpick: string; crsf: string };
+    imageAlt: { extensa: string; qpick: string };
     stats: Stat[];
   };
   challenges: {
-    label: string;
     title: string;
     description: string;
-    approach: string;
     proof: string;
     items: { problem: string; capability: string; answer: string }[];
   };
   services: {
-    label: string;
     title: string;
     description: string;
     items: { title: string; description: string; stat: string }[];
   };
-  work: {
-    label: string;
-    title: string;
-    description: string;
-    more: string;
-    viewAll: string;
-  };
+  work: { title: string; description: string; more: string };
   process: {
-    label: string;
     title: string;
     description: string;
     deliverable: string;
     steps: { title: string; description: string; deliverable: string }[];
   };
   about: {
-    label: string;
     statement: string;
     statementMuted: string;
     principles: { title: string; text: string }[];
-    industriesLabel: string;
-    industries: { name: string; text: string }[];
   };
-  techStack: {
-    label: string;
-    title: string;
-    description: string;
-    groups: string[];
-  };
-  faq: {
-    label: string;
-    title: string;
-    items: { q: string; a: string }[];
-  };
+  techStack: { title: string; description: string; groups: string[] };
+  faq: { title: string; items: { q: string; a: string }[] };
   cta: {
-    label: string;
     title: string;
     subtitle: string;
-    primary: string;
-    secondary: string;
     benefitsLabel: string;
     benefits: string[];
     channelsLabel: string;
   };
   cases: Record<CaseId, CaseTranslation>;
   casesPage: {
-    label: string;
     title: string;
     subtitle: string;
     count: { cases: string; software: string; hardware: string };
@@ -124,7 +98,6 @@ export type Translations = {
     labels: { goal: string; solution: string; result: string; stack: string };
   };
   contactPage: {
-    label: string;
     title: string;
     subtitle: string;
     nextLabel: string;
@@ -158,7 +131,7 @@ export const translations: Record<Locale, Translations> = {
     meta: {
       title: 'thesis-i | Hardware & Software Development Studio in Lviv',
       description:
-        'thesis-i builds AI systems, mobile and web products, backend platforms and embedded hardware — from idea and strategy to design, engineering and launch.',
+        'thesis-i builds AI systems, mobile and web products, backend platforms and embedded hardware, from idea and strategy to design, engineering and launch.',
     },
     nav: {
       services: 'Services',
@@ -166,12 +139,13 @@ export const translations: Record<Locale, Translations> = {
       process: 'Process',
       about: 'About',
       faq: 'FAQ',
-      startProject: 'Start a project',
       menu: 'Menu',
       close: 'Close',
       skip: 'Skip to content',
     },
     common: {
+      bookCall: 'Book a call',
+      allCases: 'All case studies',
       all: 'All',
       software: 'Software',
       hardware: 'Hardware',
@@ -190,19 +164,12 @@ export const translations: Record<Locale, Translations> = {
     },
     hero: {
       eyebrow: 'Hardware & software development studio',
-      headline: 'We turn complex problems into products that work',
+      headline: 'We turn complex problems into working products',
       subtitle:
-        'From idea and strategy to design, engineering and launch. AI systems, apps, platforms and devices built by one team that owns the result — so problems never get passed back to you.',
-      cta: { primary: 'Book a free 30-min call', secondary: 'See our work' },
-      facts: ['Reply within 24 hours', 'Work under NDA', 'Lviv · remote'],
-      now: {
-        label: 'In development',
-        project: 'GMI Doc Verifier — clinical AI',
-      },
-      captions: {
-        extensa: 'Extensa AI — agentic B2B SaaS',
-        qpick: 'QPick — robotic picking for Żabka',
-        crsf: 'CRSF — fiber-optic control board',
+        'AI systems, apps, platforms and devices, built by one team from idea to launch.',
+      imageAlt: {
+        extensa: 'Extensa AI outreach dashboard',
+        qpick: 'QPick robotic picking kiosk built for Żabka',
       },
       stats: [
         {
@@ -232,11 +199,9 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     challenges: {
-      label: 'Client requests',
       title: 'Found your challenge?',
       description:
-        'Tired of uncertainty, poor quality and endless iterations? We turn complexity into simplicity — and ideas into products that work.',
-      approach: 'How we approach it',
+        'Tired of uncertainty, poor quality and endless iterations? We turn complexity into simplicity and ideas into products that work.',
       proof: 'Where we did it',
       items: [
         {
@@ -244,37 +209,36 @@ export const translations: Record<Locale, Translations> = {
             "We have an idea, but don't know how to turn it into a product",
           capability: 'Build',
           answer:
-            'We start with discovery: validate the idea, cut it down to a sharp first version and take it all the way to launch — design, engineering, release.',
+            'We start with discovery: validate the idea, cut it down to a sharp first version and take it all the way to launch.',
         },
         {
           problem: 'Our existing platform no longer supports our growth',
-          capability: 'Transform & scale',
+          capability: 'Transform and scale',
           answer:
-            'We audit what you have, stabilise it and re-architect the parts that block scale — without starting from scratch.',
+            'We audit what you have, stabilise it and re-architect the parts that block scale, without starting from scratch.',
         },
         {
           problem:
             'We want to use AI, but need to know where it truly creates value',
           capability: 'Applied AI',
           answer:
-            'We find the workflows where AI pays for itself, prove it on real data and ship it with guardrails, access control and audit logs.',
+            'We find the workflows where AI pays for itself, prove it on real data and ship it with access control and audit logs.',
         },
         {
           problem: 'Our physical product needs a digital layer',
-          capability: 'Hardware + software',
+          capability: 'Hardware and software',
           answer:
-            'Electronics, firmware, control systems and the apps on top — designed by one team, so the device and the software work as a whole.',
+            'Electronics, firmware, control systems and the apps on top, designed by one team so the device and the software work as a whole.',
         },
         {
           problem: 'A complex manual process needs to be automated',
           capability: 'Automate',
           answer:
-            'We map the process, automate the repetitive steps — in software or with a machine — and keep people in control of the decisions.',
+            'We map the process, automate the repetitive steps in software or with a machine, and keep people in control of the decisions.',
         },
       ],
     },
     services: {
-      label: 'Capabilities',
       title: 'Capabilities that pay for themselves',
       description:
         'Seven capability areas pointed at one goal: fewer surprises, faster delivery and technology that earns its keep.',
@@ -288,19 +252,19 @@ export const translations: Record<Locale, Translations> = {
         {
           title: 'Mobile & web development',
           description:
-            'One codebase, every platform — so you ship to iOS, Android and web without tripling your dev budget or your timeline.',
+            'One codebase, every platform, so you ship to iOS, Android and web without tripling your dev budget or your timeline.',
           stat: '8+ apps',
         },
         {
           title: 'Backend & API development',
           description:
-            'Systems built to handle your busiest day, not just your demo day — so growth never turns into downtime.',
+            'Systems built to handle your busiest day, not just your demo day, so growth never turns into downtime.',
           stat: '12+ services',
         },
         {
           title: 'Hardware & embedded',
           description:
-            'PCBs, control electronics, mechanics and robotics — prototypes that leave the lab and hold up on a real shop floor.',
+            'PCBs, control electronics, mechanics and robotics. Prototypes that leave the lab and hold up on a real shop floor.',
           stat: '4 hardware builds',
         },
         {
@@ -324,15 +288,12 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     work: {
-      label: 'Selected work',
       title: "Software and hardware we've shipped",
       description:
         'A glimpse into the projects we have delivered across industries. Details shared within NDA boundaries.',
       more: 'More projects',
-      viewAll: 'All case studies',
     },
     process: {
-      label: 'How we work',
       title: 'From ambiguity to a working product',
       description:
         'A trusted partner for the whole journey: we take ownership from the first idea to a working product and stay close at every step.',
@@ -366,7 +327,6 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     about: {
-      label: 'Why thesis-i',
       statement:
         'We take ownership from the first challenge to the final product.',
       statementMuted:
@@ -374,7 +334,7 @@ export const translations: Record<Locale, Translations> = {
       principles: [
         {
           title: 'Complex problems welcome',
-          text: 'We take on challenges that need more than an off-the-shelf solution — the ones other studios pass on.',
+          text: 'We take on challenges that need more than an off-the-shelf solution, the ones other studios pass on.',
         },
         {
           title: 'End-to-end ownership',
@@ -389,53 +349,14 @@ export const translations: Record<Locale, Translations> = {
           text: 'Deep technical skill paired with business thinking at every decision.',
         },
       ],
-      industriesLabel: 'Where we create value',
-      industries: [
-        {
-          name: 'AI',
-          text: 'Making products smarter and automating complex work',
-        },
-        {
-          name: 'IoT',
-          text: 'Connecting physical products with digital experiences',
-        },
-        {
-          name: 'AgroTech',
-          text: 'Robotic systems and hardware for precision agriculture',
-        },
-        {
-          name: 'Deep Tech',
-          text: 'Turning complex technologies into concrete products',
-        },
-        {
-          name: 'MedTech',
-          text: 'Making healthcare more accessible and connected',
-        },
-        {
-          name: 'FinTech',
-          text: 'Making financial operations simpler and more efficient',
-        },
-      ],
     },
     techStack: {
-      label: 'Stack',
       title: 'Technology stack',
       description:
         'Battle-tested technologies we use to deliver robust, scalable solutions across the full product lifecycle.',
-      groups: [
-        'Mobile',
-        'Backend',
-        'Web',
-        'AI & data',
-        'Databases',
-        'Cloud & DevOps',
-        'Messaging',
-        'Quality',
-        'Hardware',
-      ],
+      groups: ['Product', 'Platform', 'AI & hardware'],
     },
     faq: {
-      label: 'FAQ',
       title: 'Questions we hear often',
       items: [
         {
@@ -465,12 +386,9 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     cta: {
-      label: 'Start a project',
-      title: "Have a complex problem? Let's turn it into something that works",
+      title: "Have a complex problem? Let's turn it into something that works.",
       subtitle:
-        'Still waiting for the right time to start? Book a free 30-minute discovery call — no commitment, just a conversation.',
-      primary: 'Book a free call',
-      secondary: 'Email us',
+        'Still waiting for the right time to start? Book a free 30-minute discovery call. No commitment, just a conversation.',
       benefitsLabel: 'What you get',
       benefits: [
         'A free 30-minute discovery call',
@@ -479,7 +397,7 @@ export const translations: Record<Locale, Translations> = {
         'Work under NDA',
         'One team for hardware and software',
       ],
-      channelsLabel: 'Or reach us directly',
+      channelsLabel: 'Or write to us directly',
     },
     cases: {
       extensa: {
@@ -524,7 +442,7 @@ export const translations: Record<Locale, Translations> = {
         title: 'AI Dept Platform',
         category: 'AI & Automation',
         summary:
-          'A platform for Lviv Polytechnic’s AI department that automates workflows, documentation and reporting — deployed on production Kubernetes.',
+          'A platform for the Lviv Polytechnic AI department that automates workflows, documentation and reporting, deployed on production Kubernetes.',
         subtitle: 'From design to Kubernetes deployment',
         goal: 'Cut operational overhead on internal reporting and documentation workflows.',
         solution:
@@ -545,7 +463,7 @@ export const translations: Record<Locale, Translations> = {
         title: 'Niania24',
         category: 'Web & Mobile',
         summary:
-          'A childcare marketplace connecting families with trusted specialists — web and mobile, with real-time booking, reviews and secure payments.',
+          'A childcare marketplace connecting families with trusted specialists: web and mobile, with real-time booking, reviews and secure payments.',
         subtitle: 'Universal app for iOS and Android',
         goal: 'Help families find a vetted babysitter faster.',
         solution:
@@ -564,12 +482,12 @@ export const translations: Record<Locale, Translations> = {
       },
       ibd: {
         title: 'IBD Registry',
-        category: 'MedTech · Patient registry',
+        category: 'MedTech, patient registry',
         summary:
           'A centralized registry for inflammatory bowel disease: doctors manage clinical records, patients submit periodic PRO2 self-assessments.',
         subtitle: 'IBD patient registry for Ukrainian clinics',
         description:
-          "Centralized registry for inflammatory bowel disease patients — doctors manage structured clinical records for UC and Crohn's disease, patients submit periodic PRO2 self-assessments scored server-side, with passwordless magic-link auth and role-based routing for DOCTOR / MODERATOR / PATIENT / ADMIN roles. A BFF layer on Next.js API routes proxies requests to a FastAPI backend, hiding tokens from the client.",
+          "Centralized registry for inflammatory bowel disease patients. Doctors manage structured clinical records for UC and Crohn's disease, patients submit periodic PRO2 self-assessments scored server-side, with passwordless magic-link auth and role-based routing for DOCTOR / MODERATOR / PATIENT / ADMIN roles. A BFF layer on Next.js API routes proxies requests to a FastAPI backend, hiding tokens from the client.",
         tags: [
           'Patient Outcomes',
           'Regulatory Compliance',
@@ -582,10 +500,10 @@ export const translations: Record<Locale, Translations> = {
         title: 'Cardiology Doc Audit',
         category: 'AI & HealthTech',
         summary:
-          'Detects discrepancies in cardiology documentation before MoH submission — NER, ICD-10 normalization and plain-language explanations. Fully on-premise.',
+          'Detects discrepancies in cardiology documentation before MoH submission, using NER, ICD-10 normalization and plain-language explanations. Fully on-premise.',
         subtitle: 'AI error detection in cardiology documentation',
         description:
-          'Detects discrepancies in patient medical documentation before MoH submission — NER extracts clinical entities, normalizes them to ICD-10 codes, compares related forms per patient and generates plain-language explanations for doctors via LLM. RAG is used only as an explanation layer, not a decision mechanism. Runs fully on-premise against a read-only 5 TB database copy.',
+          'Detects discrepancies in patient medical documentation before MoH submission. NER extracts clinical entities, normalizes them to ICD-10 codes, compares related forms per patient and generates plain-language explanations for doctors via LLM. RAG is used only as an explanation layer, not a decision mechanism. Runs fully on-premise against a read-only 5 TB database copy.',
         figure: 'read-only clinical database, analysed fully on-premise',
         tags: [
           'Documentation Accuracy',
@@ -597,11 +515,11 @@ export const translations: Record<Locale, Translations> = {
       },
       qpick: {
         title: 'QPick',
-        category: 'Robotics · Retail automation',
+        category: 'Robotics, retail automation',
         summary:
-          'A robotic arm that identifies and picks individual retail products under real shelf conditions — built for Żabka, one of Poland’s largest retail chains.',
+          "A robotic arm that identifies and picks individual retail products under real shelf conditions, built for Żabka, one of Poland's largest retail chains.",
         subtitle: 'Robotic product picking for retail fulfilment',
-        goal: 'Teach a robotic arm to reliably identify and pick individual retail products — even with similar packaging, transparent, reflective or dark materials, and deformable items — under real shelf conditions, not just in a lab.',
+        goal: 'Teach a robotic arm to reliably identify and pick individual retail products under real shelf conditions, not just in a lab: similar packaging, transparent, reflective or dark materials, and deformable items.',
         solution:
           'A system that recognizes individual products, determines where each can be safely gripped, executes a precise pick with a vacuum gripper and keeps improving by learning from both successful and unsuccessful attempts.',
         result: [
@@ -621,9 +539,9 @@ export const translations: Record<Locale, Translations> = {
         title: 'AI Agent for Compliance',
         category: 'AI & Compliance',
         summary:
-          'An assistant that answers employee questions from internal documents — respecting role-based access, redacting sensitive data and logging every exchange.',
+          'An assistant that answers employee questions from internal documents, respecting role-based access, redacting sensitive data and logging every exchange.',
         subtitle: 'Internal knowledge assistant with role-based access',
-        goal: 'Let employees get answers already buried in internal documents without digging through files — and without giving everyone access to everything.',
+        goal: 'Let employees get answers already buried in internal documents without digging through files, and without giving everyone access to everything.',
         solution:
           'An AI assistant that answers natural-language questions using only documents the employee is allowed to see, strips sensitive personal data where needed, refuses to answer when information is unavailable and logs every exchange for audit.',
         result: [
@@ -641,13 +559,13 @@ export const translations: Record<Locale, Translations> = {
       },
       butics: {
         title: 'Butics',
-        category: 'Retail · Mobile POS',
+        category: 'Retail, mobile POS',
         summary:
-          'A mobile point of sale for small stores that identifies products by barcode, product code or visual catalogue — with discounts, payments and returns.',
+          'A mobile point of sale for small stores that identifies products by barcode, product code or visual catalogue, with discounts, payments and returns.',
         subtitle: 'Mobile point of sale for small retail stores',
         goal: 'Let store employees process sales quickly even when not every product has a barcode, without slowing them down with complicated workflows.',
         solution:
-          'A mobile POS app that identifies products by camera barcode scan, internal product code or a visual catalogue when no barcode exists — with basket management, discounts, payment and returns.',
+          'A mobile POS app that identifies products by camera barcode scan, internal product code or a visual catalogue when no barcode exists, with basket management, discounts, payment and returns.',
         result: [
           {
             text: 'A simpler sales workflow for employees, especially in small stores that cannot always rely on barcodes',
@@ -663,13 +581,13 @@ export const translations: Record<Locale, Translations> = {
       },
       nexus: {
         title: 'Nexus',
-        category: 'Personal CRM · Privacy',
+        category: 'Personal CRM, privacy',
         summary:
           'A private contact platform where professionals keep their own space, share selectively with teams and never lose control of private data.',
         subtitle: 'Private contact sharing for professional networks',
         goal: 'Let people with large professional networks collaborate around shared contacts as a team, without losing control over their private data.',
         solution:
-          'A contact management platform where each user keeps a private contact space, shares contacts selectively with different access levels, and teams collaborate on what is explicitly shared with them — synced across devices.',
+          'A contact management platform where each user keeps a private contact space, shares contacts selectively with different access levels, and teams collaborate on what is explicitly shared with them, synced across devices.',
         result: [
           {
             text: 'A professional CRM experience with privacy built into the product rather than added on later',
@@ -685,11 +603,11 @@ export const translations: Record<Locale, Translations> = {
       },
       wirebender: {
         title: 'Wire Bending Machine',
-        category: 'Production equipment · Antennas',
+        category: 'Production equipment, antennas',
         summary:
-          'A compact automatic machine that bends copper staples for cloverleaf antennas — 1,400 per hour with repeatable geometry, replacing a manual bottleneck.',
+          'A compact automatic machine that bends copper staples for cloverleaf antennas: 1,400 per hour with repeatable geometry, replacing a manual bottleneck.',
         subtitle: 'Automating precision antenna component manufacturing',
-        goal: 'Replace manual bending of copper staples for cloverleaf antennas — a bottleneck with low throughput and dimensional scatter that made antenna performance inconsistent.',
+        goal: 'Replace manual bending of copper staples for cloverleaf antennas. It was a bottleneck with low throughput and dimensional scatter, which made antenna performance inconsistent.',
         solution:
           'A compact automatic machine: wire fed from a coil through straightening rollers, a bending mechanism with a programmable bend sequence and automatic cut-off. Aluminium housing, stepper-motor drives and in-house control electronics.',
         result: [
@@ -710,9 +628,9 @@ export const translations: Record<Locale, Translations> = {
         title: 'VTOL Aircraft',
         category: 'Unmanned systems',
         summary:
-          'A vertical take-off and landing prototype that flies longer and carries more than a drone of similar size — built at low cost from readily available materials.',
+          'A vertical take-off and landing prototype that flies longer and carries more than a drone of similar size, built at low cost from readily available materials.',
         subtitle: 'An aerial platform for hard-to-reach locations',
-        goal: 'Build a platform that takes off and lands vertically in hard-to-reach places, yet flies longer and carries more than a multicopter of similar size — no runway needed.',
+        goal: 'Build a platform that takes off and lands vertically in hard-to-reach places, yet flies longer and carries more than a multicopter of similar size. No runway needed.',
         solution:
           'A VTOL prototype from cheap, readily available materials: wing and fuselage from lightweight sheet panels, load-bearing nodes 3D-printed. Tilting motor mounts handle the transition to forward flight, driven by our own control system, with special attention to landing.',
         result: [
@@ -733,7 +651,7 @@ export const translations: Record<Locale, Translations> = {
         title: 'CRSF Fiber-Optic Converter',
         category: 'Communications',
         summary:
-          'A JR-bay module that carries the CRSF control signal over fiber instead of radio — drone control that ignores jamming, plus extra peripheral channels.',
+          'A JR-bay module that carries the CRSF control signal over fiber instead of radio: drone control that ignores jamming, plus extra peripheral channels.',
         subtitle: 'A jamming-resistant drone control link',
         goal: 'Bridge the CRSF signal from a standard radio transmitter onto a fiber-optic link, so the drone stays controllable under radio jamming, and add channels for on-board peripherals.',
         solution:
@@ -756,11 +674,14 @@ export const translations: Record<Locale, Translations> = {
       },
     },
     casesPage: {
-      label: 'Case studies',
       title: 'Case studies',
       subtitle:
-        'Published software and hardware projects. More work delivered under NDA — details on request.',
-      count: { cases: 'cases', software: 'software', hardware: 'hardware' },
+        'Published software and hardware projects. More work delivered under NDA, details on request.',
+      count: {
+        cases: 'case studies',
+        software: 'software',
+        hardware: 'hardware',
+      },
       filterLabel: 'Filter case studies',
       visitLive: 'Visit live',
       labels: {
@@ -771,7 +692,6 @@ export const translations: Record<Locale, Translations> = {
       },
     },
     contactPage: {
-      label: 'Contact',
       title: 'Tell us about your project',
       subtitle:
         "Share a few details and we'll reply within 24 hours to set up a free 30-minute discovery call.",
@@ -811,7 +731,7 @@ export const translations: Record<Locale, Translations> = {
       navigate: 'Navigate',
       contact: 'Contact',
       copyright: '© 2026 thesis-i. All rights reserved.',
-      location: 'Lviv, Ukraine · remote',
+      location: 'Lviv, Ukraine',
     },
   },
 
@@ -819,7 +739,7 @@ export const translations: Record<Locale, Translations> = {
     meta: {
       title: 'thesis-i | Розробка hardware та software у Львові',
       description:
-        'thesis-i створює AI-системи, мобільні та веб-продукти, бекенд-платформи й embedded-hardware — від ідеї та стратегії до дизайну, розробки й запуску.',
+        'thesis-i створює AI-системи, мобільні та веб-продукти, бекенд-платформи й embedded-hardware: від ідеї та стратегії до дизайну, розробки й запуску.',
     },
     nav: {
       services: 'Послуги',
@@ -827,12 +747,13 @@ export const translations: Record<Locale, Translations> = {
       process: 'Процес',
       about: 'Про нас',
       faq: 'FAQ',
-      startProject: 'Почати проєкт',
       menu: 'Меню',
       close: 'Закрити',
       skip: 'Перейти до змісту',
     },
     common: {
+      bookCall: 'Замовити дзвінок',
+      allCases: 'Усі кейси',
       all: 'Всі',
       software: 'Software',
       hardware: 'Hardware',
@@ -851,20 +772,12 @@ export const translations: Record<Locale, Translations> = {
     },
     hero: {
       eyebrow: 'Студія розробки hardware та software',
-      headline: 'Перетворюємо складні задачі на продукти, що працюють',
+      headline: 'Перетворюємо складні задачі на робочі продукти',
       subtitle:
-        'Від ідеї та стратегії — до дизайну, розробки й запуску. AI-системи, застосунки, платформи та пристрої від однієї команди, яка відповідає за результат і не повертає проблеми вам.',
-      cta: { primary: 'Безкоштовний дзвінок 30 хв', secondary: 'Наші роботи' },
-      facts: [
-        'Відповідь протягом 24 год',
-        'Працюємо під NDA',
-        'Львів · віддалено',
-      ],
-      now: { label: 'В розробці', project: 'GMI Doc Verifier — клінічний ШІ' },
-      captions: {
-        extensa: 'Extensa AI — агентний B2B SaaS',
-        qpick: 'QPick — роботизований підбір для Żabka',
-        crsf: 'CRSF — плата оптоволоконного керування',
+        'AI-системи, застосунки, платформи й пристрої від однієї команди, від ідеї до запуску.',
+      imageAlt: {
+        extensa: 'Дашборд аутричу Extensa AI',
+        qpick: 'Роботизований кіоск QPick для Żabka',
       },
       stats: [
         {
@@ -894,48 +807,45 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     challenges: {
-      label: 'Запити клієнтів',
       title: 'Впізнали свою задачу?',
       description:
-        'Втомилися від невизначеності, низької якості та нескінченних ітерацій? Ми перетворюємо складне на просте, а ідеї — на продукти, що працюють.',
-      approach: 'Як ми це вирішуємо',
+        'Втомилися від невизначеності, низької якості та нескінченних ітерацій? Ми перетворюємо складне на просте, а ідеї на продукти, що працюють.',
       proof: 'Де ми це робили',
       items: [
         {
           problem: 'Маємо ідею, але не знаємо, як перетворити її на продукт',
           capability: 'Створення',
           answer:
-            'Починаємо з discovery: перевіряємо ідею, визначаємо чітку першу версію й доводимо її до запуску — дизайн, розробка, реліз.',
+            'Починаємо з discovery: перевіряємо ідею, визначаємо чітку першу версію й доводимо її до запуску.',
         },
         {
           problem: 'Наша платформа більше не витримує зростання',
           capability: 'Модернізація',
           answer:
-            'Аудитуємо те, що є, стабілізуємо й переробляємо архітектуру там, де вона гальмує масштаб, — без переписування з нуля.',
+            'Аудитуємо те, що є, стабілізуємо й переробляємо архітектуру там, де вона гальмує масштаб, без переписування з нуля.',
         },
         {
           problem:
             'Хочемо використати ШІ, але треба зрозуміти, де він справді дає цінність',
           capability: 'Прикладний ШІ',
           answer:
-            'Знаходимо процеси, де ШІ окупається, перевіряємо на реальних даних і впроваджуємо із запобіжниками, контролем доступу та журналом аудиту.',
+            'Знаходимо процеси, де ШІ окупається, перевіряємо на реальних даних і впроваджуємо з контролем доступу та журналом аудиту.',
         },
         {
           problem: 'Нашому фізичному продукту потрібен цифровий шар',
-          capability: 'Hardware + software',
+          capability: 'Hardware та software',
           answer:
-            'Електроніка, прошивка, системи керування та застосунки — від однієї команди, тож пристрій і софт працюють як одне ціле.',
+            'Електроніка, прошивка, системи керування та застосунки від однієї команди, тож пристрій і софт працюють як одне ціле.',
         },
         {
           problem: 'Складний ручний процес треба автоматизувати',
           capability: 'Автоматизація',
           answer:
-            'Розкладаємо процес на кроки, автоматизуємо рутину — програмно або за допомогою машини — і залишаємо рішення за людьми.',
+            'Розкладаємо процес на кроки, автоматизуємо рутину програмно або за допомогою машини і залишаємо рішення за людьми.',
         },
       ],
     },
     services: {
-      label: 'Можливості',
       title: 'Можливості, що окупають себе',
       description:
         'Сім напрямів з однією метою: менше сюрпризів, швидша доставка та технології, які відпрацьовують свою вартість.',
@@ -943,37 +853,37 @@ export const translations: Record<Locale, Translations> = {
         {
           title: 'Прикладний ШІ та автоматизація',
           description:
-            'ШІ, що відпрацьовує бюджет: агенти, RAG та аналіз документів, побудовані навколо ваших реальних процесів — з контролем доступу, приховуванням даних і журналом аудиту.',
+            'ШІ, що відпрацьовує бюджет: агенти, RAG та аналіз документів, побудовані навколо ваших реальних процесів, з контролем доступу, приховуванням даних і журналом аудиту.',
           stat: '5+ AI-систем',
         },
         {
           title: 'Мобільна та веброзробка',
           description:
-            'Один код — усі платформи: iOS, Android і веб без потроєння бюджету й термінів розробки.',
+            'Один код для всіх платформ: iOS, Android і веб без потроєння бюджету й термінів розробки.',
           stat: '8+ застосунків',
         },
         {
           title: 'Бекенд та API-розробка',
           description:
-            'Системи, розраховані на ваш найнавантаженіший день, а не лише на демо, — щоб зростання не оберталося простоєм.',
+            'Системи, розраховані на ваш найнавантаженіший день, а не лише на демо, щоб зростання не оберталося простоєм.',
           stat: '12+ сервісів',
         },
         {
           title: 'Hardware та embedded',
           description:
-            'Друковані плати, електроніка керування, механіка та робототехніка — прототипи, що виходять з лабораторії й працюють у реальному цеху.',
+            'Друковані плати, електроніка керування, механіка та робототехніка. Прототипи, що виходять з лабораторії й працюють у реальному цеху.',
           stat: '4 hardware-проєкти',
         },
         {
           title: 'Хмара та DevOps',
           description:
-            'Релізи без нічних авралів. Автоматизовані пайплайни та моніторинг — менше дзвінків о другій ночі, швидші релізи.',
+            'Релізи без нічних авралів. Автоматизовані пайплайни та моніторинг: менше дзвінків о другій ночі, швидші релізи.',
           stat: '5+ кластерів',
         },
         {
           title: 'Архітектура та консалтинг',
           description:
-            'Правильні технічні рішення, ухвалені рано, — поки їх ще дешево змінити, а не через пів року.',
+            'Правильні технічні рішення, ухвалені рано, поки їх ще дешево змінити, а не через пів року.',
           stat: '3 greenfields',
         },
         {
@@ -985,15 +895,12 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     work: {
-      label: 'Вибрані роботи',
       title: 'Software та hardware, які ми запустили',
       description:
         'Огляд проєктів, реалізованих у різних галузях. Деталі надаються в межах NDA.',
       more: 'Інші проєкти',
-      viewAll: 'Усі кейси',
     },
     process: {
-      label: 'Як ми працюємо',
       title: 'Від невизначеності до робочого продукту',
       description:
         'Надійний партнер на всьому шляху: відповідаємо за результат від першої ідеї до робочого продукту й залишаємося поруч на кожному кроці.',
@@ -1027,11 +934,10 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     about: {
-      label: 'Чому thesis-i',
       statement:
         'Ми відповідаємо за результат від першої задачі до готового продукту.',
       statementMuted:
-        'Без здогадок. Без перекладання проблем на вас. Лише експертиза, щоб зробити правильно — і щоб це працювало.',
+        'Без здогадок. Без перекладання проблем на вас. Лише експертиза, щоб зробити правильно і щоб це працювало.',
       principles: [
         {
           title: 'Беремося за складне',
@@ -1039,7 +945,7 @@ export const translations: Record<Locale, Translations> = {
         },
         {
           title: 'Відповідальність від і до',
-          text: 'Від ранньої невизначеності до продакшну — ми поруч на всьому шляху.',
+          text: 'Від ранньої невизначеності до продакшну ми поруч на всьому шляху.',
         },
         {
           title: 'Досвід у різних галузях',
@@ -1050,53 +956,14 @@ export const translations: Record<Locale, Translations> = {
           text: 'Глибока технічна експертиза та бізнес-мислення в кожному рішенні.',
         },
       ],
-      industriesLabel: 'Де ми створюємо цінність',
-      industries: [
-        {
-          name: 'AI',
-          text: 'Робимо продукти розумнішими та автоматизуємо складну роботу',
-        },
-        {
-          name: 'IoT',
-          text: 'Поєднуємо фізичні продукти з цифровим досвідом',
-        },
-        {
-          name: 'AgroTech',
-          text: 'Роботизовані системи та hardware для точного землеробства',
-        },
-        {
-          name: 'Deep Tech',
-          text: 'Перетворюємо складні технології на конкретні продукти',
-        },
-        {
-          name: 'MedTech',
-          text: 'Робимо медицину доступнішою та більш зв’язаною',
-        },
-        {
-          name: 'FinTech',
-          text: 'Спрощуємо фінансові операції та робимо їх ефективнішими',
-        },
-      ],
     },
     techStack: {
-      label: 'Стек',
       title: 'Технологічний стек',
       description:
         'Перевірені технології, якими ми користуємося для надійних, масштабованих рішень протягом усього продуктового циклу.',
-      groups: [
-        'Мобайл',
-        'Бекенд',
-        'Веб',
-        'ШІ та дані',
-        'Бази даних',
-        'Хмара та DevOps',
-        'Повідомлення',
-        'Якість',
-        'Hardware',
-      ],
+      groups: ['Продукт', 'Платформа', 'ШІ та hardware'],
     },
     faq: {
-      label: 'FAQ',
       title: 'Часті запитання',
       items: [
         {
@@ -1126,12 +993,9 @@ export const translations: Record<Locale, Translations> = {
       ],
     },
     cta: {
-      label: 'Почати проєкт',
-      title: 'Маєте складну задачу? Перетворимо її на те, що працює',
+      title: 'Маєте складну задачу? Перетворимо її на те, що працює.',
       subtitle:
-        'Досі чекаєте слушного моменту? Запишіться на безкоштовний 30-хвилинний дзвінок — без зобов’язань, просто розмова.',
-      primary: 'Записатися на дзвінок',
-      secondary: 'Написати листа',
+        'Досі чекаєте слушного моменту? Запишіться на безкоштовний 30-хвилинний дзвінок. Без зобов’язань, просто розмова.',
       benefitsLabel: 'Що ви отримуєте',
       benefits: [
         'Безкоштовний 30-хвилинний дзвінок',
@@ -1191,7 +1055,7 @@ export const translations: Record<Locale, Translations> = {
         title: 'AI Dept Platform',
         category: 'ШІ та автоматизація',
         summary:
-          'Платформа кафедри ШІ Львівської політехніки, що автоматизує процеси, документообіг і звітність, — розгорнута на продакшн Kubernetes.',
+          'Платформа кафедри ШІ Львівської політехніки, що автоматизує процеси, документообіг і звітність. Розгорнута на продакшн Kubernetes.',
         subtitle: 'Від дизайну до деплою на Kubernetes',
         goal: 'Зменшити операційне навантаження на звітність і документообіг.',
         solution:
@@ -1212,7 +1076,7 @@ export const translations: Record<Locale, Translations> = {
         title: 'Niania24',
         category: 'Веб та мобайл',
         summary:
-          'Маркетплейс, що з’єднує сім’ї з перевіреними фахівцями з догляду за дітьми, — веб і мобайл з онлайн-бронюванням, відгуками й захищеними платежами.',
+          'Маркетплейс, що з’єднує сім’ї з перевіреними фахівцями з догляду за дітьми: веб і мобайл з онлайн-бронюванням, відгуками й захищеними платежами.',
         subtitle: 'Єдиний застосунок для iOS та Android',
         goal: 'Скоротити час пошуку перевіреного бебіситтера для сімей.',
         solution:
@@ -1231,12 +1095,12 @@ export const translations: Record<Locale, Translations> = {
       },
       ibd: {
         title: 'ЗЗК Реєстр',
-        category: 'MedTech · Реєстр пацієнтів',
+        category: 'MedTech, реєстр пацієнтів',
         summary:
           'Централізований реєстр пацієнтів із запальними захворюваннями кишечника: лікарі ведуть записи, пацієнти подають PRO2-самооцінки.',
         subtitle: 'Реєстр пацієнтів із ЗЗК для українських клінік',
         description:
-          'Централізований реєстр пацієнтів із запальними захворюваннями кишечника — лікарі ведуть структуровані клінічні записи для ВК та хвороби Крона, пацієнти подають PRO2-самооцінки з автоматичним розрахунком балів, автентифікація magic link без паролів і рольова маршрутизація (ЛІКАР / МОДЕРАТОР / ПАЦІЄНТ / АДМІН). BFF-шар на Next.js API routes проксує запити до FastAPI-бекенду, приховуючи токен від клієнта.',
+          'Централізований реєстр пацієнтів із запальними захворюваннями кишечника. Лікарі ведуть структуровані клінічні записи для ВК та хвороби Крона, пацієнти подають PRO2-самооцінки з автоматичним розрахунком балів, автентифікація magic link без паролів і рольова маршрутизація (ЛІКАР / МОДЕРАТОР / ПАЦІЄНТ / АДМІН). BFF-шар на Next.js API routes проксує запити до FastAPI-бекенду, приховуючи токен від клієнта.',
         tags: [
           'Результати лікування',
           'Регуляторний комплаєнс',
@@ -1249,10 +1113,10 @@ export const translations: Record<Locale, Translations> = {
         title: 'Аудит кардіодокументації',
         category: 'ШІ та MedTech',
         summary:
-          'Виявляє розбіжності в кардіологічній документації до подання в МОЗ — NER, нормалізація до МКХ-10 і пояснення природною мовою. Повністю on-premise.',
+          'Виявляє розбіжності в кардіологічній документації до подання в МОЗ: NER, нормалізація до МКХ-10 і пояснення природною мовою. Повністю on-premise.',
         subtitle: 'AI-виявлення помилок у кардіологічній документації',
         description:
-          'Виявляє розбіжності в медичній документації кардіологічних пацієнтів до подання в МОЗ — NER-екстракція клінічних сутностей, нормалізація до МКХ-10, порівняння пов’язаних форм одного пацієнта й пояснення лікарю природною мовою через LLM. RAG — лише шар пояснення, а не механізм ухвалення рішень. Працює повністю on-premise на read-only копії бази 5 ТБ.',
+          'Виявляє розбіжності в медичній документації кардіологічних пацієнтів до подання в МОЗ. NER-екстракція клінічних сутностей, нормалізація до МКХ-10, порівняння пов’язаних форм одного пацієнта й пояснення лікарю природною мовою через LLM. RAG лише пояснює, а не ухвалює рішення. Працює повністю on-premise на read-only копії бази 5 ТБ.',
         figure: 'клінічна база лише для читання, аналіз повністю on-premise',
         tags: [
           'Точність документації',
@@ -1264,16 +1128,16 @@ export const translations: Record<Locale, Translations> = {
       },
       qpick: {
         title: 'QPick',
-        category: 'Робототехніка · Рітейл',
+        category: 'Робототехніка, рітейл',
         summary:
-          'Роботизована рука, що розпізнає та бере окремі товари в реальних умовах полиці, — створено для Żabka, однієї з найбільших мереж рітейлу Польщі.',
+          'Роботизована рука, що розпізнає та бере окремі товари в реальних умовах полиці. Створено для Żabka, однієї з найбільших мереж рітейлу Польщі.',
         subtitle: 'Роботизований підбір товарів для рітейл-фулфілменту',
-        goal: 'Навчити роботизовану руку надійно розпізнавати й брати окремі товари — навіть зі схожим пакуванням, прозорими, дзеркальними чи темними матеріалами та товари, що деформуються, — у реальних умовах полиці, а не лише в лабораторії.',
+        goal: 'Навчити роботизовану руку надійно розпізнавати й брати окремі товари в реальних умовах полиці, а не лише в лабораторії: схоже пакування, прозорі, дзеркальні чи темні матеріали, товари, що деформуються.',
         solution:
           'Система, що розпізнає окремі товари, визначає, де їх можна безпечно захопити, виконує точний забір вакуумним захватом і постійно вдосконалюється, навчаючись як на вдалих, так і на невдалих спробах.',
         result: [
           {
-            text: 'Чіткий шлях до автоматизації повторюваних фізичних операцій рітейлу для Żabka — однієї з найбільших мереж роздрібної торгівлі Польщі',
+            text: 'Чіткий шлях до автоматизації повторюваних фізичних операцій рітейлу для Żabka, однієї з найбільших мереж роздрібної торгівлі Польщі',
           },
         ],
         tags: [
@@ -1288,9 +1152,9 @@ export const translations: Record<Locale, Translations> = {
         title: 'AI Agent for Compliance',
         category: 'ШІ та комплаєнс',
         summary:
-          'Асистент, що відповідає на запитання співробітників за внутрішніми документами, — з рольовим доступом, приховуванням чутливих даних і логуванням.',
+          'Асистент, що відповідає на запитання співробітників за внутрішніми документами, з рольовим доступом, приховуванням чутливих даних і логуванням.',
         subtitle: 'AI-асистент бази знань з рольовим доступом',
-        goal: 'Дати співробітникам швидкі відповіді за внутрішніми документами без ручного пошуку по файлах — і без доступу до всього поспіль.',
+        goal: 'Дати співробітникам швидкі відповіді за внутрішніми документами без ручного пошуку по файлах і без доступу до всього поспіль.',
         solution:
           'AI-асистент, що відповідає природною мовою лише за документами, доступними конкретному співробітнику, приховує чутливі персональні дані, відмовляється відповідати за відсутності інформації та логує кожен обмін для аудиту.',
         result: [
@@ -1308,13 +1172,13 @@ export const translations: Record<Locale, Translations> = {
       },
       butics: {
         title: 'Butics',
-        category: 'Рітейл · Мобільний POS',
+        category: 'Рітейл, мобільний POS',
         summary:
-          'Мобільна каса для невеликих магазинів: товар за штрихкодом, кодом або з візуального каталогу — зі знижками, оплатою та поверненнями.',
+          'Мобільна каса для невеликих магазинів: товар за штрихкодом, кодом або з візуального каталогу, зі знижками, оплатою та поверненнями.',
         subtitle: 'Мобільний POS для невеликих магазинів',
         goal: 'Дати продавцям змогу швидко оформлювати продажі, навіть коли не кожен товар має штрихкод, без ускладнення робочого процесу.',
         solution:
-          'Мобільний POS-застосунок, що ідентифікує товари скануванням штрихкоду камерою, внутрішнім кодом або вибором із візуального каталогу — з кошиком, знижками, оплатою та поверненнями.',
+          'Мобільний POS-застосунок, що ідентифікує товари скануванням штрихкоду камерою, внутрішнім кодом або вибором із візуального каталогу, з кошиком, знижками, оплатою та поверненнями.',
         result: [
           {
             text: 'Простіший процес продажу для персоналу, особливо в невеликих магазинах, де не можна покладатися лише на штрихкоди',
@@ -1330,13 +1194,13 @@ export const translations: Record<Locale, Translations> = {
       },
       nexus: {
         title: 'Nexus',
-        category: 'Особистий CRM · Приватність',
+        category: 'Особистий CRM, приватність',
         summary:
           'Платформа контактів, де фахівці мають власний простір, вибірково діляться з командою й не втрачають контролю над приватними даними.',
         subtitle: 'Приватний обмін контактами для професійних мереж',
         goal: 'Дати людям із великими професійними мережами змогу працювати з контактами командою, не втрачаючи контролю над приватними даними.',
         solution:
-          'Платформа управління контактами, де кожен має приватний простір, вибірково ділиться контактами з різними рівнями доступу, а команди працюють над явно наданими контактами — із синхронізацією між пристроями.',
+          'Платформа управління контактами, де кожен має приватний простір, вибірково ділиться контактами з різними рівнями доступу, а команди працюють над явно наданими контактами із синхронізацією між пристроями.',
         result: [
           {
             text: 'CRM професійного рівня з приватністю, закладеною в продукт, а не доданою згодом',
@@ -1352,11 +1216,11 @@ export const translations: Record<Locale, Translations> = {
       },
       wirebender: {
         title: 'Верстат для гнуття дроту',
-        category: 'Виробниче обладнання · Антени',
+        category: 'Виробниче обладнання, антени',
         summary:
-          'Компактний автоматичний верстат, що гне мідні скоби для антен «клеверліф», — 1 400 на годину зі стабільною геометрією замість ручної роботи.',
+          'Компактний автоматичний верстат, що гне мідні скоби для антен «клеверліф»: 1 400 на годину зі стабільною геометрією замість ручної роботи.',
         subtitle: 'Автоматизація виробництва точних компонентів антен',
-        goal: 'Замінити ручне гнуття мідних скоб для антен «клеверліф» — вузьке місце з низькою продуктивністю та розкидом розмірів, через яке характеристики антен були нестабільними.',
+        goal: 'Замінити ручне гнуття мідних скоб для антен «клеверліф». Це було вузьке місце з низькою продуктивністю та розкидом розмірів, через яке характеристики антен були нестабільними.',
         solution:
           'Компактний автоматичний верстат: подача дроту з котушки через рихтувальні ролики, механізм гнуття з програмованою послідовністю та автоматичне відрізання готової скоби. Алюмінієвий корпус, крокові двигуни, власна електроніка керування.',
         result: [
@@ -1376,11 +1240,11 @@ export const translations: Record<Locale, Translations> = {
         title: 'Літак VTOL',
         category: 'Безпілотні системи',
         summary:
-          'Прототип із вертикальним злетом і посадкою, що летить довше й несе більше, ніж дрон схожого розміру, — недорого, з доступних матеріалів.',
+          'Прототип із вертикальним злетом і посадкою, що летить довше й несе більше, ніж дрон схожого розміру. Недорого, з доступних матеріалів.',
         subtitle: 'Повітряна платформа для важкодоступних місць',
-        goal: 'Створити платформу, яка злітає й сідає вертикально у важкодоступних місцях, але летить довше й несе більше, ніж мультикоптер схожого розміру, — без злітної смуги.',
+        goal: 'Створити платформу, яка злітає й сідає вертикально у важкодоступних місцях, але летить довше й несе більше, ніж мультикоптер схожого розміру. Без злітної смуги.',
         solution:
-          'Прототип VTOL із дешевих доступних матеріалів: крило та фюзеляж — з легких листових панелей, силові вузли — надруковані на 3D-принтері. Поворотні кріплення моторів забезпечують перехід до горизонтального польоту під керуванням нашої системи; окрему увагу приділили посадці.',
+          'Прототип VTOL із дешевих доступних матеріалів: крило та фюзеляж з легких листових панелей, силові вузли надруковані на 3D-принтері. Поворотні кріплення моторів забезпечують перехід до горизонтального польоту під керуванням нашої системи; окрему увагу приділили посадці.',
         result: [
           { text: 'Зібрано прототип, готовий до польотів' },
           {
@@ -1399,7 +1263,7 @@ export const translations: Record<Locale, Translations> = {
         title: 'CRSF-конвертер для оптоволокна',
         category: 'Зв’язок',
         summary:
-          'Модуль у форм-факторі JR, що передає сигнал керування CRSF оптоволокном замість радіо, — керування дроном, стійке до РЕБ, і додаткові канали.',
+          'Модуль у форм-факторі JR, що передає сигнал керування CRSF оптоволокном замість радіо: керування дроном, стійке до РЕБ, і додаткові канали.',
         subtitle: 'Стійка до завад лінія керування дроном',
         goal: 'Перенести сигнал CRSF зі стандартного пульта на оптоволоконну лінію, щоб дрон залишався керованим під радіозавадами, і додати канали для бортової периферії.',
         solution:
@@ -1420,10 +1284,9 @@ export const translations: Record<Locale, Translations> = {
       },
     },
     casesPage: {
-      label: 'Кейси',
       title: 'Кейс-стаді',
       subtitle:
-        'Опубліковані software- та hardware-проєкти. Більше робіт реалізовано під NDA — деталі за запитом.',
+        'Опубліковані software- та hardware-проєкти. Більше робіт реалізовано під NDA, деталі за запитом.',
       count: { cases: 'кейсів', software: 'software', hardware: 'hardware' },
       filterLabel: 'Фільтр кейсів',
       visitLive: 'Відкрити',
@@ -1435,10 +1298,9 @@ export const translations: Record<Locale, Translations> = {
       },
     },
     contactPage: {
-      label: 'Контакти',
       title: 'Розкажіть про свій проєкт',
       subtitle:
-        'Кілька деталей — і ми відповімо протягом 24 годин, щоб домовитися про безкоштовний 30-хвилинний дзвінок.',
+        'Кілька деталей, і ми відповімо протягом 24 годин, щоб домовитися про безкоштовний 30-хвилинний дзвінок.',
       nextLabel: 'Що далі',
       next: [
         'Відповідаємо протягом 24 годин',
@@ -1474,7 +1336,7 @@ export const translations: Record<Locale, Translations> = {
       navigate: 'Навігація',
       contact: 'Контакти',
       copyright: '© 2026 thesis-i. Всі права захищені.',
-      location: 'Львів, Україна · віддалено',
+      location: 'Львів, Україна',
     },
   },
 };

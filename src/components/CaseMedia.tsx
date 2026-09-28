@@ -32,31 +32,21 @@ const CaseMedia = ({ meta, alt, figureCaption }: CaseMediaProps) => {
   }
 
   if (media.kind === 'figure') {
+    // Projects without publishable screenshots show their key number instead.
     return (
       <div
         role="img"
-        aria-label={`${media.value} — ${figureCaption ?? alt}`}
-        className="relative flex size-full flex-col justify-between p-6 md:p-8"
-        style={{
-          backgroundImage:
-            'linear-gradient(to right, rgb(var(--line) / 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--line) / 0.05) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
+        aria-label={`${media.value}: ${figureCaption ?? alt}`}
+        className="flex size-full flex-col justify-end p-6 md:p-8"
       >
-        <div className="flex items-center justify-between">
-          <span className="label">fig. {meta.num}</span>
-          <span className="size-2 rounded-full bg-signal" />
+        <div className="text-[4rem] font-medium leading-none tracking-[-0.04em] text-ink md:text-[5.5rem]">
+          {media.value}
         </div>
-        <div>
-          <div className="font-mono text-[4.5rem] font-medium leading-none tracking-tight text-ink transition-transform duration-700 ease-out group-hover:-translate-y-1 md:text-[6.5rem]">
-            {media.value}
-          </div>
-          {figureCaption && (
-            <p className="mt-4 max-w-[30ch] text-sm leading-relaxed text-muted">
-              {figureCaption}
-            </p>
-          )}
-        </div>
+        {figureCaption && (
+          <p className="mt-4 max-w-[30ch] text-sm leading-relaxed text-muted">
+            {figureCaption}
+          </p>
+        )}
       </div>
     );
   }

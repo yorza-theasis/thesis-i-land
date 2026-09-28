@@ -48,7 +48,7 @@ const useActiveSection = () => {
 };
 
 const Navbar = ({ subPath = '' }: NavbarProps) => {
-  const { nav } = useT();
+  const { nav, common } = useT();
   const base = useBase();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -135,7 +135,7 @@ const Navbar = ({ subPath = '' }: NavbarProps) => {
               href={`${base}/contact/`}
               className="ml-2 hidden !py-1 !pl-4 text-sm md:inline-flex [&>span:last-child]:size-8"
             >
-              {nav.startProject}
+              {common.bookCall}
             </ButtonLink>
             <button
               type="button"
@@ -173,10 +173,7 @@ const Navbar = ({ subPath = '' }: NavbarProps) => {
             <nav aria-label="Mobile" className="flex-1">
               <ul className="flex flex-col">
                 {items.map((item, i) => (
-                  <li
-                    key={item.id}
-                    className="overflow-hidden border-b border-line/10"
-                  >
+                  <li key={item.id} className="overflow-hidden">
                     <motion.div
                       initial={{ y: '100%', opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
@@ -189,11 +186,8 @@ const Navbar = ({ subPath = '' }: NavbarProps) => {
                       <Link
                         href={item.href}
                         onClick={() => setOpen(false)}
-                        className="flex items-baseline gap-4 py-4 text-3xl font-medium tracking-heading text-ink"
+                        className="block py-4 text-3xl font-medium tracking-heading text-ink"
                       >
-                        <span className="font-mono text-xs text-subtle">
-                          0{i + 1}
-                        </span>
                         {item.label}
                       </Link>
                     </motion.div>
@@ -208,7 +202,7 @@ const Navbar = ({ subPath = '' }: NavbarProps) => {
               className="flex flex-col gap-6"
             >
               <ButtonLink href={`${base}/contact/`} className="self-start">
-                {nav.startProject}
+                {common.bookCall}
               </ButtonLink>
               <div className="flex items-center justify-between">
                 <a

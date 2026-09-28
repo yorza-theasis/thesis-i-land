@@ -81,7 +81,7 @@ const ContactContent = () => {
     if (!apiKey || apiKey === 'YOUR_KEY_HERE') {
       // eslint-disable-next-line no-console
       console.error(
-        'NEXT_PUBLIC_WEB3FORMS_KEY is not set — add it to .env.local.',
+        'NEXT_PUBLIC_WEB3FORMS_KEY is not set. Add it to .env.local.',
       );
       setStatus('error');
       setErrorMessage(contactPage.errors.config);
@@ -116,19 +116,11 @@ const ContactContent = () => {
   const submitting = status === 'submitting';
 
   return (
-    <section className="relative overflow-hidden pb-24 pt-36 md:pb-36 md:pt-44">
-      <div
-        aria-hidden="true"
-        className="blueprint pointer-events-none absolute inset-0"
-      />
-      <div className="container-page relative grid gap-14 lg:grid-cols-12 lg:gap-12">
+    <section className="pb-24 pt-32 md:pb-32 md:pt-40">
+      <div className="container-page grid gap-14 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-5">
           <Reveal>
-            <p className="label flex items-center gap-2.5">
-              <span className="size-1.5 rounded-full bg-signal" />
-              {contactPage.label}
-            </p>
-            <h1 className="mt-7 text-[2.5rem] font-medium leading-[1.02] tracking-display text-ink sm:text-6xl">
+            <h1 className="text-[2.5rem] font-medium leading-[1.02] tracking-display text-ink sm:text-6xl">
               {contactPage.title}
             </h1>
             <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-muted">
@@ -137,24 +129,20 @@ const ContactContent = () => {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="label mt-12">{contactPage.nextLabel}</p>
-            <ol className="mt-4 border-t border-line/10">
-              {contactPage.next.map((step, i) => (
-                <li
-                  key={step}
-                  className="flex items-baseline gap-4 border-b border-line/10 py-4"
-                >
-                  <span className="font-mono text-xs text-signal-ink">
-                    0{i + 1}
-                  </span>
-                  <span className="text-[15px] text-ink">{step}</span>
-                </li>
+            <p className="mt-12 text-base font-medium text-ink">
+              {contactPage.nextLabel}
+            </p>
+            <ol className="mt-3 list-decimal space-y-2 pl-5 text-[15px] text-muted marker:text-subtle">
+              {contactPage.next.map((step) => (
+                <li key={step}>{step}</li>
               ))}
             </ol>
           </Reveal>
 
           <Reveal delay={0.15}>
-            <p className="label mt-12">{contactPage.directLabel}</p>
+            <p className="mt-12 text-base font-medium text-ink">
+              {contactPage.directLabel}
+            </p>
             <ul className="mt-4 flex flex-col gap-3">
               {channels.map(({ label, href, Icon }) => (
                 <li key={href}>
@@ -331,7 +319,7 @@ const ContactPage = ({ locale = 'en' as Locale }: { locale?: Locale }) => {
   return (
     <SiteShell
       locale={locale}
-      title={`${t.contactPage.title} — ${AppConfig.site_name}`}
+      title={`${t.contactPage.title} | ${AppConfig.site_name}`}
       description={t.contactPage.subtitle}
       path="contact/"
     >

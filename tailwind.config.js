@@ -31,7 +31,6 @@ module.exports = {
       letterSpacing: {
         display: '-0.045em',
         heading: '-0.03em',
-        label: '0.14em',
       },
       transitionTimingFunction: {
         out: 'cubic-bezier(0.16, 1, 0.3, 1)',

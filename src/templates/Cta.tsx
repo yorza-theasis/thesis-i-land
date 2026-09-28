@@ -7,7 +7,6 @@ import {
 } from '@phosphor-icons/react';
 
 import { ButtonLink } from '../components/ButtonLink';
-import { Dot } from '../components/Dot';
 import { Frame } from '../components/Frame';
 import { Reveal } from '../components/motion';
 import { useBase, useT } from '../i18n/LocaleContext';
@@ -36,7 +35,7 @@ const channels = [
 ];
 
 const Cta = () => {
-  const { cta } = useT();
+  const { cta, common } = useT();
   const base = useBase();
 
   return (
@@ -44,30 +43,19 @@ const Cta = () => {
       <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
           <Reveal>
-            <p className="label flex items-center gap-2.5">
-              <span className="size-1.5 rounded-full bg-signal" />
-              {cta.label}
-            </p>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className="mt-7 max-w-[18ch] text-[2.5rem] font-medium leading-[1.02] tracking-display text-ink md:text-6xl xl:text-[4.25rem]">
+            <h2 className="max-w-[18ch] text-4xl font-medium leading-[1.04] tracking-display text-ink md:text-5xl xl:text-[3.5rem]">
               {cta.title}
-              <Dot />
             </h2>
           </Reveal>
-          <Reveal delay={0.12}>
-            <p className="mt-8 max-w-[52ch] text-lg leading-relaxed text-muted">
+          <Reveal delay={0.1}>
+            <p className="mt-7 max-w-[52ch] text-lg leading-relaxed text-muted">
               {cta.subtitle}
             </p>
           </Reveal>
-          <Reveal delay={0.18}>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <ButtonLink href={`${base}/contact/`}>{cta.primary}</ButtonLink>
-              <ButtonLink
-                href={`mailto:${AppConfig.contact.email}`}
-                variant="secondary"
-              >
-                {cta.secondary}
+          <Reveal delay={0.16}>
+            <div className="mt-9">
+              <ButtonLink href={`${base}/contact/`}>
+                {common.bookCall}
               </ButtonLink>
             </div>
           </Reveal>
@@ -75,12 +63,14 @@ const Cta = () => {
 
         <Reveal delay={0.1} className="lg:col-span-5">
           <Frame innerClassName="p-7 md:p-9">
-            <p className="label">{cta.benefitsLabel}</p>
-            <ul className="mt-5 space-y-3.5">
+            <p className="text-base font-medium text-ink">
+              {cta.benefitsLabel}
+            </p>
+            <ul className="mt-5 space-y-3">
               {cta.benefits.map((b) => (
                 <li
                   key={b}
-                  className="flex items-start gap-3 text-[15px] text-ink"
+                  className="flex items-start gap-3 text-[15px] text-muted"
                 >
                   <Check
                     size={16}
@@ -93,8 +83,10 @@ const Cta = () => {
               ))}
             </ul>
 
-            <p className="label mt-10">{cta.channelsLabel}</p>
-            <ul className="mt-3 border-t border-line/10">
+            <p className="mt-10 text-base font-medium text-ink">
+              {cta.channelsLabel}
+            </p>
+            <ul className="mt-3 space-y-1">
               {channels.map(({ label, value, href, Icon }) => (
                 <li key={label}>
                   <a
@@ -102,7 +94,7 @@ const Cta = () => {
                     {...(href.startsWith('http')
                       ? { target: '_blank', rel: 'noopener noreferrer' }
                       : {})}
-                    className="group flex items-center gap-4 border-b border-line/10 py-3.5"
+                    className="group -mx-3 flex items-center gap-4 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-line/[0.05]"
                   >
                     <Icon
                       size={20}
@@ -110,10 +102,10 @@ const Cta = () => {
                       aria-hidden="true"
                       className="text-muted"
                     />
-                    <span className="w-20 text-sm text-subtle">{label}</span>
                     <span className="flex-1 truncate text-[15px] text-ink">
                       {value}
                     </span>
+                    <span className="sr-only">{label}</span>
                     <ArrowUpRight
                       size={16}
                       weight="regular"
