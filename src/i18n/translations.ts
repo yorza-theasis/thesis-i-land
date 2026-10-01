@@ -1,973 +1,1372 @@
-export type Locale = 'en' | 'ua';
+import type { CaseId } from '../data/cases';
+import { es } from './es';
 
-type ServiceTranslation = {
-  title: string;
-  description: string;
-  stat: string;
-};
+export type Locale = 'en' | 'ua' | 'es';
 
-type CaseTranslation = {
+type Stat = { value: number; suffix: string; label: string; note: string };
+
+type CaseResult = { text: string };
+
+export type CaseTranslation = {
   title: string;
   category: string;
-  description: string;
-  imageAlt: string;
-  tags: string[];
-};
-
-type StatTranslation = {
-  end: number;
-  suffix: string;
-  label: string;
-};
-
-// A result line can mix confirmed facts with metrics still pending real data
-// (e.g. post-pilot, or awaiting client-side analytics) — isPlaceholder flags the latter.
-type CaseResultItem = {
-  text: string;
-  isPlaceholder?: boolean;
-};
-
-type CasesPageCaseTranslation = {
+  /** One-line teaser used on the homepage. */
+  summary: string;
   subtitle: string;
-  description?: string;
   goal?: string;
   solution?: string;
-  result?: CaseResultItem[];
+  result?: CaseResult[];
+  /** Used instead of goal/solution/result when those aren't published. */
+  description?: string;
+  /** Caption for cases shown as a typographic figure instead of a screenshot. */
+  figure?: string;
   tags: string[];
+  imageAlt: string;
 };
 
 export type Translations = {
   meta: { title: string; description: string };
   nav: {
     services: string;
-    portfolio: string;
-    techStack: string;
-    startProject: string;
+    work: string;
+    process: string;
+    about: string;
+    faq: string;
+    menu: string;
+    close: string;
+    skip: string;
+  };
+  common: {
+    /** The one label for every contact CTA on the site.
+     * Titles may wrap a phrase in *asterisks* to render it in the accent colour. */
+    bookCall: string;
+    /** The one label for every "see the portfolio" CTA. */
+    allCases: string;
+    all: string;
+    software: string;
+    hardware: string;
+    status: { completed: string; in_progress: string; prototype: string };
+    viewCase: string;
+    backToTop: string;
+    theme: { toLight: string; toDark: string };
+    /** Accessible name for the language switcher. */
+    switchLanguage: string;
   };
   hero: {
-    headline1: string[];
-    headline2: string[];
+    eyebrow: string;
+    headline: string;
     subtitle: string;
-    cta: { primary: string; secondary: string };
-    stats: StatTranslation[];
-    readout: { online: string; response: string; location: string };
-    scroll: string;
+    /** Accessible name for the project orbit and its text chips. */
+    orbit: { label: string; chips: string[] };
+    stats: Stat[];
+  };
+  challenges: {
+    title: string;
+    description: string;
+    proof: string;
+    items: { problem: string; capability: string; answer: string }[];
   };
   services: {
-    eyebrow: string;
     title: string;
     description: string;
-    items: ServiceTranslation[];
+    /** `title` names the business outcome; `area` is the capability
+     * behind it, shown as a small label and in the navbar menu. */
+    items: { area: string; title: string; description: string; stat: string }[];
   };
-  portfolio: {
-    eyebrow: string;
+  work: { title: string; description: string; more: string };
+  process: {
     title: string;
     description: string;
-    tabs: { all: string; completed: string; in_progress: string };
-    status: { live: string; inDev: string };
-    viewCase: string;
-    comingSoon: string;
-    viewAll: string;
-    cases: CaseTranslation[];
+    deliverable: string;
+    steps: { title: string; description: string; deliverable: string }[];
+  };
+  about: {
+    statement: string;
+    statementMuted: string;
+    principles: { title: string; text: string }[];
   };
   techStack: {
-    eyebrow: string;
     title: string;
     description: string;
+    groups: string[];
+    also: string;
   };
-  casesPage: {
-    eyebrow: string;
+  faq: { title: string; items: { q: string; a: string }[] };
+  cta: {
     title: string;
     subtitle: string;
-    badge: string;
-    status: { live: string; inDev: string };
+    benefitsLabel: string;
+    benefits: string[];
+    channelsLabel: string;
+  };
+  cases: Record<CaseId, CaseTranslation>;
+  casesPage: {
+    title: string;
+    subtitle: string;
+    count: { cases: string; software: string; hardware: string };
+    filterLabel: string;
     visitLive: string;
-    labels: { goal: string; solution: string; result: string };
-    cta: { title: string; subtitle: string; button: string };
-    cases: CasesPageCaseTranslation[];
+    labels: { goal: string; solution: string; result: string; stack: string };
   };
   contactPage: {
     title: string;
     subtitle: string;
-    fields: { name: string; email: string; company: string; message: string };
+    nextLabel: string;
+    next: string[];
+    directLabel: string;
+    fields: {
+      name: string;
+      email: string;
+      company: string;
+      message: string;
+      messagePlaceholder: string;
+    };
+    optional: string;
     success: { title: string; subtitle: string; backHome: string };
     submit: string;
     submitting: string;
-  };
-  banner: {
-    title: string;
-    subtitle: string;
-    cta: string;
+    errors: { config: string; generic: string; network: string };
   };
   footer: {
+    tagline: string;
     description: string;
-    copyright: string;
-    quickLinks: string;
+    navigate: string;
     contact: string;
-    links: {
-      services: string;
-      portfolio: string;
-      techStack: string;
-      contact: string;
-    };
+    copyright: string;
+    location: string;
   };
 };
 
 export const translations: Record<Locale, Translations> = {
   en: {
     meta: {
-      title: 'thesis-i | Expert Mobile & Backend Solutions in Lviv',
+      title: 'thesis-i | Hardware & Software Development Studio in Lviv',
       description:
-        'thesis-i is a software development studio specializing in high-performance mobile apps and scalable backend systems.',
+        'thesis-i builds AI systems, mobile and web products, backend platforms and embedded hardware, from idea and strategy to design, engineering and launch.',
     },
     nav: {
       services: 'Services',
-      portfolio: 'Portfolio',
-      techStack: 'Tech Stack',
-      startProject: 'Start Project',
+      work: 'Work',
+      process: 'Process',
+      about: 'About',
+      faq: 'FAQ',
+      menu: 'Menu',
+      close: 'Close',
+      skip: 'Skip to content',
+    },
+    common: {
+      bookCall: 'Book a call',
+      allCases: 'All case studies',
+      all: 'All',
+      software: 'Software',
+      hardware: 'Hardware',
+      status: {
+        completed: 'Delivered',
+        in_progress: 'In development',
+        prototype: 'Prototype',
+      },
+      viewCase: 'View case',
+      backToTop: 'Back to top',
+      theme: {
+        toLight: 'Switch to light theme',
+        toDark: 'Switch to dark theme',
+      },
+      switchLanguage: 'Language',
     },
     hero: {
-      headline1: ['Scaling', 'Businesses'],
-      headline2: ['with AI &', 'Software.'],
+      eyebrow: 'Hardware & software development studio',
+      headline: 'We turn complex problems into *working products*',
       subtitle:
-        'We take on complex, cross-industry problems other agencies pass on, and stay hands-on from idea to production — so what we ship moves your revenue, not just your roadmap.',
-      cta: { primary: 'View Portfolio', secondary: 'Our Services' },
-      stats: [
-        { end: 50, suffix: 'M+', label: 'Users served' },
-        { end: 10, suffix: '+', label: 'Products shipped' },
-        { end: 5, suffix: '', label: 'Industries' },
-      ],
-      readout: {
-        online: 'sys.online',
-        response: 'response < 24h',
-        location: 'lviv, ua · remote',
+        'AI systems, apps, platforms and devices, built by one team from idea to launch.',
+      orbit: {
+        label: 'Projects we have delivered',
+        chips: ['AI systems', 'Hardware', 'Mobile & web'],
       },
-      scroll: 'scroll',
+      stats: [
+        {
+          value: 10,
+          suffix: '+',
+          label: 'Products delivered',
+          note: 'End-to-end launches across industries',
+        },
+        {
+          value: 6,
+          suffix: '',
+          label: 'Industries',
+          note: 'AI, FinTech, MedTech, IoT, Deep Tech, AgroTech',
+        },
+        {
+          value: 7,
+          suffix: '+',
+          label: 'Years of experience',
+          note: 'Complex, high-stakes projects',
+        },
+        {
+          value: 50,
+          suffix: 'M+',
+          label: 'Users served',
+          note: 'Across the products we shipped',
+        },
+      ],
     },
-    services: {
-      eyebrow: 'What we build',
-      title: 'Capabilities That Pay for Themselves.',
+    challenges: {
+      title: 'Found your *challenge*?',
       description:
-        'Five capability areas, each pointed at one goal — fewer surprises, faster delivery, and software that earns its keep.',
+        'Tired of uncertainty, poor quality and endless iterations? We turn complexity into simplicity and ideas into products that work.',
+      proof: 'Where we did it',
       items: [
         {
-          title: 'Mobile & Web Development',
+          problem:
+            "We have an idea, but don't know how to turn it into a product",
+          capability: 'Build',
+          answer:
+            'We start with discovery: validate the idea, cut it down to a sharp first version and take it all the way to launch.',
+        },
+        {
+          problem: 'Our existing platform no longer supports our growth',
+          capability: 'Transform and scale',
+          answer:
+            'We audit what you have, stabilise it and re-architect the parts that block scale, without starting from scratch.',
+        },
+        {
+          problem:
+            'We want to use AI, but need to know where it truly creates value',
+          capability: 'Applied AI',
+          answer:
+            'We find the workflows where AI pays for itself, prove it on real data and ship it with access control and audit logs.',
+        },
+        {
+          problem: 'Our physical product needs a digital layer',
+          capability: 'Hardware and software',
+          answer:
+            'Electronics, firmware, control systems and the apps on top, designed by one team so the device and the software work as a whole.',
+        },
+        {
+          problem: 'A complex manual process needs to be automated',
+          capability: 'Automate',
+          answer:
+            'We map the process, automate the repetitive steps in software or with a machine, and keep people in control of the decisions.',
+        },
+      ],
+    },
+    services: {
+      title: 'Capabilities that *pay for themselves*',
+      description:
+        'Seven capability areas pointed at one goal: fewer surprises, faster delivery and technology that earns its keep.',
+      items: [
+        {
+          area: 'Applied AI & automation',
+          title: 'Automate routine work with AI',
           description:
-            'One codebase, every platform — so you ship to iOS, Android, and web without tripling your dev budget or your timeline.',
+            'AI that earns its budget line: agents, RAG and document analysis built around your real workflows, with access control, redaction and audit trails.',
+          stat: '5+ AI systems',
+        },
+        {
+          area: 'Mobile & web development',
+          title: 'Launch on every platform at once',
+          description:
+            'One codebase, every platform, so you ship to iOS, Android and web without tripling your dev budget or your timeline.',
           stat: '8+ apps',
         },
         {
-          title: 'Backend & API Development',
+          area: 'Backend & APIs',
+          title: 'Platforms that scale with demand',
           description:
-            'Systems built to handle your busiest day, not just your demo day — so growth never turns into downtime.',
+            'Systems built to handle your busiest day, not just your demo day, so growth never turns into downtime.',
           stat: '12+ services',
         },
         {
-          title: 'Cloud & DevOps',
+          area: 'Hardware & embedded',
+          title: 'Devices built for the real world',
+          description:
+            'PCBs, control electronics, mechanics and robotics. Prototypes that leave the lab and hold up on a real shop floor.',
+          stat: '4 hardware builds',
+        },
+        {
+          area: 'Cloud & DevOps',
+          title: 'Releases without downtime',
           description:
             "Deploys that don't need a war room. Automated pipelines and monitoring mean fewer 2am pages and faster releases.",
           stat: '5+ clusters',
         },
         {
-          title: 'Architecture & Consulting',
+          area: 'Architecture & consulting',
+          title: 'Avoid costly rewrites later',
           description:
             'The right technical decisions made early, before they become expensive to undo six months in.',
           stat: '3 greenfields',
         },
         {
-          title: 'Reducing AI-Slop',
+          area: 'Product stabilization',
+          title: 'Make your product reliable again',
           description:
-            'AI that earns its budget line — fine-tuned models built for your actual use case, not a bolted-on chatbot that impresses no one.',
+            'An unstable app costs you users, time, and revenue. We restore broken functionality and eliminate the root causes of technical failures, so your product runs reliably, serves your customers, and is ready to grow.',
           stat: 'High ROI',
         },
       ],
     },
-    portfolio: {
-      eyebrow: 'Portfolio',
-      title: 'Selected Work',
+    work: {
+      title: "Software and hardware *we've shipped*",
       description:
         'A glimpse into the projects we have delivered across industries. Details shared within NDA boundaries.',
-      tabs: { all: 'All', completed: 'Live', in_progress: 'In Development' },
-      status: { live: 'Live', inDev: 'In Dev' },
-      viewCase: 'View Case',
-      comingSoon: 'Coming Soon',
-      viewAll: 'View all cases',
-      cases: [
+      more: 'More projects',
+    },
+    process: {
+      title: 'From ambiguity to a *working product*',
+      description:
+        'A trusted partner for the whole journey: we take ownership from the first idea to a working product and stay close at every step.',
+      deliverable: 'You get',
+      steps: [
         {
-          title: 'Extensa AI',
-          category: 'Agentic Outreach',
-          description:
-            'A FastAPI-based B2B platform using an autonomous Claude GoalAgent to continuously build, refine, and test Ideal Customer Profiles (ICPs) based on direct feedback and onboarding goals.',
-          imageAlt: 'Extensa AI Dashboard',
-          tags: [
-            'Sales Automation',
-            'Lead Generation',
-            'Agentic AI',
-            'B2B SaaS',
-          ],
+          title: 'Idea',
+          description: 'Clarify goals and expected outcomes',
+          deliverable: 'Goals, constraints and success metrics',
         },
         {
-          title: 'GMI Doc Verifier',
-          category: 'AI & HealthTech',
-          description:
-            'Nightly AI assistant for acute stroke (AIS) wards that automatically verifies 37 mandatory clinical documents per patient episode against official MoH protocols — using a three-layer pipeline of rules-engine, LLM content analysis, and RAG-based protocol lookup — surfacing discrepancies and missing entries as actionable doctor reports.',
-          imageAlt: 'GMI Documentation Verifier Dashboard',
-          tags: [
-            'Patient Safety',
-            'Compliance Automation',
-            'Clinical AI',
-            'Risk Reduction',
-          ],
+          title: 'Discovery',
+          description: 'Research and validate hypotheses',
+          deliverable: 'Validated assumptions and a risk map',
         },
         {
-          title: 'Niania24',
-          category: 'Web & Mobile',
-          description:
-            'Childcare service platform connecting families with trusted babysitters. Full-stack web and mobile solution with real-time booking, reviews, and secure payments.',
-          imageAlt: 'Niania24 platform screenshot',
-          tags: [
-            'Marketplace Growth',
-            'Trust & Safety',
-            'Consumer App',
-            'Cross-Platform Reach',
-          ],
+          title: 'Strategy',
+          description: 'Define the product and technology direction',
+          deliverable: 'Scope, roadmap and estimate',
         },
         {
-          title: 'AI Department',
-          category: 'AI & Automation',
-          description:
-            'Internal AI-powered platform for automating department workflows, documentation, and reporting — built to reduce ops overhead and surface actionable insights.',
-          imageAlt: 'AI Department tool screenshot',
-          tags: [
-            'Ops Efficiency',
-            'Internal Tooling',
-            'Process Automation',
-            'Enterprise Scale',
-          ],
+          title: 'Design',
+          description: 'Create the UX and system architecture',
+          deliverable: 'UX flows and an architecture you can build on',
         },
         {
-          title: 'IBD Registry',
-          category: 'MedTech / Patient Registry',
-          description:
-            'Centralized patient registry for inflammatory bowel disease (UC/CD) for Ukrainian medical institutions — doctors manage clinical records, patients submit periodic PRO2 self-assessments, with passwordless magic-link auth and role-based routing.',
-          imageAlt: 'IBD Registry Dashboard',
-          tags: [
-            'Patient Outcomes',
-            'Regulatory Compliance',
-            'Clinical Data',
-            'Care Coordination',
-          ],
+          title: 'Build',
+          description: 'Develop and integrate the product',
+          deliverable: 'A working product in production, with support',
+        },
+      ],
+    },
+    about: {
+      statement:
+        'We take ownership from the first challenge to the final product.',
+      statementMuted:
+        'No guesswork. No passing problems back to you. Just the expertise to build it right and make it work.',
+      principles: [
+        {
+          title: 'Complex problems welcome',
+          text: 'We take on challenges that need more than an off-the-shelf solution, the ones other studios pass on.',
         },
         {
-          title: 'Cardiology Doc Audit',
-          category: 'AI & HealthTech',
-          description:
-            'AI system for detecting discrepancies in cardiology patient documentation — NER extracts clinical entities, normalizes to ICD-10 codes, compares across forms, and generates plain-language explanations for doctors via LLM. Fully on-premise.',
-          imageAlt: 'Cardiology Documentation Audit',
-          tags: [
-            'Documentation Accuracy',
-            'Compliance Risk',
-            'Clinical Auditing',
-            'Data Privacy',
-          ],
+          title: 'End-to-end ownership',
+          text: 'From early ambiguity to production, we stay with you for the whole journey.',
         },
         {
-          title: 'QPick',
-          category: 'Robotics & Retail',
-          description:
-            "A robotic-arm system that identifies and picks individual retail products under real shelf conditions — even with similar packaging, reflective, or dark materials — continuously improving from every pick attempt. Built for Żabka, one of Poland's largest retail chains.",
-          imageAlt: 'Q-Pick Robotic Retail Kiosk',
-          tags: [
-            'Labor Cost Reduction',
-            'Retail Automation',
-            'Fulfillment Speed',
-            'Scalable Ops',
-          ],
+          title: 'Cross-industry insight',
+          text: 'Solving similar problems in very different sectors lets us bring proven patterns to yours.',
         },
         {
-          title: 'AI Agent for Compliance',
-          category: 'AI & Compliance',
-          description:
-            'An AI assistant that answers employee questions from internal company documents in natural language — respecting role-based access, redacting sensitive data, and logging every exchange for audit.',
-          imageAlt: 'AI Agent for Compliance Chat Interface',
-          tags: [
-            'Employee Productivity',
-            'Compliance Risk',
-            'Knowledge Access',
-            'Data Governance',
-          ],
-        },
-        {
-          title: 'Butics',
-          category: 'Retail / Mobile POS',
-          description:
-            'A mobile point-of-sale app for small retail stores, identifying products by barcode scan, product code, or visual catalogue — with basket management, discounts, payments, and returns built in.',
-          imageAlt: 'Butics Mobile POS in Use',
-          tags: [
-            'Faster Checkout',
-            'Retail Efficiency',
-            'Small Business Tools',
-            'Sales Enablement',
-          ],
-        },
-        {
-          title: 'Nexus',
-          category: 'Personal CRM / Privacy',
-          description:
-            'A private contact management platform where professionals keep their own contact space, share selectively with teams, and collaborate without losing control over private data.',
-          imageAlt: 'Nexus Personal CRM Interface',
-          tags: [
-            'Network Monetization',
-            'Privacy-First',
-            'Team Collaboration',
-            'Relationship Management',
-          ],
+          title: 'Engineering meets business',
+          text: 'Deep technical skill paired with business thinking at every decision.',
         },
       ],
     },
     techStack: {
-      eyebrow: 'Tools of the trade',
-      title: 'Technology Stack',
+      title: 'Technology stack',
       description:
         'Battle-tested technologies we use to deliver robust, scalable solutions across the full product lifecycle.',
+      groups: ['Product', 'Platform', 'AI & hardware'],
+      also: 'Also',
     },
-    casesPage: {
-      eyebrow: 'Selected work',
-      title: 'Case Studies',
-      subtitle:
-        'Published case studies. More projects delivered under NDA — details available on request.',
-      badge: '10 cases · 7 live · 3 in dev',
-      status: { live: 'Live', inDev: 'In Development' },
-      visitLive: 'Visit live',
-      labels: { goal: 'Goal', solution: 'Solution', result: 'Result' },
-      cta: {
-        title: 'Ready to build something great?',
-        subtitle:
-          "Let's discuss your project and see how we can help you ship faster and build better.",
-        button: 'Get in touch',
-      },
-      cases: [
+    faq: {
+      title: 'Questions we hear often',
+      items: [
         {
-          subtitle: 'Agentic B2B Outreach Platform',
-          goal: "Automate ICP creation and upkeep so it doesn't rely on manual SDR work.",
-          solution:
-            'An autonomous Claude-powered GoalAgent that builds, refines, and tests Ideal Customer Profiles from onboarding goals and live user feedback.',
-          result: [
-            { text: '30% faster ICP turnaround' },
-            { text: '120 leads processed per week' },
-          ],
-          tags: [
-            'Sales Automation',
-            'Lead Generation',
-            'Agentic AI',
-            'B2B SaaS',
-          ],
+          q: "What if I'm not sure about my idea?",
+          a: "Reach out anyway. We'll help you explore, validate and shape the idea during the discovery phase.",
         },
         {
-          subtitle: 'AI-Powered Clinical Documentation Audit',
-          goal: 'Make sure no mandatory clinical document gets missed in acute stroke (AIS) wards.',
-          solution:
-            'A nightly AI assistant with a three-layer pipeline (rules engine, LLM content analysis, RAG protocol lookup) checking 37 required documents per patient episode against MoH protocols.',
-          result: [
-            { text: '37 automated checks per patient, every night' },
-            { text: '70% reduction in manual review time' },
-          ],
-          tags: [
-            'Patient Safety',
-            'Compliance Automation',
-            'Clinical AI',
-            'Risk Reduction',
-          ],
+          q: 'I already have a website. Do I need to rebuild it from scratch?',
+          a: 'No. We support and improve existing websites, whatever technology they were built with.',
         },
         {
-          subtitle: 'From Design to Kubernetes Deployment',
-          goal: 'Cut operational overhead on internal reporting and documentation workflows.',
-          solution:
-            'A Next.js + Spring Boot platform with a custom RAG system, fully deployed on a production Kubernetes cluster.',
-          result: [
-            { text: '45% less time spent on reporting' },
-            { text: '3 workflows automated' },
-          ],
-          tags: [
-            'Ops Efficiency',
-            'Internal Tooling',
-            'Process Automation',
-            'Enterprise Scale',
-          ],
+          q: 'Can you work with our existing development team?',
+          a: 'Yes. We can join your team, fill specific expertise gaps or take ownership of particular parts of the product.',
         },
         {
-          subtitle: 'Universal App for iOS and Android',
-          goal: 'Help families find a vetted babysitter faster.',
-          solution:
-            'Full-parity iOS/Android app with real-time booking, reviews, and a dedicated personal-data protection layer.',
-          result: [
-            { text: '1,714 active families' },
-            { text: 'booking completed in 3 min' },
-          ],
-          tags: [
-            'Marketplace Growth',
-            'Trust & Safety',
-            'Consumer App',
-            'Cross-Platform Reach',
-          ],
+          q: 'Can you take over a project built by another company?',
+          a: "Yes. We'll understand the current state, identify the key issues and help you move forward without starting over.",
         },
         {
-          subtitle: 'IBD Patient Registry for Ukrainian Clinics',
-          description:
-            "Centralized registry for inflammatory bowel disease patients — doctors manage structured clinical records for UC and Crohn's disease, patients submit periodic PRO2 self-assessments scored server-side, with passwordless magic-link auth and role-based routing for DOCTOR / MODERATOR / PATIENT / ADMIN roles. BFF layer on Next.js API routes proxies requests to a FastAPI backend, hiding tokens from the client.",
-          tags: [
-            'Patient Outcomes',
-            'Regulatory Compliance',
-            'Clinical Data',
-            'Care Coordination',
-          ],
+          q: 'Do you work with startups or only established companies?',
+          a: 'Both. We adapt our approach to your stage, resources and business goals.',
         },
         {
-          subtitle: 'AI Error Detection in Cardiology Documentation',
-          description:
-            'Detects discrepancies in patient medical documentation before MoH submission — NER extracts clinical entities, normalizes to ICD-10 codes, compares across related forms per patient, and generates plain-language explanations for doctors via LLM. RAG is used only as an explanation layer, not a decision mechanism. Runs fully on-premise against a read-only 5 TB database copy.',
-          tags: [
-            'Documentation Accuracy',
-            'Compliance Risk',
-            'Clinical Auditing',
-            'Data Privacy',
-          ],
-        },
-        {
-          subtitle: 'Robotic Product Picking for Retail Fulfillment',
-          goal: 'Teach a robotic arm to reliably identify and pick individual retail products — even with similar packaging, transparent, reflective, or dark materials, and deformable items — under real shelf conditions, not just in a lab.',
-          solution:
-            'A system that recognizes individual products, determines where each can be safely gripped, executes a precise pick with a vacuum gripper, and keeps improving by learning from both successful and unsuccessful attempts.',
-          result: [
-            {
-              text: "Clear path toward automating repetitive physical retail operations for Żabka, one of Poland's largest convenience retail chains",
-            },
-          ],
-          tags: [
-            'Labor Cost Reduction',
-            'Retail Automation',
-            'Fulfillment Speed',
-            'Scalable Ops',
-          ],
-        },
-        {
-          subtitle: 'Internal Knowledge Base Assistant with Role-Based Access',
-          goal: 'Let employees get answers already buried in internal company documents without manually digging through files, and without giving everyone access to everything.',
-          solution:
-            'An AI assistant that answers natural-language questions using only documents the employee is allowed to see, strips sensitive personal information where needed, refuses to answer when information is unavailable, and logs every exchange for audit.',
-          result: [
-            {
-              text: 'Employees find internal information faster while the company keeps full control over who can access what',
-            },
-          ],
-          tags: [
-            'Employee Productivity',
-            'Compliance Risk',
-            'Knowledge Access',
-            'Data Governance',
-          ],
-        },
-        {
-          subtitle: 'Mobile Point-of-Sale for Small Retail Stores',
-          goal: 'Let store employees process sales quickly even when not every product has a barcode, without slowing them down with complicated workflows.',
-          solution:
-            'A mobile POS app that identifies products by camera barcode scan, internal product code, or a visual catalogue when no barcode exists — supporting basket management, discounts, payment, and returns.',
-          result: [
-            {
-              text: 'A simpler sales workflow for employees, especially in small stores that cannot always rely on barcodes',
-            },
-          ],
-          tags: [
-            'Faster Checkout',
-            'Retail Efficiency',
-            'Small Business Tools',
-            'Sales Enablement',
-          ],
-        },
-        {
-          subtitle: 'Private Contact Sharing for Professional Networks',
-          goal: 'Let people with large professional networks collaborate around shared contacts as a team, without losing control over their private data.',
-          solution:
-            'A contact management platform where each user keeps a private contact space, can share contacts selectively with different access levels, and teams can collaborate on the contacts explicitly shared with them — synced across devices.',
-          result: [
-            {
-              text: 'A professional CRM experience with privacy built into the product rather than added on later',
-            },
-          ],
-          tags: [
-            'Network Monetization',
-            'Privacy-First',
-            'Team Collaboration',
-            'Relationship Management',
-          ],
+          q: 'Can you build both hardware and software?',
+          a: 'Yes. We bring hardware and software development together, so the product works as a whole.',
         },
       ],
     },
-    contactPage: {
-      title: 'Get in Touch',
+    cta: {
+      title: "Have a complex problem? Let's turn it into something that works.",
       subtitle:
-        "Have a project in mind? Fill out the form below and we'll get back to you as soon as possible.",
+        'Still waiting for the right time to start? Book a free 30-minute discovery call. No commitment, just a conversation.',
+      benefitsLabel: 'What you get',
+      benefits: [
+        'A free 30-minute discovery call',
+        'A reply within 24 hours',
+        "An honest answer on whether we're the right fit",
+        'Work under NDA',
+        'One team for hardware and software',
+      ],
+      channelsLabel: 'Or write to us directly',
+    },
+    cases: {
+      extensa: {
+        title: 'Extensa AI',
+        category: 'Agentic outreach',
+        summary:
+          'A B2B platform where an autonomous Claude GoalAgent builds, refines and tests Ideal Customer Profiles from onboarding goals and live feedback.',
+        subtitle: 'Agentic B2B outreach platform',
+        goal: "Automate ICP creation and upkeep so it doesn't rely on manual SDR work.",
+        solution:
+          'An autonomous Claude-powered GoalAgent that builds, refines and tests Ideal Customer Profiles from onboarding goals and live user feedback.',
+        result: [
+          { text: '30% faster ICP turnaround' },
+          { text: '120 leads processed per week' },
+        ],
+        tags: ['Sales Automation', 'Lead Generation', 'Agentic AI', 'B2B SaaS'],
+        imageAlt: 'Extensa AI outreach dashboard',
+      },
+      gmi: {
+        title: 'GMI Doc Verifier',
+        category: 'AI & HealthTech',
+        summary:
+          'A nightly AI assistant for acute stroke wards that verifies 37 mandatory clinical documents per patient episode against official MoH protocols.',
+        subtitle: 'AI-powered clinical documentation audit',
+        goal: 'Make sure no mandatory clinical document gets missed in acute stroke (AIS) wards.',
+        solution:
+          'A nightly AI assistant with a three-layer pipeline (rules engine, LLM content analysis, RAG protocol lookup) checking 37 required documents per patient episode against MoH protocols.',
+        result: [
+          { text: '37 automated checks per patient, every night' },
+          { text: '70% reduction in manual review time' },
+        ],
+        figure: 'mandatory documents checked per patient episode, every night',
+        tags: [
+          'Patient Safety',
+          'Compliance Automation',
+          'Clinical AI',
+          'Risk Reduction',
+        ],
+        imageAlt:
+          'Illustration: a brain CT slice next to a night-time checklist of clinical documents, one of them flagged',
+      },
+      aidept: {
+        title: 'AI Dept Platform',
+        category: 'AI & Automation',
+        summary:
+          'A platform for the Lviv Polytechnic AI department that automates workflows, documentation and reporting, deployed on production Kubernetes.',
+        subtitle: 'From design to Kubernetes deployment',
+        goal: 'Cut operational overhead on internal reporting and documentation workflows.',
+        solution:
+          'A Next.js + Spring Boot platform with a custom RAG system, fully deployed on a production Kubernetes cluster.',
+        result: [
+          { text: '45% less time spent on reporting' },
+          { text: '3 workflows automated' },
+        ],
+        tags: [
+          'Ops Efficiency',
+          'Internal Tooling',
+          'Process Automation',
+          'Enterprise Scale',
+        ],
+        imageAlt: 'AI Dept Platform website',
+      },
+      niania: {
+        title: 'Niania24',
+        category: 'Web & Mobile',
+        summary:
+          'A childcare marketplace connecting families with trusted specialists: web and mobile, with real-time booking, reviews and secure payments.',
+        subtitle: 'Universal app for iOS and Android',
+        goal: 'Help families find a vetted babysitter faster.',
+        solution:
+          'Full-parity iOS/Android app with real-time booking, reviews and a dedicated personal-data protection layer.',
+        result: [
+          { text: '1,714 active families' },
+          { text: 'Booking completed in 3 min' },
+        ],
+        tags: [
+          'Marketplace Growth',
+          'Trust & Safety',
+          'Consumer App',
+          'Cross-Platform Reach',
+        ],
+        imageAlt: 'Niania24 platform homepage',
+      },
+      ibd: {
+        title: 'IBD Registry',
+        category: 'MedTech, patient registry',
+        summary:
+          'A centralized registry for inflammatory bowel disease: doctors manage clinical records, patients submit periodic PRO2 self-assessments.',
+        subtitle: 'IBD patient registry for Ukrainian clinics',
+        description:
+          "Centralized registry for inflammatory bowel disease patients. Doctors manage structured clinical records for UC and Crohn's disease, patients submit periodic PRO2 self-assessments scored server-side, with passwordless magic-link auth and role-based routing for DOCTOR / MODERATOR / PATIENT / ADMIN roles. A BFF layer on Next.js API routes proxies requests to a FastAPI backend, hiding tokens from the client.",
+        tags: [
+          'Patient Outcomes',
+          'Regulatory Compliance',
+          'Clinical Data',
+          'Care Coordination',
+        ],
+        imageAlt: 'IBD Registry admin dashboard',
+      },
+      cardio: {
+        title: 'Cardiology Doc Audit',
+        category: 'AI & HealthTech',
+        summary:
+          'Detects discrepancies in cardiology documentation before MoH submission, using NER, ICD-10 normalization and plain-language explanations. Fully on-premise.',
+        subtitle: 'AI error detection in cardiology documentation',
+        description:
+          'Detects discrepancies in patient medical documentation before MoH submission. NER extracts clinical entities, normalizes them to ICD-10 codes, compares related forms per patient and generates plain-language explanations for doctors via LLM. RAG is used only as an explanation layer, not a decision mechanism. Runs fully on-premise against a read-only 5 TB database copy.',
+        figure: 'read-only clinical database, analysed fully on-premise',
+        tags: [
+          'Documentation Accuracy',
+          'Compliance Risk',
+          'Clinical Auditing',
+          'Data Privacy',
+        ],
+        imageAlt: 'Cardiology documentation audit',
+      },
+      qpick: {
+        title: 'QPick',
+        category: 'Robotics, retail automation',
+        summary:
+          "A robotic arm that identifies and picks individual retail products under real shelf conditions, built for Żabka, one of Poland's largest retail chains.",
+        subtitle: 'Robotic product picking for retail fulfilment',
+        goal: 'Teach a robotic arm to reliably identify and pick individual retail products under real shelf conditions, not just in a lab: similar packaging, transparent, reflective or dark materials, and deformable items.',
+        solution:
+          'A system that recognizes individual products, determines where each can be safely gripped, executes a precise pick with a vacuum gripper and keeps improving by learning from both successful and unsuccessful attempts.',
+        result: [
+          {
+            text: "A clear path toward automating repetitive physical retail operations for Żabka, one of Poland's largest convenience retail chains",
+          },
+        ],
+        tags: [
+          'Labor Cost Reduction',
+          'Retail Automation',
+          'Fulfillment Speed',
+          'Scalable Ops',
+        ],
+        imageAlt: 'QPick robotic retail kiosk',
+      },
+      compliance: {
+        title: 'AI Agent for Compliance',
+        category: 'AI & Compliance',
+        summary:
+          'An assistant that answers employee questions from internal documents, respecting role-based access, redacting sensitive data and logging every exchange.',
+        subtitle: 'Internal knowledge assistant with role-based access',
+        goal: 'Let employees get answers already buried in internal documents without digging through files, and without giving everyone access to everything.',
+        solution:
+          'An AI assistant that answers natural-language questions using only documents the employee is allowed to see, strips sensitive personal data where needed, refuses to answer when information is unavailable and logs every exchange for audit.',
+        result: [
+          {
+            text: 'Employees find internal information faster while the company keeps full control over who can access what',
+          },
+        ],
+        tags: [
+          'Employee Productivity',
+          'Compliance Risk',
+          'Knowledge Access',
+          'Data Governance',
+        ],
+        imageAlt: 'AI Agent for Compliance chat interface',
+      },
+      butics: {
+        title: 'Butics',
+        category: 'Retail, mobile POS',
+        summary:
+          'A mobile point of sale for small stores that identifies products by barcode, product code or visual catalogue, with discounts, payments and returns.',
+        subtitle: 'Mobile point of sale for small retail stores',
+        goal: 'Let store employees process sales quickly even when not every product has a barcode, without slowing them down with complicated workflows.',
+        solution:
+          'A mobile POS app that identifies products by camera barcode scan, internal product code or a visual catalogue when no barcode exists, with basket management, discounts, payment and returns.',
+        result: [
+          {
+            text: 'A simpler sales workflow for employees, especially in small stores that cannot always rely on barcodes',
+          },
+        ],
+        tags: [
+          'Faster Checkout',
+          'Retail Efficiency',
+          'Small Business Tools',
+          'Sales Enablement',
+        ],
+        imageAlt: 'Butics mobile POS in use',
+      },
+      nexus: {
+        title: 'Nexus',
+        category: 'Personal CRM, privacy',
+        summary:
+          'A private contact platform where professionals keep their own space, share selectively with teams and never lose control of private data.',
+        subtitle: 'Private contact sharing for professional networks',
+        goal: 'Let people with large professional networks collaborate around shared contacts as a team, without losing control over their private data.',
+        solution:
+          'A contact management platform where each user keeps a private contact space, shares contacts selectively with different access levels, and teams collaborate on what is explicitly shared with them, synced across devices.',
+        result: [
+          {
+            text: 'A professional CRM experience with privacy built into the product rather than added on later',
+          },
+        ],
+        tags: [
+          'Network Monetization',
+          'Privacy-First',
+          'Team Collaboration',
+          'Relationship Management',
+        ],
+        imageAlt: 'Nexus personal CRM interface',
+      },
+      wirebender: {
+        title: 'Wire Bending Machine',
+        category: 'Production equipment, antennas',
+        summary:
+          'A compact automatic machine that bends copper staples for cloverleaf antennas: 1,400 per hour with repeatable geometry, replacing a manual bottleneck.',
+        subtitle: 'Automating precision antenna component manufacturing',
+        goal: 'Replace manual bending of copper staples for cloverleaf antennas. It was a bottleneck with low throughput and dimensional scatter, which made antenna performance inconsistent.',
+        solution:
+          'A compact automatic machine: wire fed from a coil through straightening rollers, a bending mechanism with a programmable bend sequence and automatic cut-off. Aluminium housing, stepper-motor drives and in-house control electronics.',
+        result: [
+          { text: '1,400 staples per hour with repeatable geometry' },
+          {
+            text: 'Manual operation fully replaced; antenna reliability improved',
+          },
+        ],
+        tags: [
+          'Production Automation',
+          'Precision Manufacturing',
+          'Throughput',
+          'Quality Consistency',
+        ],
+        imageAlt: 'Automatic wire bending machine with finished copper staples',
+      },
+      vtol: {
+        title: 'VTOL Aircraft',
+        category: 'Unmanned systems',
+        summary:
+          'A vertical take-off and landing prototype that flies longer and carries more than a drone of similar size, built at low cost from readily available materials.',
+        subtitle: 'An aerial platform for hard-to-reach locations',
+        goal: 'Build a platform that takes off and lands vertically in hard-to-reach places, yet flies longer and carries more than a multicopter of similar size. No runway needed.',
+        solution:
+          'A VTOL prototype from cheap, readily available materials: wing and fuselage from lightweight sheet panels, load-bearing nodes 3D-printed. Tilting motor mounts handle the transition to forward flight, driven by our own control system, with special attention to landing.',
+        result: [
+          { text: 'Flight-ready prototype assembled' },
+          {
+            text: 'Longer flight time and larger payload than a similar drone, at a low build cost',
+          },
+        ],
+        tags: [
+          'Unmanned Systems',
+          'Rapid Prototyping',
+          'Flight Control',
+          'Low-Cost Build',
+        ],
+        imageAlt: 'VTOL aircraft prototype in the workshop',
+      },
+      crsf: {
+        title: 'CRSF Fiber-Optic Converter',
+        category: 'Communications',
+        summary:
+          'A JR-bay module that carries the CRSF control signal over fiber instead of radio: drone control that ignores jamming, plus extra peripheral channels.',
+        subtitle: 'A jamming-resistant drone control link',
+        goal: 'Bridge the CRSF signal from a standard radio transmitter onto a fiber-optic link, so the drone stays controllable under radio jamming, and add channels for on-board peripherals.',
+        solution:
+          'A board in the JR-module form factor that fits the standard transmitter bay: it receives CRSF, converts it for transmission over fiber and generates additional control channels. PCB designed, assembled and tested in-house.',
+        result: [
+          {
+            text: 'Working prototype: transmitter → fiber → drone, no radio link',
+          },
+          {
+            text: 'Extra channels for release mechanisms, lighting and cameras',
+          },
+        ],
+        tags: [
+          'Anti-Jamming',
+          'Embedded Hardware',
+          'PCB Design',
+          'Resilient Comms',
+        ],
+        imageAlt: 'CRSF converter printed circuit board',
+      },
+    },
+    casesPage: {
+      title: 'Case studies',
+      subtitle:
+        'Published software and hardware projects. More work delivered under NDA, details on request.',
+      count: {
+        cases: 'case studies',
+        software: 'software',
+        hardware: 'hardware',
+      },
+      filterLabel: 'Filter case studies',
+      visitLive: 'Visit live',
+      labels: {
+        goal: 'Goal',
+        solution: 'Solution',
+        result: 'Result',
+        stack: 'Built with',
+      },
+    },
+    contactPage: {
+      title: 'Tell us about your project',
+      subtitle:
+        "Share a few details and we'll reply within 24 hours to set up a free 30-minute discovery call.",
+      nextLabel: 'What happens next',
+      next: [
+        'We reply within 24 hours',
+        'A free 30-minute discovery call',
+        'A clear proposal: scope, timeline, estimate',
+      ],
+      directLabel: 'Prefer direct contact?',
       fields: {
         name: 'Name',
         email: 'Email',
         company: 'Company',
         message: 'Message',
+        messagePlaceholder: 'What are you building, and where are you stuck?',
       },
+      optional: 'optional',
       success: {
-        title: 'Thank you!',
-        subtitle: "Your message has been sent. We'll be in touch soon.",
-        backHome: 'Back to Homepage',
+        title: 'Message sent',
+        subtitle: "Thank you. We'll reply within 24 hours.",
+        backHome: 'Back to homepage',
       },
-      submit: 'Send Message',
-      submitting: 'Sending...',
-    },
-    banner: {
-      title: "Let's build something that moves the numbers.",
-      subtitle:
-        "Tell us about your project — we'll tell you honestly if we're the right fit.",
-      cta: 'Contact Us',
+      submit: 'Send message',
+      submitting: 'Sending…',
+      errors: {
+        config:
+          'The contact form is not configured yet. Please email us directly.',
+        generic: 'Something went wrong. Please try again.',
+        network: 'Connection failed. Check your connection and try again.',
+      },
     },
     footer: {
+      tagline: 'Hardware & software development studio',
       description:
-        'A software engineering studio combining strong technical execution with architecture-driven thinking. We build things that work.',
-      copyright: '© 2026 thesis-i. All rights reserved.',
-      quickLinks: 'Quick Links',
+        'A software and hardware engineering studio combining strong technical execution with architecture-driven thinking. We build things that work.',
+      navigate: 'Navigate',
       contact: 'Contact',
-      links: {
-        services: 'Services',
-        portfolio: 'Portfolio',
-        techStack: 'Tech Stack',
-        contact: 'Contact',
-      },
+      copyright: '© 2026 thesis-i. All rights reserved.',
+      location: 'Lviv, Ukraine',
     },
   },
 
   ua: {
     meta: {
-      title: 'thesis-i | Мобільна та бекенд-розробка у Львові',
+      title: 'thesis-i | Розробка hardware та software у Львові',
       description:
-        'thesis-i — студія розробки програмного забезпечення, що спеціалізується на мобільних застосунках та масштабованих бекенд-системах.',
+        'thesis-i створює AI-системи, мобільні та веб-продукти, бекенд-платформи й embedded-hardware: від ідеї та стратегії до дизайну, розробки й запуску.',
     },
     nav: {
       services: 'Послуги',
-      portfolio: 'Портфоліо',
-      techStack: 'Стек',
-      startProject: 'Почати проєкт',
+      work: 'Роботи',
+      process: 'Процес',
+      about: 'Про нас',
+      faq: 'FAQ',
+      menu: 'Меню',
+      close: 'Закрити',
+      skip: 'Перейти до змісту',
+    },
+    common: {
+      bookCall: 'Замовити дзвінок',
+      allCases: 'Усі кейси',
+      all: 'Всі',
+      software: 'Software',
+      hardware: 'Hardware',
+      status: {
+        completed: 'Реалізовано',
+        in_progress: 'В розробці',
+        prototype: 'Прототип',
+      },
+      viewCase: 'Детальніше',
+      backToTop: 'Нагору',
+      theme: {
+        toLight: 'Увімкнути світлу тему',
+        toDark: 'Увімкнути темну тему',
+      },
+      switchLanguage: 'Мова',
     },
     hero: {
-      headline1: ['Масштабуємо', 'Бізнеси'],
-      headline2: ['за допомогою', 'ШІ та Software.'],
+      eyebrow: 'Студія розробки hardware та software',
+      headline: 'Перетворюємо складні задачі на *робочі продукти*',
       subtitle:
-        'Ми беремося за складні, міжгалузеві задачі, від яких відмовляються інші студії, і супроводжуємо проєкт від ідеї до продакшну — щоб результат впливав на ваш дохід, а не лише на роадмап.',
-      cta: { primary: 'Портфоліо', secondary: 'Наші послуги' },
-      stats: [
-        { end: 50, suffix: 'M+', label: 'Користувачів' },
-        { end: 10, suffix: '+', label: 'Продуктів' },
-        { end: 5, suffix: '', label: 'Галузей' },
-      ],
-      readout: {
-        online: 'sys.online',
-        response: 'відповідь < 24г',
-        location: 'львів · remote',
+        'AI-системи, застосунки, платформи й пристрої від однієї команди, від ідеї до запуску.',
+      orbit: {
+        label: 'Проєкти, які ми реалізували',
+        chips: ['AI-системи', 'Hardware', 'Мобайл і веб'],
       },
-      scroll: 'scroll',
+      stats: [
+        {
+          value: 10,
+          suffix: '+',
+          label: 'Продуктів запущено',
+          note: 'Від ідеї до продакшну в різних галузях',
+        },
+        {
+          value: 6,
+          suffix: '',
+          label: 'Галузей',
+          note: 'AI, FinTech, MedTech, IoT, Deep Tech, AgroTech',
+        },
+        {
+          value: 7,
+          suffix: '+',
+          label: 'Років досвіду',
+          note: 'Складні проєкти з високими ставками',
+        },
+        {
+          value: 50,
+          suffix: 'M+',
+          label: 'Користувачів',
+          note: 'У продуктах, які ми запустили',
+        },
+      ],
     },
-    services: {
-      eyebrow: 'Що ми будуємо',
-      title: 'Можливості, що окупають себе.',
+    challenges: {
+      title: 'Впізнали свою *задачу*?',
       description:
-        "П'ять напрямів, і в кожному — одна мета: менше сюрпризів, швидша доставка та софт, який відпрацьовує свою вартість.",
+        'Втомилися від невизначеності, низької якості та нескінченних ітерацій? Ми перетворюємо складне на просте, а ідеї на продукти, що працюють.',
+      proof: 'Де ми це робили',
       items: [
         {
-          title: 'Мобільна та веброзробка',
+          problem: 'Маємо ідею, але не знаємо, як перетворити її на продукт',
+          capability: 'Створення',
+          answer:
+            'Починаємо з discovery: перевіряємо ідею, визначаємо чітку першу версію й доводимо її до запуску.',
+        },
+        {
+          problem: 'Наша платформа більше не витримує зростання',
+          capability: 'Модернізація',
+          answer:
+            'Аудитуємо те, що є, стабілізуємо й переробляємо архітектуру там, де вона гальмує масштаб, без переписування з нуля.',
+        },
+        {
+          problem:
+            'Хочемо використати ШІ, але треба зрозуміти, де він справді дає цінність',
+          capability: 'Прикладний ШІ',
+          answer:
+            'Знаходимо процеси, де ШІ окупається, перевіряємо на реальних даних і впроваджуємо з контролем доступу та журналом аудиту.',
+        },
+        {
+          problem: 'Нашому фізичному продукту потрібен цифровий шар',
+          capability: 'Hardware та software',
+          answer:
+            'Електроніка, прошивка, системи керування та застосунки від однієї команди, тож пристрій і софт працюють як одне ціле.',
+        },
+        {
+          problem: 'Складний ручний процес треба автоматизувати',
+          capability: 'Автоматизація',
+          answer:
+            'Розкладаємо процес на кроки, автоматизуємо рутину програмно або за допомогою машини і залишаємо рішення за людьми.',
+        },
+      ],
+    },
+    services: {
+      title: 'Можливості, що *окупають себе*',
+      description:
+        'Сім напрямів з однією метою: менше сюрпризів, швидша доставка та технології, які відпрацьовують свою вартість.',
+      items: [
+        {
+          area: 'Прикладний ШІ та автоматизація',
+          title: 'Менше рутини завдяки ШІ',
           description:
-            'Один код — усі платформи: iOS, Android і веб без потроєння бюджету й термінів розробки.',
+            'ШІ, що відпрацьовує бюджет: агенти, RAG та аналіз документів, побудовані навколо ваших реальних процесів, з контролем доступу, приховуванням даних і журналом аудиту.',
+          stat: '5+ AI-систем',
+        },
+        {
+          area: 'Мобільна та веброзробка',
+          title: 'Запуск на всіх платформах одразу',
+          description:
+            'Один код для всіх платформ: iOS, Android і веб без потроєння бюджету й термінів розробки.',
           stat: '8+ застосунків',
         },
         {
-          title: 'Бекенд та API-розробка',
+          area: 'Бекенд та API',
+          title: 'Платформи, що витримують зростання',
           description:
-            'Системи, розраховані на ваш найнавантаженіший день, а не лише на демо — щоб зростання не оберталося простоєм.',
+            'Системи, розраховані на ваш найнавантаженіший день, а не лише на демо, щоб зростання не оберталося простоєм.',
           stat: '12+ сервісів',
         },
         {
-          title: 'Хмара та DevOps',
+          area: 'Hardware та embedded',
+          title: 'Пристрої для реальних умов',
           description:
-            'Релізи без нічних авралів. Автоматизовані пайплайни та моніторинг — менше дзвінків о другій ночі, швидші релізи.',
+            'Друковані плати, електроніка керування, механіка та робототехніка. Прототипи, що виходять з лабораторії й працюють у реальному цеху.',
+          stat: '4 hardware-проєкти',
+        },
+        {
+          area: 'Хмара та DevOps',
+          title: 'Релізи без простоїв',
+          description:
+            'Релізи без нічних авралів. Автоматизовані пайплайни та моніторинг: менше дзвінків о другій ночі, швидші релізи.',
           stat: '5+ кластерів',
         },
         {
-          title: 'Архітектура та консалтинг',
+          area: 'Архітектура та консалтинг',
+          title: 'Без дорогих переробок потім',
           description:
-            'Правильні технічні рішення, ухвалені рано — поки їх ще дешево змінити, а не через півроку.',
+            'Правильні технічні рішення, ухвалені рано, поки їх ще дешево змінити, а не через пів року.',
           stat: '3 greenfields',
         },
         {
-          title: 'Боротьба з AI-Slop',
+          area: 'Стабілізація продукту',
+          title: 'Надійний продукт замість збоїв',
           description:
-            'ШІ, який відпрацьовує свій бюджет — моделі, налаштовані під ваш реальний кейс, а не черговий чат-бот для галочки.',
+            'Нестабільний застосунок коштує вам користувачів, часу й доходу. Ми відновлюємо роботу функцій та усуваємо причини технічних збоїв, щоб ваш продукт стабільно працював, задовольняв потреби клієнтів і був готовий до подальшого розвитку.',
           stat: 'Високий ROI',
         },
       ],
     },
-    portfolio: {
-      eyebrow: 'Портфоліо',
-      title: 'Вибрані роботи',
+    work: {
+      title: 'Software та hardware, які ми *запустили*',
       description:
         'Огляд проєктів, реалізованих у різних галузях. Деталі надаються в межах NDA.',
-      tabs: { all: 'Всі', completed: 'Активні', in_progress: 'В розробці' },
-      status: { live: 'Активний', inDev: 'В розробці' },
-      viewCase: 'Переглянути кейс',
-      comingSoon: 'Незабаром',
-      viewAll: 'Всі кейси',
-      cases: [
+      more: 'Інші проєкти',
+    },
+    process: {
+      title: 'Від невизначеності до *робочого продукту*',
+      description:
+        'Надійний партнер на всьому шляху: відповідаємо за результат від першої ідеї до робочого продукту й залишаємося поруч на кожному кроці.',
+      deliverable: 'Результат',
+      steps: [
         {
-          title: 'Extensa AI',
-          category: 'Агентський аутрич',
-          description:
-            "FastAPI-платформа B2B з автономним GoalAgent на базі Claude для безперервного формування, вдосконалення та тестування Ідеальних профілів клієнтів (ICP) на основі зворотного зв'язку та цілей.",
-          imageAlt: 'Extensa AI Dashboard',
-          tags: [
-            'Автоматизація продажів',
-            'Генерація лідів',
-            'Агентний ШІ',
-            'B2B SaaS',
-          ],
+          title: 'Ідея',
+          description: 'Уточнюємо цілі та очікуваний результат',
+          deliverable: 'Цілі, обмеження та метрики успіху',
         },
         {
-          title: 'GMI Doc Verifier',
-          category: 'ШІ та MedTech',
-          description:
-            "AI-асистент нічної перевірки медичної документації для відділень гострого мозкового інсульту. Автоматично верифікує 37 обов'язкових документів епізоду за протоколами МОЗ — через механізм правил, AI-аналіз змісту та RAG-довідник — і формує для лікаря звіт із конкретними рекомендаціями.",
-          imageAlt: 'GMI Doc Verifier дашборд',
-          tags: [
-            'Безпека пацієнтів',
-            'Автоматизація комплаєнсу',
-            'Клінічний ШІ',
-            'Зниження ризиків',
-          ],
+          title: 'Discovery',
+          description: 'Досліджуємо та перевіряємо гіпотези',
+          deliverable: 'Перевірені припущення та карта ризиків',
         },
         {
-          title: 'Niania24',
-          category: 'Веб та мобайл',
-          description:
-            "Платформа для пошуку нянь, що з'єднує сім'ї з перевіреними бебіситтерами. Повностекове веб- та мобільне рішення з онлайн-бронюванням, відгуками та захищеними платежами.",
-          imageAlt: 'Niania24 скріншот платформи',
-          tags: [
-            'Зростання маркетплейсу',
-            'Довіра та безпека',
-            'Споживчий застосунок',
-            'Кросплатформність',
-          ],
+          title: 'Стратегія',
+          description: 'Визначаємо напрям продукту та технологій',
+          deliverable: 'Обсяг робіт, роадмап і оцінка',
         },
         {
-          title: 'AI Department',
-          category: 'ШІ та автоматизація',
-          description:
-            'Внутрішня платформа на основі ШІ для автоматизації робочих процесів відділу, документообігу та звітності — для зменшення операційних витрат та видобування корисних аналітичних даних.',
-          imageAlt: 'AI Department скріншот',
-          tags: [
-            'Операційна ефективність',
-            'Внутрішні інструменти',
-            'Автоматизація процесів',
-            'Корпоративний масштаб',
-          ],
+          title: 'Дизайн',
+          description: 'Створюємо UX і системну архітектуру',
+          deliverable: 'UX-сценарії та архітектура, на яку можна спертися',
         },
         {
-          title: 'ЗЗК Реєстр',
-          category: 'MedTech / Реєстр пацієнтів',
-          description:
-            'Централізований реєстр пацієнтів із запальними захворюваннями кишечника (ВК/ХК) для українських медичних закладів — лікарі ведуть клінічні записи, пацієнти подають самооцінки (PRO2), автентифікація magic link та рольовий доступ.',
-          imageAlt: 'ЗЗК Реєстр',
-          tags: [
-            'Результати лікування',
-            'Регуляторний комплаєнс',
-            'Клінічні дані',
-            'Координація допомоги',
-          ],
+          title: 'Розробка',
+          description: 'Розробляємо та інтегруємо продукт',
+          deliverable: 'Робочий продукт у продакшні та підтримка',
+        },
+      ],
+    },
+    about: {
+      statement:
+        'Ми відповідаємо за результат від першої задачі до готового продукту.',
+      statementMuted:
+        'Без здогадок. Без перекладання проблем на вас. Лише експертиза, щоб зробити правильно і щоб це працювало.',
+      principles: [
+        {
+          title: 'Беремося за складне',
+          text: 'Задачі, що потребують більшого, ніж готове рішення, і від яких відмовляються інші студії.',
         },
         {
-          title: 'Аудит кардіодокументації',
-          category: 'ШІ та MedTech',
-          description:
-            'Система виявлення розбіжностей у медичній документації кардіологічних пацієнтів — NER-екстракція сутностей, нормалізація до МКХ-10, порівняння між документами та формування пояснень лікарю природною мовою через LLM. Повністю on-premise.',
-          imageAlt: 'Аудит кардіологічної документації',
-          tags: [
-            'Точність документації',
-            'Комплаєнс-ризики',
-            'Клінічний аудит',
-            'Приватність даних',
-          ],
+          title: 'Відповідальність від і до',
+          text: 'Від ранньої невизначеності до продакшну ми поруч на всьому шляху.',
         },
         {
-          title: 'QPick',
-          category: 'Робототехніка та рітейл',
-          description:
-            'Роботизована рука, що розпізнає та бере окремі товари в реальних умовах полиці — навіть зі схожим пакуванням, дзеркальними чи темними матеріалами — і постійно вдосконалюється з кожною спробою. Створено для Żabka, однієї з найбільших мереж рітейлу Польщі.',
-          imageAlt: 'Q-Pick роботизований кіоск',
-          tags: [
-            'Скорочення витрат на працю',
-            'Автоматизація рітейлу',
-            'Швидкість фулфілменту',
-            'Масштабовані операції',
-          ],
+          title: 'Досвід у різних галузях',
+          text: 'Схожі задачі в дуже різних секторах дають нам перевірені підходи для вашого.',
         },
         {
-          title: 'AI Agent for Compliance',
-          category: 'ШІ та комплаєнс',
-          description:
-            'AI-асистент, що відповідає на запитання співробітників на основі внутрішніх документів компанії природною мовою — з урахуванням рольового доступу, приховуванням чутливих даних та логуванням кожного обміну для аудиту.',
-          imageAlt: 'AI Agent for Compliance чат-інтерфейс',
-          tags: [
-            'Продуктивність команди',
-            'Комплаєнс-ризики',
-            'Доступ до знань',
-            'Управління даними',
-          ],
-        },
-        {
-          title: 'Butics',
-          category: 'Рітейл / Мобільний POS',
-          description:
-            'Мобільний POS-застосунок для невеликих магазинів, що ідентифікує товари скануванням штрихкоду, внутрішнім кодом або вибором із візуального каталогу — з кошиком, знижками, оплатою та поверненнями.',
-          imageAlt: 'Butics мобільний POS у роботі',
-          tags: [
-            'Швидша каса',
-            'Ефективність рітейлу',
-            'Інструменти для малого бізнесу',
-            'Підтримка продажів',
-          ],
-        },
-        {
-          title: 'Nexus',
-          category: 'Особистий CRM / Приватність',
-          description:
-            'Платформа управління контактами, де фахівці ведуть власний простір контактів, вибірково діляться ними з командою та співпрацюють, не втрачаючи контролю над приватними даними.',
-          imageAlt: 'Nexus інтерфейс особистого CRM',
-          tags: [
-            'Монетизація мережі',
-            'Приватність насамперед',
-            'Командна співпраця',
-            'Управління контактами',
-          ],
+          title: 'Інженерія + бізнес',
+          text: 'Глибока технічна експертиза та бізнес-мислення в кожному рішенні.',
         },
       ],
     },
     techStack: {
-      eyebrow: 'Інструменти ремесла',
       title: 'Технологічний стек',
       description:
         'Перевірені технології, якими ми користуємося для надійних, масштабованих рішень протягом усього продуктового циклу.',
+      groups: ['Продукт', 'Платформа', 'ШІ та hardware'],
+      also: 'Також',
     },
-    casesPage: {
-      eyebrow: 'Вибрані роботи',
-      title: 'Кейс-стаді',
-      subtitle:
-        'Опубліковані кейс-стаді. Більше проєктів реалізовано під NDA — деталі доступні за запитом.',
-      badge: '10 кейсів · 7 активних · 3 в розробці',
-      status: { live: 'Активний', inDev: 'В розробці' },
-      visitLive: 'Відкрити',
-      labels: { goal: 'Ціль', solution: 'Рішення', result: 'Результат' },
-      cta: {
-        title: 'Готові побудувати щось видатне?',
-        subtitle:
-          'Розкажіть про свій проєкт — разом знайдемо найкраще рішення.',
-        button: "Зв'язатися",
-      },
-      cases: [
+    faq: {
+      title: 'Часті запитання',
+      items: [
         {
-          subtitle: 'Агентська B2B-платформа аутричу',
-          goal: 'Автоматизувати побудову й підтримку ICP без ручної роботи SDR-команди.',
-          solution:
-            "Автономний GoalAgent на базі Claude, що формує, уточнює та тестує Ideal Customer Profile на основі цілей онбордингу та зворотного зв'язку.",
-          result: [
-            { text: '30% швидше формування ICP' },
-            { text: '120 оброблених лідів/тиждень' },
-          ],
-          tags: [
-            'Автоматизація продажів',
-            'Генерація лідів',
-            'Агентний ШІ',
-            'B2B SaaS',
-          ],
+          q: 'Що, як я не впевнений у своїй ідеї?',
+          a: 'Все одно напишіть нам. Ми допоможемо дослідити, перевірити та сформувати ідею на етапі discovery.',
         },
         {
-          subtitle: 'AI-аудит клінічної документації',
-          goal: 'Не допустити пропуску обов’язкової документації у відділеннях гострого інсульту.',
-          solution:
-            "Нічний AI-асистент з трирівневим пайплайном (правила, LLM-аналіз, RAG за протоколами МОЗ), що перевіряє 37 обов'язкових документів на епізод пацієнта.",
-          result: [
-            { text: '37 автоматичних перевірок/пацієнта щоночі' },
-            { text: '70% скорочення часу ручної перевірки' },
-          ],
-          tags: [
-            'Безпека пацієнтів',
-            'Автоматизація комплаєнсу',
-            'Клінічний ШІ',
-            'Зниження ризиків',
-          ],
+          q: 'У мене вже є сайт. Чи треба робити все з нуля?',
+          a: 'Ні. Ми підтримуємо й покращуємо наявні сайти незалежно від технологій, на яких їх створено.',
         },
         {
-          subtitle: 'Від дизайну до деплою на Kubernetes',
-          goal: 'Зменшити операційне навантаження на звітність і документообіг відділу.',
-          solution:
-            'Платформа на Next.js + Spring Boot з кастомним RAG, повністю розгорнута на продакшн Kubernetes-кластері.',
-          result: [
-            { text: '45% менше часу на звітність' },
-            { text: '3 автоматизовані процеси' },
-          ],
-          tags: [
-            'Операційна ефективність',
-            'Внутрішні інструменти',
-            'Автоматизація процесів',
-            'Корпоративний масштаб',
-          ],
+          q: 'Чи можете ви працювати з нашою командою розробки?',
+          a: 'Так. Ми можемо приєднатися до вашої команди, закрити конкретні прогалини в експертизі або взяти на себе окремі частини продукту.',
         },
         {
-          subtitle: 'Єдиний застосунок для iOS та Android',
-          goal: 'Скоротити час пошуку перевіреного бебіситтера для сімей.',
-          solution:
-            'Застосунок з повною паритетністю до веб-платформи, бронювання в реальному часі, відгуки, окремий шар захисту персональних даних.',
-          result: [
-            { text: '1 714 активних сімей' },
-            { text: 'бронювання за 3 хв' },
-          ],
-          tags: [
-            'Зростання маркетплейсу',
-            'Довіра та безпека',
-            'Споживчий застосунок',
-            'Кросплатформність',
-          ],
+          q: 'Чи візьмете проєкт, який робила інша компанія?',
+          a: 'Так. Ми розберемося в поточному стані, визначимо ключові проблеми й допоможемо рухатися далі без переписування з нуля.',
         },
         {
-          subtitle: 'Реєстр пацієнтів із ЗЗК для українських клінік',
-          description:
-            'Централізований реєстр пацієнтів із запальними захворюваннями кишечника — лікарі ведуть структуровані клінічні записи для ВК та хвороби Крона, пацієнти подають PRO2-самооцінки з автоматичним розрахунком балів, автентифікація magic link без паролів та рольова маршрутизація (ЛІКАР / МОДЕРАТОР / ПАЦІЄНТ / АДМІН). BFF-шар на Next.js API routes проксує запити до FastAPI бекенду, приховуючи токен від клієнта.',
-          tags: [
-            'Результати лікування',
-            'Регуляторний комплаєнс',
-            'Клінічні дані',
-            'Координація допомоги',
-          ],
+          q: 'Ви працюєте зі стартапами чи лише з великими компаніями?',
+          a: 'З обома. Ми підлаштовуємо підхід під вашу стадію, ресурси та бізнес-цілі.',
         },
         {
-          subtitle: 'AI-виявлення помилок у кардіологічній документації',
-          description:
-            "Виявляє розбіжності в медичній документації кардіологічних пацієнтів до подання в МОЗ — NER-екстракція клінічних сутностей, нормалізація до МКХ-10, порівняння між пов'язаними формами одного пацієнта та формування пояснень лікарю природною мовою через LLM. RAG використовується лише як шар пояснення, а не механізм прийняття рішення. Повністю on-premise на read-only копії бази 5 ТБ.",
-          tags: [
-            'Точність документації',
-            'Комплаєнс-ризики',
-            'Клінічний аудит',
-            'Приватність даних',
-          ],
-        },
-        {
-          subtitle: 'Роботизований підбір товарів для рітейл-фулфілменту',
-          goal: 'Навчити роботизовану руку надійно розпізнавати та брати окремі товари в рітейлі — навіть зі схожим пакуванням, прозорими, дзеркальними чи темними матеріалами та товари, що деформуються — в реальних умовах полиці, а не лише в лабораторії.',
-          solution:
-            'Система, що розпізнає окремі товари, визначає, де їх можна безпечно захопити, виконує точний забір вакуумним захватом і постійно вдосконалюється, навчаючись як на вдалих, так і на невдалих спробах.',
-          result: [
-            {
-              text: 'Чіткий шлях до автоматизації повторюваних фізичних операцій рітейлу для Żabka — однієї з найбільших мереж роздрібної торгівлі Польщі',
-            },
-          ],
-          tags: [
-            'Скорочення витрат на працю',
-            'Автоматизація рітейлу',
-            'Швидкість фулфілменту',
-            'Масштабовані операції',
-          ],
-        },
-        {
-          subtitle: 'AI-асистент бази знань з рольовим доступом',
-          goal: 'Дати співробітникам швидкі відповіді на основі внутрішніх документів компанії без ручного пошуку по файлах — і без надання доступу до всього поспіль.',
-          solution:
-            'AI-асистент, що відповідає на запитання природною мовою, використовуючи лише документи, доступні конкретному співробітнику, приховує чутливі персональні дані, де потрібно, відмовляється відповідати за відсутності інформації та логує кожен обмін для аудиту.',
-          result: [
-            {
-              text: 'Співробітники швидше знаходять внутрішню інформацію, а компанія зберігає повний контроль над тим, хто й до чого має доступ',
-            },
-          ],
-          tags: [
-            'Продуктивність команди',
-            'Комплаєнс-ризики',
-            'Доступ до знань',
-            'Управління даними',
-          ],
-        },
-        {
-          subtitle: 'Мобільний POS для невеликих роздрібних магазинів',
-          goal: 'Дати змогу продавцям швидко оформлювати продажі навіть тоді, коли не кожен товар має штрихкод, без ускладнення робочого процесу.',
-          solution:
-            'Мобільний POS-застосунок, що ідентифікує товари скануванням штрихкоду камерою, внутрішнім кодом товару або вибором із візуального каталогу за відсутності штрихкоду — з підтримкою кошика, знижок, оплати та повернень.',
-          result: [
-            {
-              text: 'Простіший робочий процес продажу для персоналу, особливо в невеликих магазинах, де не можна покладатися лише на штрихкоди',
-            },
-          ],
-          tags: [
-            'Швидша каса',
-            'Ефективність рітейлу',
-            'Інструменти для малого бізнесу',
-            'Підтримка продажів',
-          ],
-        },
-        {
-          subtitle: 'Приватний обмін контактами для професійних мереж',
-          goal: 'Дати людям з великими професійними мережами змогу спільно працювати з контактами командою, не втрачаючи контролю над приватними даними.',
-          solution:
-            'Платформа управління контактами, де кожен користувач має власний приватний простір контактів, може вибірково ділитися контактами з різними рівнями доступу, а команди можуть спільно працювати над явно наданими контактами — синхронізовано між пристроями.',
-          result: [
-            {
-              text: 'CRM-досвід професійного рівня з приватністю, закладеною в продукт, а не доданою згодом',
-            },
-          ],
-          tags: [
-            'Монетизація мережі',
-            'Приватність насамперед',
-            'Командна співпраця',
-            'Управління контактами',
-          ],
+          q: 'Чи робите ви і hardware, і software?',
+          a: 'Так. Ми поєднуємо розробку hardware та software, щоб продукт працював як єдине ціле.',
         },
       ],
     },
-    contactPage: {
-      title: "Зв'яжіться з нами",
+    cta: {
+      title: 'Маєте складну задачу? Перетворимо її на те, що працює.',
       subtitle:
-        'Маєте проєкт? Заповніть форму нижче — ми відповімо якнайшвидше.',
+        'Досі чекаєте слушного моменту? Запишіться на безкоштовний 30-хвилинний дзвінок. Без зобов’язань, просто розмова.',
+      benefitsLabel: 'Що ви отримуєте',
+      benefits: [
+        'Безкоштовний 30-хвилинний дзвінок',
+        'Відповідь протягом 24 годин',
+        'Чесну відповідь, чи підходимо ми вам',
+        'Роботу під NDA',
+        'Одну команду для hardware та software',
+      ],
+      channelsLabel: 'Або напишіть напряму',
+    },
+    cases: {
+      extensa: {
+        title: 'Extensa AI',
+        category: 'Агентний аутрич',
+        summary:
+          'B2B-платформа, де автономний GoalAgent на базі Claude формує, уточнює й тестує профілі ідеальних клієнтів на основі цілей і зворотного зв’язку.',
+        subtitle: 'Агентна B2B-платформа аутричу',
+        goal: 'Автоматизувати побудову й підтримку ICP без ручної роботи SDR-команди.',
+        solution:
+          'Автономний GoalAgent на базі Claude, що формує, уточнює та тестує Ideal Customer Profile на основі цілей онбордингу та зворотного зв’язку.',
+        result: [
+          { text: '30% швидше формування ICP' },
+          { text: '120 оброблених лідів на тиждень' },
+        ],
+        tags: [
+          'Автоматизація продажів',
+          'Генерація лідів',
+          'Агентний ШІ',
+          'B2B SaaS',
+        ],
+        imageAlt: 'Дашборд аутричу Extensa AI',
+      },
+      gmi: {
+        title: 'GMI Doc Verifier',
+        category: 'ШІ та MedTech',
+        summary:
+          'Нічний AI-асистент для відділень гострого інсульту, що перевіряє 37 обов’язкових документів на епізод пацієнта за протоколами МОЗ.',
+        subtitle: 'AI-аудит клінічної документації',
+        goal: 'Не допустити пропуску обов’язкової документації у відділеннях гострого інсульту.',
+        solution:
+          'Нічний AI-асистент із трирівневим пайплайном (правила, LLM-аналіз, RAG за протоколами МОЗ), що перевіряє 37 обов’язкових документів на епізод пацієнта.',
+        result: [
+          { text: '37 автоматичних перевірок на пацієнта щоночі' },
+          { text: '70% скорочення часу ручної перевірки' },
+        ],
+        figure:
+          'обов’язкових документів перевіряється на епізод пацієнта щоночі',
+        tags: [
+          'Безпека пацієнтів',
+          'Автоматизація комплаєнсу',
+          'Клінічний ШІ',
+          'Зниження ризиків',
+        ],
+        imageAlt:
+          'Ілюстрація: КТ-зріз мозку поруч із нічним чеклістом клінічних документів, один із них позначено',
+      },
+      aidept: {
+        title: 'AI Dept Platform',
+        category: 'ШІ та автоматизація',
+        summary:
+          'Платформа кафедри ШІ Львівської політехніки, що автоматизує процеси, документообіг і звітність. Розгорнута на продакшн Kubernetes.',
+        subtitle: 'Від дизайну до деплою на Kubernetes',
+        goal: 'Зменшити операційне навантаження на звітність і документообіг.',
+        solution:
+          'Платформа на Next.js + Spring Boot з кастомним RAG, повністю розгорнута на продакшн Kubernetes-кластері.',
+        result: [
+          { text: '45% менше часу на звітність' },
+          { text: '3 автоматизовані процеси' },
+        ],
+        tags: [
+          'Операційна ефективність',
+          'Внутрішні інструменти',
+          'Автоматизація процесів',
+          'Корпоративний масштаб',
+        ],
+        imageAlt: 'Сайт AI Dept Platform',
+      },
+      niania: {
+        title: 'Niania24',
+        category: 'Веб та мобайл',
+        summary:
+          'Маркетплейс, що з’єднує сім’ї з перевіреними фахівцями з догляду за дітьми: веб і мобайл з онлайн-бронюванням, відгуками й захищеними платежами.',
+        subtitle: 'Єдиний застосунок для iOS та Android',
+        goal: 'Скоротити час пошуку перевіреного бебіситтера для сімей.',
+        solution:
+          'Застосунок із повною паритетністю до веб-платформи, бронювання в реальному часі, відгуки та окремий шар захисту персональних даних.',
+        result: [
+          { text: '1 714 активних сімей' },
+          { text: 'Бронювання за 3 хв' },
+        ],
+        tags: [
+          'Зростання маркетплейсу',
+          'Довіра та безпека',
+          'Споживчий застосунок',
+          'Кросплатформність',
+        ],
+        imageAlt: 'Головна сторінка платформи Niania24',
+      },
+      ibd: {
+        title: 'ЗЗК Реєстр',
+        category: 'MedTech, реєстр пацієнтів',
+        summary:
+          'Централізований реєстр пацієнтів із запальними захворюваннями кишечника: лікарі ведуть записи, пацієнти подають PRO2-самооцінки.',
+        subtitle: 'Реєстр пацієнтів із ЗЗК для українських клінік',
+        description:
+          'Централізований реєстр пацієнтів із запальними захворюваннями кишечника. Лікарі ведуть структуровані клінічні записи для ВК та хвороби Крона, пацієнти подають PRO2-самооцінки з автоматичним розрахунком балів, автентифікація magic link без паролів і рольова маршрутизація (ЛІКАР / МОДЕРАТОР / ПАЦІЄНТ / АДМІН). BFF-шар на Next.js API routes проксує запити до FastAPI-бекенду, приховуючи токен від клієнта.',
+        tags: [
+          'Результати лікування',
+          'Регуляторний комплаєнс',
+          'Клінічні дані',
+          'Координація допомоги',
+        ],
+        imageAlt: 'Адмін-панель ЗЗК Реєстру',
+      },
+      cardio: {
+        title: 'Аудит кардіодокументації',
+        category: 'ШІ та MedTech',
+        summary:
+          'Виявляє розбіжності в кардіологічній документації до подання в МОЗ: NER, нормалізація до МКХ-10 і пояснення природною мовою. Повністю on-premise.',
+        subtitle: 'AI-виявлення помилок у кардіологічній документації',
+        description:
+          'Виявляє розбіжності в медичній документації кардіологічних пацієнтів до подання в МОЗ. NER-екстракція клінічних сутностей, нормалізація до МКХ-10, порівняння пов’язаних форм одного пацієнта й пояснення лікарю природною мовою через LLM. RAG лише пояснює, а не ухвалює рішення. Працює повністю on-premise на read-only копії бази 5 ТБ.',
+        figure: 'клінічна база лише для читання, аналіз повністю on-premise',
+        tags: [
+          'Точність документації',
+          'Комплаєнс-ризики',
+          'Клінічний аудит',
+          'Приватність даних',
+        ],
+        imageAlt: 'Аудит кардіологічної документації',
+      },
+      qpick: {
+        title: 'QPick',
+        category: 'Робототехніка, рітейл',
+        summary:
+          'Роботизована рука, що розпізнає та бере окремі товари в реальних умовах полиці. Створено для Żabka, однієї з найбільших мереж рітейлу Польщі.',
+        subtitle: 'Роботизований підбір товарів для рітейл-фулфілменту',
+        goal: 'Навчити роботизовану руку надійно розпізнавати й брати окремі товари в реальних умовах полиці, а не лише в лабораторії: схоже пакування, прозорі, дзеркальні чи темні матеріали, товари, що деформуються.',
+        solution:
+          'Система, що розпізнає окремі товари, визначає, де їх можна безпечно захопити, виконує точний забір вакуумним захватом і постійно вдосконалюється, навчаючись як на вдалих, так і на невдалих спробах.',
+        result: [
+          {
+            text: 'Чіткий шлях до автоматизації повторюваних фізичних операцій рітейлу для Żabka, однієї з найбільших мереж роздрібної торгівлі Польщі',
+          },
+        ],
+        tags: [
+          'Скорочення витрат на працю',
+          'Автоматизація рітейлу',
+          'Швидкість фулфілменту',
+          'Масштабовані операції',
+        ],
+        imageAlt: 'Роботизований рітейл-кіоск QPick',
+      },
+      compliance: {
+        title: 'AI Agent for Compliance',
+        category: 'ШІ та комплаєнс',
+        summary:
+          'Асистент, що відповідає на запитання співробітників за внутрішніми документами, з рольовим доступом, приховуванням чутливих даних і логуванням.',
+        subtitle: 'AI-асистент бази знань з рольовим доступом',
+        goal: 'Дати співробітникам швидкі відповіді за внутрішніми документами без ручного пошуку по файлах і без доступу до всього поспіль.',
+        solution:
+          'AI-асистент, що відповідає природною мовою лише за документами, доступними конкретному співробітнику, приховує чутливі персональні дані, відмовляється відповідати за відсутності інформації та логує кожен обмін для аудиту.',
+        result: [
+          {
+            text: 'Співробітники швидше знаходять внутрішню інформацію, а компанія зберігає повний контроль над тим, хто й до чого має доступ',
+          },
+        ],
+        tags: [
+          'Продуктивність команди',
+          'Комплаєнс-ризики',
+          'Доступ до знань',
+          'Управління даними',
+        ],
+        imageAlt: 'Чат-інтерфейс AI Agent for Compliance',
+      },
+      butics: {
+        title: 'Butics',
+        category: 'Рітейл, мобільний POS',
+        summary:
+          'Мобільна каса для невеликих магазинів: товар за штрихкодом, кодом або з візуального каталогу, зі знижками, оплатою та поверненнями.',
+        subtitle: 'Мобільний POS для невеликих магазинів',
+        goal: 'Дати продавцям змогу швидко оформлювати продажі, навіть коли не кожен товар має штрихкод, без ускладнення робочого процесу.',
+        solution:
+          'Мобільний POS-застосунок, що ідентифікує товари скануванням штрихкоду камерою, внутрішнім кодом або вибором із візуального каталогу, з кошиком, знижками, оплатою та поверненнями.',
+        result: [
+          {
+            text: 'Простіший процес продажу для персоналу, особливо в невеликих магазинах, де не можна покладатися лише на штрихкоди',
+          },
+        ],
+        tags: [
+          'Швидша каса',
+          'Ефективність рітейлу',
+          'Інструменти для малого бізнесу',
+          'Підтримка продажів',
+        ],
+        imageAlt: 'Мобільний POS Butics у роботі',
+      },
+      nexus: {
+        title: 'Nexus',
+        category: 'Особистий CRM, приватність',
+        summary:
+          'Платформа контактів, де фахівці мають власний простір, вибірково діляться з командою й не втрачають контролю над приватними даними.',
+        subtitle: 'Приватний обмін контактами для професійних мереж',
+        goal: 'Дати людям із великими професійними мережами змогу працювати з контактами командою, не втрачаючи контролю над приватними даними.',
+        solution:
+          'Платформа управління контактами, де кожен має приватний простір, вибірково ділиться контактами з різними рівнями доступу, а команди працюють над явно наданими контактами із синхронізацією між пристроями.',
+        result: [
+          {
+            text: 'CRM професійного рівня з приватністю, закладеною в продукт, а не доданою згодом',
+          },
+        ],
+        tags: [
+          'Монетизація мережі',
+          'Приватність насамперед',
+          'Командна співпраця',
+          'Управління контактами',
+        ],
+        imageAlt: 'Інтерфейс особистого CRM Nexus',
+      },
+      wirebender: {
+        title: 'Верстат для гнуття дроту',
+        category: 'Виробниче обладнання, антени',
+        summary:
+          'Компактний автоматичний верстат, що гне мідні скоби для антен «клеверліф»: 1 400 на годину зі стабільною геометрією замість ручної роботи.',
+        subtitle: 'Автоматизація виробництва точних компонентів антен',
+        goal: 'Замінити ручне гнуття мідних скоб для антен «клеверліф». Це було вузьке місце з низькою продуктивністю та розкидом розмірів, через яке характеристики антен були нестабільними.',
+        solution:
+          'Компактний автоматичний верстат: подача дроту з котушки через рихтувальні ролики, механізм гнуття з програмованою послідовністю та автоматичне відрізання готової скоби. Алюмінієвий корпус, крокові двигуни, власна електроніка керування.',
+        result: [
+          { text: '1 400 скоб на годину зі стабільною геометрією' },
+          { text: 'Ручну операцію повністю замінено, надійність антен зросла' },
+        ],
+        tags: [
+          'Автоматизація виробництва',
+          'Точне виготовлення',
+          'Продуктивність',
+          'Стабільна якість',
+        ],
+        imageAlt:
+          'Автоматичний верстат для гнуття дроту з готовими мідними скобами',
+      },
+      vtol: {
+        title: 'Літак VTOL',
+        category: 'Безпілотні системи',
+        summary:
+          'Прототип із вертикальним злетом і посадкою, що летить довше й несе більше, ніж дрон схожого розміру. Недорого, з доступних матеріалів.',
+        subtitle: 'Повітряна платформа для важкодоступних місць',
+        goal: 'Створити платформу, яка злітає й сідає вертикально у важкодоступних місцях, але летить довше й несе більше, ніж мультикоптер схожого розміру. Без злітної смуги.',
+        solution:
+          'Прототип VTOL із дешевих доступних матеріалів: крило та фюзеляж з легких листових панелей, силові вузли надруковані на 3D-принтері. Поворотні кріплення моторів забезпечують перехід до горизонтального польоту під керуванням нашої системи; окрему увагу приділили посадці.',
+        result: [
+          { text: 'Зібрано прототип, готовий до польотів' },
+          {
+            text: 'Довший політ і більше корисне навантаження, ніж у схожого дрона, за низької вартості',
+          },
+        ],
+        tags: [
+          'Безпілотні системи',
+          'Швидке прототипування',
+          'Керування польотом',
+          'Низька собівартість',
+        ],
+        imageAlt: 'Прототип літака VTOL у майстерні',
+      },
+      crsf: {
+        title: 'CRSF-конвертер для оптоволокна',
+        category: 'Зв’язок',
+        summary:
+          'Модуль у форм-факторі JR, що передає сигнал керування CRSF оптоволокном замість радіо: керування дроном, стійке до РЕБ, і додаткові канали.',
+        subtitle: 'Стійка до завад лінія керування дроном',
+        goal: 'Перенести сигнал CRSF зі стандартного пульта на оптоволоконну лінію, щоб дрон залишався керованим під радіозавадами, і додати канали для бортової периферії.',
+        solution:
+          'Плата у форм-факторі JR-модуля для штатного відсіку пульта: приймає CRSF, конвертує його для передачі оптоволокном і формує додаткові канали керування. Плату спроєктовано, зібрано й протестовано власними силами.',
+        result: [
+          {
+            text: 'Робочий прототип: пульт → оптоволокно → дрон без радіоканалу',
+          },
+          { text: 'Додаткові канали для скидів, освітлення та камер' },
+        ],
+        tags: [
+          'Стійкість до РЕБ',
+          'Embedded hardware',
+          'Проєктування плат',
+          'Надійний зв’язок',
+        ],
+        imageAlt: 'Друкована плата CRSF-конвертера',
+      },
+    },
+    casesPage: {
+      title: 'Кейс-стаді',
+      subtitle:
+        'Опубліковані software- та hardware-проєкти. Більше робіт реалізовано під NDA, деталі за запитом.',
+      count: { cases: 'кейсів', software: 'software', hardware: 'hardware' },
+      filterLabel: 'Фільтр кейсів',
+      visitLive: 'Відкрити',
+      labels: {
+        goal: 'Ціль',
+        solution: 'Рішення',
+        result: 'Результат',
+        stack: 'Технології',
+      },
+    },
+    contactPage: {
+      title: 'Розкажіть про свій проєкт',
+      subtitle:
+        'Кілька деталей, і ми відповімо протягом 24 годин, щоб домовитися про безкоштовний 30-хвилинний дзвінок.',
+      nextLabel: 'Що далі',
+      next: [
+        'Відповідаємо протягом 24 годин',
+        'Безкоштовний 30-хвилинний дзвінок',
+        'Зрозуміла пропозиція: обсяг, терміни, оцінка',
+      ],
+      directLabel: 'Зручніше напряму?',
       fields: {
-        name: "Ім'я",
+        name: 'Ім’я',
         email: 'Email',
         company: 'Компанія',
         message: 'Повідомлення',
+        messagePlaceholder: 'Що ви створюєте і де застрягли?',
       },
+      optional: 'необов’язково',
       success: {
-        title: 'Дякуємо!',
-        subtitle:
-          "Ваше повідомлення надіслано. Ми незабаром зв'яжемося з вами.",
+        title: 'Повідомлення надіслано',
+        subtitle: 'Дякуємо. Ми відповімо протягом 24 годин.',
         backHome: 'На головну',
       },
       submit: 'Надіслати',
-      submitting: 'Надсилається...',
-    },
-    banner: {
-      title: 'Давайте побудуємо те, що вплине на цифри.',
-      subtitle:
-        'Розкажіть про свій проєкт — чесно скажемо, чи підходимо один одному.',
-      cta: "Зв'язатися",
-    },
-    footer: {
-      description:
-        'Студія програмної інженерії, що поєднує сильне технічне виконання з архітектурно-орієнтованим мисленням. Ми будуємо те, що працює.',
-      copyright: '© 2026 thesis-i. Всі права захищені.',
-      quickLinks: 'Посилання',
-      contact: 'Контакти',
-      links: {
-        services: 'Послуги',
-        portfolio: 'Портфоліо',
-        techStack: 'Стек',
-        contact: 'Контакти',
+      submitting: 'Надсилаємо…',
+      errors: {
+        config: 'Форма ще не налаштована. Напишіть нам на пошту.',
+        generic: 'Щось пішло не так. Спробуйте ще раз.',
+        network: 'Немає з’єднання. Перевірте інтернет і спробуйте ще раз.',
       },
     },
+    footer: {
+      tagline: 'Студія розробки hardware та software',
+      description:
+        'Студія програмної та апаратної інженерії, що поєднує сильне технічне виконання з архітектурним мисленням. Ми будуємо те, що працює.',
+      navigate: 'Навігація',
+      contact: 'Контакти',
+      copyright: '© 2026 thesis-i. Всі права захищені.',
+      location: 'Львів, Україна',
+    },
   },
+  es,
 };

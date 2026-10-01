@@ -1,7 +1,13 @@
 export const AppConfig = {
   site_name: 'thesis-i',
-  title: 'thesis-i | Expert Mobile & Backend Solutions in Lviv', // Більше ключових слів
+  site_url: 'https://thesis-i.com',
+  title: 'thesis-i | Hardware & Software Development Studio in Lviv',
   description:
-    'thesis-i is a software development studio specializing in high-performance mobile apps and scalable backend systems.',
+    'thesis-i is a hardware and software development studio from Lviv: AI systems, mobile and web products, backend platforms and embedded hardware, from idea to launch.',
   locale: 'en',
+  contact: {
+    email: 'yorza@thesis-i.com',
+    linkedin: 'https://www.linkedin.com/company/thesis-i',
+    telegram: 'https://t.me/vu_boru',
+  },
 };
