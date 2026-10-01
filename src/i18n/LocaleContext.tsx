@@ -23,9 +23,18 @@ const useT = (): Translations => {
   return translations[locale];
 };
 
-/** Path prefix for internal links: '' for English, '/ua' for Ukrainian. */
-const localeBase = (locale: Locale) => (locale === 'ua' ? '/ua' : '');
+/** Every locale with its switcher label and its BCP 47 and Open Graph tags,
+ * in the order the language switcher shows them. */
+const LOCALES: { id: Locale; label: string; hrefLang: string; og: string }[] = [
+  { id: 'en', label: 'EN', hrefLang: 'en', og: 'en_US' },
+  { id: 'ua', label: 'UA', hrefLang: 'uk', og: 'uk_UA' },
+  { id: 'es', label: 'ES', hrefLang: 'es', og: 'es_ES' },
+];
+
+/** Path prefix for internal links: '' for English (canonical root URLs),
+ * '/ua' and '/es' for the others. */
+const localeBase = (locale: Locale) => (locale === 'en' ? '' : `/${locale}`);
 
 const useBase = (): string => localeBase(useContext(LocaleContext));
 
-export { localeBase, LocaleProvider, useBase, useLocale, useT };
+export { localeBase, LocaleProvider, LOCALES, useBase, useLocale, useT };

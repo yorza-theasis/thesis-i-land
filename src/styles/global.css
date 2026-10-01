@@ -46,11 +46,12 @@
     scroll-padding-top: 6rem;
   }
 
-  /* Everything is rem-based, so large 3K/4K screens scale up together
-     instead of leaving a small column in the middle. */
+  /* Everything is rem-based. Past 1440px the root size tracks the viewport,
+     so wide screens and zoomed-out windows keep the 1440 composition
+     instead of leaving a small island in the middle. The floor is the
+     reader's own default size, the ceiling 1.5x of it (reached at 2160px). */
   html {
-    /* 16px up to a 1440px viewport, then grows linearly to 20px at 2560px. */
-    font-size: clamp(16px, 0.357vw + 10.86px, 20px);
+    font-size: clamp(100%, 1.1111vw, 150%);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -121,18 +122,36 @@
   background-size: 240px 240px;
 }
 
-/* ─── Hero orbit: rings rotate, node content counter-rotates to stay
-   upright. Transform-only, paused on hover so nodes stay clickable. ──── */
+/* ─── Hero orbit ────────────────────────────────────────
+   Two rings turn in opposite directions (their radii keep nodes apart),
+   node content counter-rotates to stay upright, light sweeps run along
+   the rings and signals travel from the studio out to each project.
+   Transform, opacity and dash offsets only. Rings pause on hover. ──── */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 @keyframes spin-reverse {
   to { transform: rotate(-360deg); }
 }
-.orbit-cw { animation: spin 140s linear infinite; }
-.orbit-ccw { animation: spin-reverse 180s linear infinite; }
-.orbit-cw .orbit-upright { animation: spin-reverse 140s linear infinite; }
-.orbit-ccw .orbit-upright { animation: spin 180s linear infinite; }
+@keyframes orbit-drift {
+  0% { transform: rotateX(7deg) rotateY(-6deg); }
+  50% { transform: rotateX(-4deg) rotateY(3deg); }
+  100% { transform: rotateX(3deg) rotateY(7deg); }
+}
+@keyframes orbit-signal {
+  0% { stroke-dashoffset: 10; opacity: 0; }
+  8% { opacity: 1; }
+  52% { opacity: 1; }
+  60%, 100% { stroke-dashoffset: -100; opacity: 0; }
+}
+
+.orbit-3d { transform-style: preserve-3d; }
+.orbit-drift { animation: orbit-drift 18s ease-in-out infinite alternate; }
+
+.orbit-cw { animation: spin 90s linear infinite; }
+.orbit-ccw { animation: spin-reverse 120s linear infinite; }
+.orbit-cw .orbit-upright { animation: spin-reverse 90s linear infinite; }
+.orbit-ccw .orbit-upright { animation: spin 120s linear infinite; }
 .orbit:hover .orbit-cw,
 .orbit:hover .orbit-ccw,
 .orbit:hover .orbit-upright,
@@ -140,6 +159,50 @@
 .orbit:focus-within .orbit-ccw,
 .orbit:focus-within .orbit-upright {
   animation-play-state: paused;
+}
+
+/* Small orbits leave no room for wide chips to pass the inner photos, so
+   on phones both rings turn together. */
+@media (max-width: 639px) {
+  .orbit-ccw { animation: spin 90s linear infinite; }
+  .orbit-ccw .orbit-upright { animation: spin-reverse 90s linear infinite; }
+}
+
+/* A short bright arc with a fading tail, masked down to the ring line.
+   The head leads in the direction the sweep turns. */
+.orbit-sweep {
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 1.5px),
+    #000 calc(100% - 1px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 1.5px),
+    #000 calc(100% - 1px)
+  );
+}
+.orbit-sweep-cw {
+  background: conic-gradient(
+    transparent 0 72%,
+    rgb(var(--signal) / 0.6) 99.5%,
+    transparent 0
+  );
+  animation: spin 11s linear infinite;
+}
+.orbit-sweep-ccw {
+  background: conic-gradient(
+    transparent 0.5%,
+    rgb(var(--signal) / 0.5) 0.5%,
+    transparent 24%
+  );
+  animation: spin-reverse 15s linear infinite;
+}
+
+.orbit-signal {
+  stroke-dasharray: 10 100;
+  animation: orbit-signal 6s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  animation-delay: var(--signal-delay, 0s);
 }
 
 @media (prefers-reduced-motion: reduce) {

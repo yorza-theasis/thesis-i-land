@@ -60,8 +60,8 @@ const Base = ({ locale = 'en' }: { locale?: Locale }) => {
       <Challenges />
       <Process />
       <Services />
-      <Work />
       <About />
+      <Work />
       <Faq />
       <TechStack />
       <Cta />

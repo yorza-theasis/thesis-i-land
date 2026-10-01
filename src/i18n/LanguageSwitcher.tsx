@@ -1,14 +1,8 @@
 import Link from 'next/link';
 
-import { localeBase, useLocale, useT } from './LocaleContext';
-import type { Locale } from './translations';
+import { localeBase, LOCALES, useLocale, useT } from './LocaleContext';
 
-const LOCALES: { id: Locale; label: string; hrefLang: string }[] = [
-  { id: 'en', label: 'EN', hrefLang: 'en' },
-  { id: 'ua', label: 'UA', hrefLang: 'uk' },
-];
-
-/* Segmented EN / UA control. `subPath` keeps the visitor on the same page
+/* Segmented EN / UA / ES control. `subPath` keeps the visitor on the same page
  * (e.g. "cases/") when switching language. */
 const LanguageSwitcher = ({ subPath = '' }: { subPath?: string }) => {
   const locale = useLocale();

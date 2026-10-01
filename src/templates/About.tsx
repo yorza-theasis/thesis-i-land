@@ -7,7 +7,7 @@ const About = () => {
   const { about } = useT();
 
   return (
-    <Section id="about" tone="alt">
+    <Section id="about">
       <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-6">
           <Reveal>

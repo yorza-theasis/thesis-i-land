@@ -1,6 +1,7 @@
 import type { CaseId } from '../data/cases';
+import { es } from './es';
 
-export type Locale = 'en' | 'ua';
+export type Locale = 'en' | 'ua' | 'es';
 
 type Stat = { value: number; suffix: string; label: string; note: string };
 
@@ -48,6 +49,7 @@ export type Translations = {
     viewCase: string;
     backToTop: string;
     theme: { toLight: string; toDark: string };
+    /** Accessible name for the language switcher. */
     switchLanguage: string;
   };
   hero: {
@@ -67,7 +69,9 @@ export type Translations = {
   services: {
     title: string;
     description: string;
-    items: { title: string; description: string; stat: string }[];
+    /** `title` names the business outcome; `area` is the capability
+     * behind it, shown as a small label and in the navbar menu. */
+    items: { area: string; title: string; description: string; stat: string }[];
   };
   work: { title: string; description: string; more: string };
   process: {
@@ -167,7 +171,7 @@ export const translations: Record<Locale, Translations> = {
         toLight: 'Switch to light theme',
         toDark: 'Switch to dark theme',
       },
-      switchLanguage: 'Українська версія',
+      switchLanguage: 'Language',
     },
     hero: {
       eyebrow: 'Hardware & software development studio',
@@ -251,43 +255,50 @@ export const translations: Record<Locale, Translations> = {
         'Seven capability areas pointed at one goal: fewer surprises, faster delivery and technology that earns its keep.',
       items: [
         {
-          title: 'Applied AI & automation',
+          area: 'Applied AI & automation',
+          title: 'Automate routine work with AI',
           description:
             'AI that earns its budget line: agents, RAG and document analysis built around your real workflows, with access control, redaction and audit trails.',
           stat: '5+ AI systems',
         },
         {
-          title: 'Mobile & web development',
+          area: 'Mobile & web development',
+          title: 'Launch on every platform at once',
           description:
             'One codebase, every platform, so you ship to iOS, Android and web without tripling your dev budget or your timeline.',
           stat: '8+ apps',
         },
         {
-          title: 'Backend & API development',
+          area: 'Backend & APIs',
+          title: 'Platforms that scale with demand',
           description:
             'Systems built to handle your busiest day, not just your demo day, so growth never turns into downtime.',
           stat: '12+ services',
         },
         {
-          title: 'Hardware & embedded',
+          area: 'Hardware & embedded',
+          title: 'Devices built for the real world',
           description:
             'PCBs, control electronics, mechanics and robotics. Prototypes that leave the lab and hold up on a real shop floor.',
           stat: '4 hardware builds',
         },
         {
-          title: 'Cloud & DevOps',
+          area: 'Cloud & DevOps',
+          title: 'Releases without downtime',
           description:
             "Deploys that don't need a war room. Automated pipelines and monitoring mean fewer 2am pages and faster releases.",
           stat: '5+ clusters',
         },
         {
-          title: 'Architecture & consulting',
+          area: 'Architecture & consulting',
+          title: 'Avoid costly rewrites later',
           description:
             'The right technical decisions made early, before they become expensive to undo six months in.',
           stat: '3 greenfields',
         },
         {
-          title: 'Product stabilization',
+          area: 'Product stabilization',
+          title: 'Make your product reliable again',
           description:
             'An unstable app costs you users, time, and revenue. We restore broken functionality and eliminate the root causes of technical failures, so your product runs reliably, serves your customers, and is ready to grow.',
           stat: 'High ROI',
@@ -444,7 +455,8 @@ export const translations: Record<Locale, Translations> = {
           'Clinical AI',
           'Risk Reduction',
         ],
-        imageAlt: 'GMI Doc Verifier',
+        imageAlt:
+          'Illustration: a brain CT slice next to a night-time checklist of clinical documents, one of them flagged',
       },
       aidept: {
         title: 'AI Dept Platform',
@@ -776,7 +788,7 @@ export const translations: Record<Locale, Translations> = {
         toLight: 'Увімкнути світлу тему',
         toDark: 'Увімкнути темну тему',
       },
-      switchLanguage: 'English version',
+      switchLanguage: 'Мова',
     },
     hero: {
       eyebrow: 'Студія розробки hardware та software',
@@ -859,43 +871,50 @@ export const translations: Record<Locale, Translations> = {
         'Сім напрямів з однією метою: менше сюрпризів, швидша доставка та технології, які відпрацьовують свою вартість.',
       items: [
         {
-          title: 'Прикладний ШІ та автоматизація',
+          area: 'Прикладний ШІ та автоматизація',
+          title: 'Менше рутини завдяки ШІ',
           description:
             'ШІ, що відпрацьовує бюджет: агенти, RAG та аналіз документів, побудовані навколо ваших реальних процесів, з контролем доступу, приховуванням даних і журналом аудиту.',
           stat: '5+ AI-систем',
         },
         {
-          title: 'Мобільна та веброзробка',
+          area: 'Мобільна та веброзробка',
+          title: 'Запуск на всіх платформах одразу',
           description:
             'Один код для всіх платформ: iOS, Android і веб без потроєння бюджету й термінів розробки.',
           stat: '8+ застосунків',
         },
         {
-          title: 'Бекенд та API-розробка',
+          area: 'Бекенд та API',
+          title: 'Платформи, що витримують зростання',
           description:
             'Системи, розраховані на ваш найнавантаженіший день, а не лише на демо, щоб зростання не оберталося простоєм.',
           stat: '12+ сервісів',
         },
         {
-          title: 'Hardware та embedded',
+          area: 'Hardware та embedded',
+          title: 'Пристрої для реальних умов',
           description:
             'Друковані плати, електроніка керування, механіка та робототехніка. Прототипи, що виходять з лабораторії й працюють у реальному цеху.',
           stat: '4 hardware-проєкти',
         },
         {
-          title: 'Хмара та DevOps',
+          area: 'Хмара та DevOps',
+          title: 'Релізи без простоїв',
           description:
             'Релізи без нічних авралів. Автоматизовані пайплайни та моніторинг: менше дзвінків о другій ночі, швидші релізи.',
           stat: '5+ кластерів',
         },
         {
-          title: 'Архітектура та консалтинг',
+          area: 'Архітектура та консалтинг',
+          title: 'Без дорогих переробок потім',
           description:
             'Правильні технічні рішення, ухвалені рано, поки їх ще дешево змінити, а не через пів року.',
           stat: '3 greenfields',
         },
         {
-          title: 'Стабілізація продукту',
+          area: 'Стабілізація продукту',
+          title: 'Надійний продукт замість збоїв',
           description:
             'Нестабільний застосунок коштує вам користувачів, часу й доходу. Ми відновлюємо роботу функцій та усуваємо причини технічних збоїв, щоб ваш продукт стабільно працював, задовольняв потреби клієнтів і був готовий до подальшого розвитку.',
           stat: 'Високий ROI',
@@ -1058,7 +1077,8 @@ export const translations: Record<Locale, Translations> = {
           'Клінічний ШІ',
           'Зниження ризиків',
         ],
-        imageAlt: 'GMI Doc Verifier',
+        imageAlt:
+          'Ілюстрація: КТ-зріз мозку поруч із нічним чеклістом клінічних документів, один із них позначено',
       },
       aidept: {
         title: 'AI Dept Platform',
@@ -1348,4 +1368,5 @@ export const translations: Record<Locale, Translations> = {
       location: 'Львів, Україна',
     },
   },
+  es,
 };

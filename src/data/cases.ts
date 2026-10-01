@@ -58,10 +58,11 @@ export const CASES: CaseMeta[] = [
     num: '02',
     type: 'software',
     status: 'in_progress',
+    // Illustration: the real output is a confidential clinical report.
     media: {
-      kind: 'diptych',
-      src: ['/assets/images/gmi-doc-1.jpg', '/assets/images/gmi-doc-2.jpg'],
-      position: '50% 0%',
+      kind: 'image',
+      src: '/assets/images/gmi-illustration.jpg',
+      position: '58% 50%',
     },
     stack: ['Rules engine', 'LLM analysis', 'RAG'],
   },

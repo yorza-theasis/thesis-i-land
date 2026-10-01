@@ -26,7 +26,7 @@ type NavbarProps = {
 
 type MenuId = 'services' | 'cases';
 
-const SECTION_IDS = ['process', 'services', 'cases', 'about', 'faq'] as const;
+const SECTION_IDS = ['process', 'services', 'about', 'cases', 'faq'] as const;
 
 const MENU_CASES: CaseId[] = ['qpick', 'extensa', 'wirebender', 'niania'];
 
@@ -123,7 +123,7 @@ const ServicesMenu = ({ onNavigate }: { onNavigate: () => void }) => {
                     {service.title}
                   </span>
                   <span className="block text-xs text-subtle">
-                    {service.stat}
+                    {service.area}
                   </span>
                 </span>
               </Link>
@@ -233,8 +233,8 @@ const Navbar = ({ subPath = '' }: NavbarProps) => {
   const items: { id: string; label: string; menu?: MenuId }[] = [
     { id: 'process', label: nav.process },
     { id: 'services', label: nav.services, menu: 'services' },
-    { id: 'cases', label: nav.work, menu: 'cases' },
     { id: 'about', label: nav.about },
+    { id: 'cases', label: nav.work, menu: 'cases' },
     { id: 'faq', label: nav.faq },
   ];
   const links = items.map((item) => ({

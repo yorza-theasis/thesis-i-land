@@ -197,7 +197,7 @@ const CasesContent = () => {
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setFilter(tab.id)}
-                    className={`relative flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-colors duration-300 ${
+                    className={`relative flex items-center gap-1.5 rounded-full px-3 py-2 text-sm transition-colors duration-300 xs:gap-2 xs:px-4 ${
                       isActive ? 'text-ink' : 'text-muted hover:text-ink'
                     }`}
                   >

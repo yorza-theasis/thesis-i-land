@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 
+import { localeBase, LOCALES } from '../i18n/LocaleContext';
 import type { Locale } from '../i18n/translations';
 import { AppConfig } from '../utils/AppConfig';
 
@@ -15,9 +16,9 @@ type MetaProps = {
 
 const Meta = ({ title, description, locale, path, noindex }: MetaProps) => {
   const site = AppConfig.site_url;
-  const enUrl = `${site}/${path}`;
-  const uaUrl = `${site}/ua/${path}`;
-  const url = locale === 'ua' ? uaUrl : enUrl;
+  const urlFor = (l: Locale) => `${site}${localeBase(l)}/${path}`;
+  const url = urlFor(locale);
+  const { og } = LOCALES.find((l) => l.id === locale)!;
   const image = `${site}/thesis-igraphitegray.png`;
 
   return (
@@ -51,16 +52,15 @@ const Meta = ({ title, description, locale, path, noindex }: MetaProps) => {
         canonical={url}
         noindex={noindex}
         languageAlternates={[
-          { hrefLang: 'en', href: enUrl },
-          { hrefLang: 'uk', href: uaUrl },
-          { hrefLang: 'x-default', href: enUrl },
+          ...LOCALES.map((l) => ({ hrefLang: l.hrefLang, href: urlFor(l.id) })),
+          { hrefLang: 'x-default', href: urlFor('en') },
         ]}
         openGraph={{
           type: 'website',
           url,
           title,
           description,
-          locale: locale === 'ua' ? 'uk_UA' : 'en_US',
+          locale: og,
           site_name: AppConfig.site_name,
           images: [{ url: image, width: 1200, height: 1200, alt: 'thesis-i' }],
         }}

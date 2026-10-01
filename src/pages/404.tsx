@@ -21,10 +21,16 @@ const NotFound = () => (
         <p lang="uk" className="mt-1 max-w-[48ch] text-lg text-muted">
           Сторінку не знайдено. Можливо, посилання застаріло.
         </p>
+        <p lang="es" className="mt-1 max-w-[48ch] text-lg text-muted">
+          La página no existe. Puede que el enlace esté desactualizado.
+        </p>
         <div className="mt-10 flex flex-wrap gap-3">
           <ButtonLink href="/">Back to homepage</ButtonLink>
           <ButtonLink href="/ua/" variant="secondary">
             Українською
+          </ButtonLink>
+          <ButtonLink href="/es/" variant="secondary">
+            En español
           </ButtonLink>
         </div>
       </div>

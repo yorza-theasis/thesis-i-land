@@ -78,12 +78,11 @@ const Services = () => {
                     <TileIcon size={20} weight="regular" aria-hidden="true" />
                   </span>
                   <div>
-                    <h3 className="text-lg font-medium tracking-[-0.01em] text-ink md:text-xl">
+                    <p className="text-sm text-signal-ink">{service.area}</p>
+                    <h3 className="mt-1 text-lg font-medium tracking-[-0.01em] text-ink md:text-xl">
                       {service.title}
                     </h3>
-                    <p className="mt-1 text-sm text-signal-ink">
-                      {service.stat}
-                    </p>
+                    <p className="mt-1 text-sm text-subtle">{service.stat}</p>
                   </div>
                 </div>
                 <div>
@@ -106,17 +105,18 @@ const Services = () => {
             >
               <Thumb src={thumb.src} position={thumb.position} />
               <div className="flex min-w-0 flex-1 flex-col py-1 pr-1">
-                <div className="flex items-center gap-2.5">
+                <p className="flex items-center gap-2 text-xs text-signal-ink sm:text-[0.8125rem]">
                   <TileIcon
-                    size={18}
+                    size={16}
                     weight="regular"
                     aria-hidden="true"
-                    className="shrink-0 text-signal-ink"
+                    className="shrink-0"
                   />
-                  <h3 className="text-base font-medium leading-snug tracking-[-0.01em] text-ink sm:text-lg">
-                    {service.title}
-                  </h3>
-                </div>
+                  {service.area}
+                </p>
+                <h3 className="mt-1.5 text-base font-medium leading-snug tracking-[-0.01em] text-ink sm:text-lg">
+                  {service.title}
+                </h3>
                 <p className="mt-1.5 line-clamp-3 text-sm leading-relaxed text-muted">
                   {service.description}
                 </p>

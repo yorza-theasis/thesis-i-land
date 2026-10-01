@@ -77,7 +77,7 @@ const Answer = ({ index }: { index: number }) => {
         {item.answer}
       </p>
       <p className="label mt-8">{challenges.proof}</p>
-      <div className="mt-3 grid gap-2">
+      <div className="mt-3 grid grid-cols-1 gap-2">
         {PROOF[index]!.map((id) => (
           <ProofCard key={id} id={id} />
         ))}

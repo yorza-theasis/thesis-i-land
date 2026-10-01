@@ -105,7 +105,7 @@ const Work = () => {
   const base = useBase();
 
   return (
-    <Section id="cases">
+    <Section id="cases" tone="alt">
       <SectionHeader title={work.title} description={work.description} />
 
       <RevealGroup className="mt-14 grid gap-x-8 gap-y-16 md:mt-16 md:grid-cols-2 md:pb-28">

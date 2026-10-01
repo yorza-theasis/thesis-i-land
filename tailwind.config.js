@@ -1,12 +1,17 @@
 /** Design tokens live in src/styles/global.css as RGB channels so every
  * colour supports Tailwind's `/alpha` modifier and flips with the theme
  * class next-themes puts on <html>. */
+// eslint-disable-next-line import/no-extraneous-dependencies
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
 
 module.exports = {
   darkMode: 'class',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    // xs sits before the defaults so the cascade order stays mobile-first.
+    screens: { xs: '480px', ...defaultTheme.screens },
     extend: {
       fontFamily: {
         sans: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
